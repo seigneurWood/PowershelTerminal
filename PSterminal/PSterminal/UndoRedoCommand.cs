@@ -8,8 +8,8 @@ namespace PSterminal
 {
     public class UndoRedoCommand
     {
-        private Stack<Command> _Undocommands = new Stack<Command>();
-        private Stack<Command> _Redocommands = new Stack<Command>();
+        static public Stack<Command> _Undocommands;
+        static public Stack<Command> _Redocommands;
 
         public void Redo(int levels)
         {

@@ -11,7 +11,7 @@
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
-                    <TextBox Name="TextScript" Background="#FFF1F1A6"/>
+                    <TextBox Name="TextScript" Background="#FFF1F1A6" KeyUp="TextScript_KeyUp"/>
                 </TabItem>
             </TabControl>
         </Grid>
@@ -25,8 +25,8 @@
                 <MenuItem Header="Exit"></MenuItem>
             </MenuItem>
             <MenuItem Grid.Column="1" Header="Edit" Grid.Row="0">
-                <MenuItem Header="Undo"></MenuItem>
-                <MenuItem Header="Redo"></MenuItem>
+                <MenuItem Name="miUndo" Header="Undo" Click="miUndo_Click"></MenuItem>
+                <MenuItem Name="miRedo" Header="Redo" Click="miRedo_Click"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Cut"></MenuItem>
                 <MenuItem Header="Copy"></MenuItem>

@@ -17,7 +17,11 @@ namespace PSterminal
             set { _script = value; }
         }
 
-
-
+        public void TypeScript(char curChar)
+        {
+            Command command = new CommandType(Script, curChar);
+            command.Execute();
+            UndoRedoCommand._Undocommands.Push(command);
+        }
     }
 }

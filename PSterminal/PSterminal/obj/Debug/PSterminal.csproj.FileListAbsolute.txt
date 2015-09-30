@@ -11,3 +11,6 @@ C:\Users\Владислав\Desktop\Ад 2.0\PSterminal\PSterminal\bin\Debug\PSt
 C:\Users\Владислав\Desktop\Ад 2.0\PSterminal\PSterminal\bin\Debug\PSterminal.pdb
 C:\Users\Владислав\Desktop\Ад 2.0\PSterminal\PSterminal\obj\Debug\PSterminal.exe
 C:\Users\Владислав\Desktop\Ад 2.0\PSterminal\PSterminal\obj\Debug\PSterminal.pdb
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.exe.config
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.exe
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.pdb

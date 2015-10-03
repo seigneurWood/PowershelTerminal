@@ -53,10 +53,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandDelete.cs" />
-    <Compile Include="CommandType.cs" />
+    <Compile Include="AbstractExpression.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="CommonParamTerminalExpression.cs" />
+    <Compile Include="ParamTerminalExpression.cs" />
+    <Compile Include="ScriptCommandExpression.cs" />
     <Compile Include="Terminal.cs" />
-    <Compile Include="UndoRedoCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,7 +67,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Command.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

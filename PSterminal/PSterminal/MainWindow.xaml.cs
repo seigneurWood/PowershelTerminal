@@ -40,8 +40,8 @@ namespace PSterminal
         private void miUndo_Click(object sender, RoutedEventArgs e)
         {
             UndoRedoCommand u = new UndoRedoCommand();
-            u.Undo(1);
-            //TextScript.Text = terminal.Script;
+            terminal.Script = u.Undo(1);
+            TextScript.Text = terminal.Script;
         }
 
         private void miRedo_Click(object sender, RoutedEventArgs e)

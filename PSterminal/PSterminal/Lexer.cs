@@ -16,6 +16,7 @@ namespace PSterminal
         const int CHAR = -10;
         const int INT = -5;
         const int DASH = -110;// -
+        const int PIPE = -124;
 
 
         #endregion
@@ -114,7 +115,7 @@ namespace PSterminal
         {
             states[0] = identifyChar(c, states[0]);
             states[1] = identifyDash(c, states[1]);
-            states[2] = identifyDash(c, states[1]);
+            states[2] = identifyDash(c, states[2]);
         }
 
         private int identifyChar(char c, int state)

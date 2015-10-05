@@ -8,6 +8,36 @@ namespace PSterminal
 {
     public class TokenReader
     {
+
+        private int _startingPosistion;
+
+        public int StartingPosistion
+        {
+            get { return _startingPosistion; }
+            set { _startingPosistion = value; }
+        }
+        private int _endingPosition;
+
+        public int EndingPosition
+        {
+            get { return _endingPosition; }
+            set { _endingPosition = value; }
+        }
+        private string _token;
+
+        public string Token
+        {
+            get { return _token; }
+            set { _token = value; }
+        }
+        private int _state;
+
+        public int State
+        {
+            get { return _state; }
+            set { _state = value; }
+        }
+
         public void CheckVerbExpression(List<string> tokenList)
         {
         }

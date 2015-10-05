@@ -28,7 +28,7 @@ namespace PSterminal
             //TextBox t = new TextBox();
             //t.Undo();
             TextScript.Text = "get-process -id 640 \n";
-            TextScript.Text += Convert.ToString((int)('-'));
+            TextScript.Text += Convert.ToString((int)('|'));
             terminal.Script = TextScript.Text;
         }
 

@@ -8,7 +8,7 @@ namespace PSterminal
 {
     public class TokenReader
     {
-
+        static public List<TokenReader> TokenReaderList = new List<TokenReader>();
         private int _startingPosistion;
 
         public int StartingPosistion
@@ -38,19 +38,44 @@ namespace PSterminal
             set { _state = value; }
         }
 
-        public void CheckVerbExpression(List<string> tokenList)
+        public TokenReader(int startingPos, int endingPos, string token, int state)
         {
+            StartingPosistion = startingPos;
+            EndingPosition = endingPos;
+            Token = token;
+            State = state;
         }
 
-        public IAbstractExpression ReadToken(List<string> tokenList)
+        public override string ToString()
         {
-            return ReadNextToken(tokenList);
+            StringBuilder str = new StringBuilder("Lexeme ");
+            str.Append(this.Token);
+            str.Append(" Position ");
+            str.Append(this.StartingPosistion.ToString());
+            str.Append('-');
+            str.Append(this.EndingPosition.ToString());
+            str.Append(" State ");
+            str.Append(this.State.ToString());
+            return str.ToString();
         }
 
-        private IAbstractExpression ReadNextToken(List<string> tokenList)
+        public void AddToList(TokenReader token)
         {
-            return new VerbScriptCommandExpression("get");
+            TokenReaderList.Add(token);
         }
+        //public void CheckVerbExpression(List<string> tokenList)
+        //{
+        //}
+
+        //public IAbstractExpression ReadToken(List<string> tokenList)
+        //{
+        //    return ReadNextToken(tokenList);
+        //}
+
+        //private IAbstractExpression ReadNextToken(List<string> tokenList)
+        //{
+        //    return new VerbScriptCommandExpression("get");
+        //}
 
     }
 }

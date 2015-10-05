@@ -8,6 +8,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+        <Button Content="Run" Height="30" Width="60" Grid.Row="2" Click="Button_Click_1"/>
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
@@ -25,8 +26,8 @@
                 <MenuItem Header="Exit"></MenuItem>
             </MenuItem>
             <MenuItem Grid.Column="1" Header="Edit" Grid.Row="0">
-                <MenuItem Name="miUndo" Header="Undo" Click="miUndo_Click"></MenuItem>
-                <MenuItem Name="miRedo" Header="Redo" Click="miRedo_Click"></MenuItem>
+                <MenuItem Name="miUndo" Header="Undo" ></MenuItem>
+                <MenuItem Name="miRedo" Header="Redo" ></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Cut"></MenuItem>
                 <MenuItem Header="Copy"></MenuItem>

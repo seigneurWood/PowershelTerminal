@@ -53,12 +53,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AbstractExpression.cs" />
+    <Compile Include="IAbstractExpression.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CommonParamTerminalExpression.cs" />
+    <Compile Include="Lexer.cs" />
+    <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
-    <Compile Include="ScriptCommandExpression.cs" />
+    <Compile Include="VerbScriptCommandExpression.cs" />
+    <Compile Include="ScriptComNonterminalExpression.cs" />
     <Compile Include="Terminal.cs" />
+    <Compile Include="TokenReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

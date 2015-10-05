@@ -23,9 +23,12 @@ namespace PSterminal
         Terminal terminal = new Terminal();
         public MainWindow()
         {
+            
             InitializeComponent();
             //TextBox t = new TextBox();
             //t.Undo();
+            TextScript.Text = "get-process -id 640 \n";
+            TextScript.Text += Convert.ToString((int)('-'));
             terminal.Script = TextScript.Text;
         }
 
@@ -33,12 +36,10 @@ namespace PSterminal
         {
         }
 
-        private void miUndo_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
-        private void miRedo_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+
         }
     }
 }

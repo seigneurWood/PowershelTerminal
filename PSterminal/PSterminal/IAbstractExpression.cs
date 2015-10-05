@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public abstract class AbstractExpression
+    public interface IAbstractExpression
     {
-        public void Interpret();
+        void Interpret();
     }
 }

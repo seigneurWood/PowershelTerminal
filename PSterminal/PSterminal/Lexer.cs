@@ -113,7 +113,7 @@ namespace PSterminal
 
             if (lastFinalState != 0)
             {
-                TokenReader token = new TokenReader(startingPosition, lastPositionWithFinalState+1, code.Substring(startingPosition, lastPositionWithFinalState + 1), lastFinalState);
+                TokenReader token = new TokenReader(startingPosition, lastPositionWithFinalState + 1, code.Substring(startingPosition, lastPositionWithFinalState + 1-startingPosition), lastFinalState);
                 token.AddToList(token);
             }
         }

@@ -27,17 +27,18 @@ namespace PSterminal
             InitializeComponent();
             //TextBox t = new TextBox();
             //t.Undo();
-            TextScript.Text = "get-process -id 640";
+            TextScript.Text = "get-process -id 640 #";
             //TextScript.Text += Convert.ToString((int)('9'));
+            //TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = TextScript.Text;
 
             Lexer lexer = new Lexer(TextScript.Text);
 
-            //TextScript.Text += "\n";
+            TextScript.Text += "\n";
             //TextScript.Text += TextScript.Text.Substring(4, 10);
             for (int i = 0; i < TokenReader.TokenReaderList.Count; i++)
             {
-                TextScript.Text += TokenReader.TokenReaderList.ElementAt(i).ToString();
+                TextScript.Text += TokenReader.TokenReaderList.ElementAt(i).ToString()+"\n";
             }
         }
 

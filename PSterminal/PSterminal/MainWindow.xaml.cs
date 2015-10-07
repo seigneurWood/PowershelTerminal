@@ -27,7 +27,7 @@ namespace PSterminal
             InitializeComponent();
             //TextBox t = new TextBox();
             //t.Undo();
-            TextScript.Text = "get-process -id 640#";
+            TextScript.Text = "get-process | sort-object | foreach ";
             //TextScript.Text += Convert.ToString((int)('9'));
             //TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = TextScript.Text;
@@ -40,6 +40,11 @@ namespace PSterminal
             {
                 TextScript.Text += TokenReader.TokenReaderList.ElementAt(i).ToString()+"\n";
             }
+            TextScript.Text += "\n";
+
+            Parser parser = new Parser(TokenReader.TokenReaderList);
+            parser.CreateTree();
+            int f = 10;
         }
 
         private void TextScript_KeyUp(object sender, KeyEventArgs e)

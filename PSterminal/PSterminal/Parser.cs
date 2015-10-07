@@ -36,6 +36,55 @@ namespace PSterminal
             TokenList = token;
         }
 
-        
+        public void CreateTree()
+        {
+            CreateNextTree(this.TokenList);
+        }
+
+        private void CreateNextTree(List<TokenReader> currentTokenList)
+        {
+            List<TokenReader> currentListRight = new List<TokenReader>();
+            for (int i = currentTokenList.Count-1; i >= 0; i--)
+            {
+                if (currentTokenList.ElementAt(i).Token == "|")
+                {
+                    //currentTokenList.Reverse();
+                    this.Left = new Parser(currentTokenList.Take(i-1).ToList<TokenReader>());
+                    this.Left.CreateNextTree(this.Left.TokenList);
+                    //continue;
+                    break;
+                    //IEnumerable<TokenReader> t = currentTokenList.Take(i);
+                    //return new Parser(t.ToList<TokenReader>());
+                    //this.Right = new Parser(t.ToList<TokenReader>());
+
+                    //currentListRight.AddRange(this.TokenList.Take(i));
+                    //this.TokenList.RemoveRange(i, this.TokenList.Count - i);
+                }
+                else
+                {
+                    currentListRight.Add(this.TokenList.ElementAt(i));
+                }
+            }
+            currentListRight.Reverse();
+            this.Right = new Parser(currentListRight);
+
+            //List<TokenReader> currentListLeft = new List<TokenReader>();
+            //List<TokenReader> currentListRight = new List<TokenReader>();
+            //this.Left = new Parser(new List<TokenReader>());
+            //this.Right = new Parser(new List<TokenReader>());
+            //for (int i = this.TokenList.Count; i >= 0; i--)
+            //{
+            //    if (this.TokenList.ElementAt(i).Token == "|")
+            //    {
+            //        currentListRight.AddRange(this.TokenList.Take(i));
+            //        //this.TokenList.RemoveRange(i, this.TokenList.Count - i);
+            //    }
+            //    else
+            //    {
+            //        currentListLeft.Add(this.TokenList.ElementAt(i));
+            //    }
+            //}
+        }
+
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Lexer.cs" />
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="VerbScriptCommandExpression.cs" />
     <Compile Include="ScriptComNonterminalExpression.cs" />
     <Compile Include="Terminal.cs" />

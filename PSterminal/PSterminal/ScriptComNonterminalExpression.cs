@@ -30,6 +30,7 @@ namespace PSterminal
         public void Interpret()
         {
             string str = Exp1.ToString() + Exp2.ToString();
+            
         }
     }
 }

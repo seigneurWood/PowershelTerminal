@@ -27,7 +27,7 @@ namespace PSterminal
             InitializeComponent();
             //TextBox t = new TextBox();
             //t.Undo();
-            TextScript.Text = "get-process -id 640 #";
+            TextScript.Text = "get-process -id 640#";
             //TextScript.Text += Convert.ToString((int)('9'));
             //TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = TextScript.Text;

@@ -41,9 +41,31 @@ namespace PSterminal
                 TextScript.Text += TokenReader.TokenReaderList.ElementAt(i).ToString()+"\n";
             }
             TextScript.Text += "\n";
+            TextScript.Text += "\n";
 
             Parser parser = new Parser(TokenReader.TokenReaderList);
             parser.CreateTree();
+
+
+            //TokenReader t1 = new TokenReader(1, 2, "aaa", 0);
+            //TokenReader t2 = new TokenReader(1, 2, "aaa", 0);
+
+            //List<TokenReader> t1 = new List<TokenReader>();
+            //t1.Add(new TokenReader(1,2,"aaa",0));
+            ////t1.Add(new TokenReader(1,2,"bbb",0));
+
+            //List<TokenReader> t2 = new List<TokenReader>();
+            //t2.Add(new TokenReader(1,2,"aaa",0));
+            ////t2.Add(new TokenReader(1,2,"bbb",0));
+
+            //bool t = false;
+            //if (t1.Token == t2.Token)
+            //    t = true;
+            //else
+            //    t = false;
+
+            //TextScript.Text += t.ToString();
+
             int f = 10;
         }
 

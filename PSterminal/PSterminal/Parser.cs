@@ -66,7 +66,11 @@ namespace PSterminal
                 }
             }
             currentListRight.Reverse();
-            this.Right = new Parser(currentListRight);
+            if (currentListRight.Count != this.TokenList.Count)
+            {
+                //if /*(currentTokenList.Count != this.TokenList.Count &&*/ (IsCopy(currentTokenList,this.TokenList)== false)
+                    this.Right = new Parser(currentListRight);
+            }
 
             //List<TokenReader> currentListLeft = new List<TokenReader>();
             //List<TokenReader> currentListRight = new List<TokenReader>();
@@ -85,6 +89,14 @@ namespace PSterminal
             //    }
             //}
         }
-
+        private bool IsCopy(List<TokenReader> tokenList1, List<TokenReader> tokenList2)
+        {
+            for (int i = 0; i < tokenList2.Count; i++)
+            {
+                if (tokenList1.ElementAt(i) != tokenList2.ElementAt(i))// && tokenList1.Count != tokenList2.Count)
+                    return false;
+            }
+            return true;
+        }
     }
 }

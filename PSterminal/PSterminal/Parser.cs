@@ -48,17 +48,10 @@ namespace PSterminal
             {
                 if (currentTokenList.ElementAt(i).Token == "|")
                 {
-                    //currentTokenList.Reverse();
                     this.Left = new Parser(currentTokenList.Take(i-1).ToList<TokenReader>());
                     this.Left.CreateNextTree(this.Left.TokenList);
-                    //continue;
                     break;
-                    //IEnumerable<TokenReader> t = currentTokenList.Take(i);
-                    //return new Parser(t.ToList<TokenReader>());
-                    //this.Right = new Parser(t.ToList<TokenReader>());
-
-                    //currentListRight.AddRange(this.TokenList.Take(i));
-                    //this.TokenList.RemoveRange(i, this.TokenList.Count - i);
+                    
                 }
                 else
                 {
@@ -68,35 +61,43 @@ namespace PSterminal
             currentListRight.Reverse();
             if (currentListRight.Count != this.TokenList.Count)
             {
-                //if /*(currentTokenList.Count != this.TokenList.Count &&*/ (IsCopy(currentTokenList,this.TokenList)== false)
                     this.Right = new Parser(currentListRight);
             }
 
-            //List<TokenReader> currentListLeft = new List<TokenReader>();
-            //List<TokenReader> currentListRight = new List<TokenReader>();
-            //this.Left = new Parser(new List<TokenReader>());
-            //this.Right = new Parser(new List<TokenReader>());
-            //for (int i = this.TokenList.Count; i >= 0; i--)
-            //{
-            //    if (this.TokenList.ElementAt(i).Token == "|")
-            //    {
-            //        currentListRight.AddRange(this.TokenList.Take(i));
-            //        //this.TokenList.RemoveRange(i, this.TokenList.Count - i);
-            //    }
-            //    else
-            //    {
-            //        currentListLeft.Add(this.TokenList.ElementAt(i));
-            //    }
-            //}
         }
         private bool IsCopy(List<TokenReader> tokenList1, List<TokenReader> tokenList2)
         {
             for (int i = 0; i < tokenList2.Count; i++)
             {
-                if (tokenList1.ElementAt(i) != tokenList2.ElementAt(i))// && tokenList1.Count != tokenList2.Count)
+                if (tokenList1.ElementAt(i) != tokenList2.ElementAt(i))
                     return false;
             }
             return true;
         }
+
+        public void CheckError()
+        {
+            var queue = new Queue<Parser>();
+            queue.Enqueue(this);
+            Parser currentParser = new Parser(this.TokenList);
+            while (queue.Count != 0)
+            {
+                if (queue.Peek().Left != null)
+                {
+                    //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Left.Value.ToString() + " из левого поддерева" + Environment.NewLine;
+                    queue.Enqueue(queue.Peek().Left);
+                    currentParser = queue.Peek().Left;
+                }
+                if (queue.Peek().Right != null)
+                {
+                    //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Right.Value.ToString() + " из правого поддерева" + Environment.NewLine;
+                    queue.Enqueue(queue.Peek().Right);
+                }
+            }
+            IAbstractExpression scriptCommand = new ScriptComNonterminalExpression();
+            scriptCommand.Interpret();
+        }
+
+
     }
 }

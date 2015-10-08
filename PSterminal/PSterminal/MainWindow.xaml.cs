@@ -45,7 +45,7 @@ namespace PSterminal
 
             Parser parser = new Parser(TokenReader.TokenReaderList);
             parser.CreateTree();
-            parser.CheckError();
+            //parser.CheckError();
 
 
             int f = 10;

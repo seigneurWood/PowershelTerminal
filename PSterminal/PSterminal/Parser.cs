@@ -94,8 +94,8 @@ namespace PSterminal
                     queue.Enqueue(queue.Peek().Right);
                 }
             }
-            IAbstractExpression scriptCommand = new ScriptComNonterminalExpression();
-            scriptCommand.Interpret();
+           // IAbstractExpression scriptCommand = new ScriptComNonterminalExpression();
+           // scriptCommand.Interpret();
         }
 
 

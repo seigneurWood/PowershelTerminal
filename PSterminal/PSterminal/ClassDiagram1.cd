@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PSterminal.CommonParamTerminalExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="2" Width="1.5" />
+    <Position X="10" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAKAAAgAAAAAAAAAAAAAAAQIAAAAAAAAA=</HashCode>
       <FileName>CommonParamTerminalExpression.cs</FileName>
@@ -23,7 +23,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PSterminal.DelimiterTerminalExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.5" Y="2" Width="1.5" />
+    <Position X="11.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DelimiterTerminalExpression.cs</FileName>
@@ -45,7 +45,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PSterminal.NounScriptTerminalExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="3" Width="1.5" />
+    <Position X="10" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAEAgAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>NounScriptTerminalExpression.cs</FileName>
@@ -53,7 +53,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PSterminal.ParamTerminalExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.5" Y="3" Width="1.5" />
+    <Position X="11.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAIAAAAAAAAgAAAIAAAAAAAAAAA=</HashCode>
       <FileName>ParamTerminalExpression.cs</FileName>
@@ -68,7 +68,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PSterminal.ScriptComNonterminalExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="4" Width="1.5" />
+    <Position X="10" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>DAAAAAAAAAAAAACAgAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>ScriptComNonterminalExpression.cs</FileName>
@@ -90,7 +90,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PSterminal.VerbScriptCommandExpression" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="5" Width="1.5" />
+    <Position X="12" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAgAAABAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>VerbScriptCommandExpression.cs</FileName>
@@ -110,7 +110,7 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="PSterminal.IAbstractExpression" Collapsed="true">
-    <Position X="14.25" Y="0.75" Width="1.5" />
+    <Position X="10.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IAbstractExpression.cs</FileName>

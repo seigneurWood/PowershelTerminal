@@ -27,7 +27,7 @@ namespace PSterminal
             InitializeComponent();
             //TextBox t = new TextBox();
             //t.Undo();
-            TextScript.Text = "get-process | sort-object";
+            TextScript.Text = "get-process | sort-object | foreach";
             //TextScript.Text += Convert.ToString((int)('9'));
             //TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = TextScript.Text;
@@ -45,7 +45,7 @@ namespace PSterminal
 
             Parser parser = new Parser(TokenReader.TokenReaderList);
             parser.CreateTree();
-            //parser.CheckError();
+            parser.CheckError();
 
 
             int f = 10;

@@ -79,20 +79,24 @@ namespace PSterminal
         {
             var queue = new Queue<Parser>();
             queue.Enqueue(this);
-            Parser currentParser = new Parser(this.TokenList);
-            while (queue.Count != 0)
+            Parser currentParser = this;
+            int current_level = 0;
+            while (true)
             {
-                if (queue.Peek().Left != null)
+                if (currentParser.Left != null)
                 {
                     //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Left.Value.ToString() + " из левого поддерева" + Environment.NewLine;
-                    queue.Enqueue(queue.Peek().Left);
-                    currentParser = queue.Peek().Left;
+                    queue.Enqueue(currentParser.Left);
+                    
+                    current_level++;
                 }
-                if (queue.Peek().Right != null)
+                if (currentParser.Right != null)
                 {
                     //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Right.Value.ToString() + " из правого поддерева" + Environment.NewLine;
-                    queue.Enqueue(queue.Peek().Right);
+                    queue.Enqueue(currentParser.Right);
                 }
+                if (currentParser.Left == null && currentParser.Right == null) { break; }
+                currentParser = currentParser.Left;
             }
            // IAbstractExpression scriptCommand = new ScriptComNonterminalExpression();
            // scriptCommand.Interpret();

@@ -8,29 +8,79 @@ namespace PSterminal
 {
     public class ScriptComNonterminalExpression: IAbstractExpression
     {
-        private IAbstractExpression _exp1;
+        private IAbstractExpression _expressionLeft;
 
-        public IAbstractExpression Exp1
+        public IAbstractExpression ExpressionLeft
         {
-            get { return _exp1; }
-            set { _exp1 = value; }
+            get { return _expressionLeft; }
+            set { _expressionLeft = value; }
         }
-        private IAbstractExpression _exp2;
 
-        public IAbstractExpression Exp2
+        private IAbstractExpression _expressionRight;
+
+        public IAbstractExpression ExpressionRight
         {
-            get { return _exp2; }
-            set { _exp2 = value; }
+            get { return _expressionRight; }
+            set { _expressionRight = value; }
         }
-        public ScriptComNonterminalExpression(IAbstractExpression exp1, IAbstractExpression exp2)
+
+        private DelimiterTerminalExpression _delimeter;
+
+        public DelimiterTerminalExpression Delimeter
         {
-            Exp1 = exp1;
-            Exp2 = exp2;
+            get { return _delimeter; }
+            set { _delimeter = value; }
         }
+
+        private Parser _parser;
+
+        public Parser Parser
+        {
+            get { return _parser; }
+            set { _parser = value; }
+        }
+
+
         public void Interpret()
+        {  
+        }
+
+        public ScriptComNonterminalExpression(Parser parser)
         {
-            string str = Exp1.ToString() + Exp2.ToString();
-            
+            Parser = parser;
+        }
+
+        public void CreateSyntaxTree()
+        {
+            CreateNextSyntaxTree(this.Parser);
+        }
+
+        private void CreateNextSyntaxTree(Parser currentParser)
+        {
+            //int index = 0;
+            BreadthFirstIterator parserIterator = new BreadthFirstIterator(currentParser);
+            parserIterator.Queue.Dequeue();
+            while (currentParser.Left != null)
+            {
+                Parser tempParser = parserIterator.Queue.Dequeue();
+                if (parserIterator.Queue.Count != 1)
+                {
+                    this.ExpressionLeft = new ScriptComNonterminalExpression(tempParser);
+                    this.Delimeter = new DelimiterTerminalExpression();
+                    this.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
+                }
+                else
+                {
+                    this.ExpressionLeft = new MainComTerminalExpression(tempParser);
+                    this.Delimeter = null;
+                    this.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
+                }
+                if (currentParser.Left == tempParser)
+                    currentParser = currentParser.Left;
+                //this.ExpressionRight = new SupportingComTerminalExpression();
+                //this.Delimeter = new DelimiterTerminalExpression();
+                //this.ExpressionLeft = new ScriptComNonterminalExpression();
+            }
         }
     }
 }

@@ -53,12 +53,9 @@ namespace PSterminal
                 }
                 if (NullParser == true)
                     break;
+                if (CurrentParser.Left != null)
+                    CurrentParser = CurrentParser.Left;
             }
-        }
-
-        private void Next()
-        {
-            Index++;
         }
     }
 }

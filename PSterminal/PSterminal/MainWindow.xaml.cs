@@ -45,8 +45,10 @@ namespace PSterminal
 
             Parser parser = new Parser(TokenReader.TokenReaderList);
             parser.CreateTree();
-            parser.CheckError();
+            //parser.CheckError();
 
+            ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(parser);
+            test.CreateSyntaxTree();
 
             int f = 10;
         }

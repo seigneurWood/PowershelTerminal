@@ -8,6 +8,6 @@ namespace PSterminal
 {
     public abstract class Command
     {
-        public abstract void Excute() { }
+        public abstract void Excute();
     }
 }

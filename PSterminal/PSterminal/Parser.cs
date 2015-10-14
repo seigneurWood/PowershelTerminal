@@ -83,21 +83,22 @@ namespace PSterminal
             int current_level = 0;
             while (true)
             {
-                if (currentParser.Left != null)
-                {
-                    //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Left.Value.ToString() + " из левого поддерева" + Environment.NewLine;
-                    queue.Enqueue(currentParser.Left);
-                    
-                    current_level++;
-                }
                 if (currentParser.Right != null)
                 {
                     //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Right.Value.ToString() + " из правого поддерева" + Environment.NewLine;
                     queue.Enqueue(currentParser.Right);
                 }
+                if (currentParser.Left != null)
+                {
+                    //if (detailed) s += "    заносим в очередь значение " + queue.Peek().Left.Value.ToString() + " из левого поддерева" + Environment.NewLine;
+                    queue.Enqueue(currentParser.Left);
+
+                    current_level++;
+                }
                 if (currentParser.Left == null && currentParser.Right == null) { break; }
                 currentParser = currentParser.Left;
             }
+
            // IAbstractExpression scriptCommand = new ScriptComNonterminalExpression();
            // scriptCommand.Interpret();
         }

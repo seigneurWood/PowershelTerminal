@@ -16,6 +16,11 @@ namespace PSterminal
             set { _delimiter = value; }
         }
 
+        public DelimiterTerminalExpression()
+        {
+            Delimiter = "|";
+        }
+
         public void Interpret()
         {
         }

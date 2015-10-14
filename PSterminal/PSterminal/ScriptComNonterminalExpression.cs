@@ -60,23 +60,35 @@ namespace PSterminal
             //int index = 0;
             BreadthFirstIterator parserIterator = new BreadthFirstIterator(currentParser);
             parserIterator.Queue.Dequeue();
+
+            ScriptComNonterminalExpression currentCommand = this;
             while (currentParser.Left != null)
             {
                 Parser tempParser = parserIterator.Queue.Dequeue();
                 if (parserIterator.Queue.Count != 1)
                 {
-                    this.ExpressionLeft = new ScriptComNonterminalExpression(tempParser);
-                    this.Delimeter = new DelimiterTerminalExpression();
-                    this.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
+                    currentCommand.ExpressionLeft = new ScriptComNonterminalExpression(tempParser);
+                    currentCommand.Delimeter = new DelimiterTerminalExpression();
+                    currentCommand.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
                 }
                 else
                 {
-                    this.ExpressionLeft = new MainComTerminalExpression(tempParser);
-                    this.Delimeter = null;
-                    this.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
+                    currentCommand.ExpressionLeft = new MainComTerminalExpression(tempParser);
+                    currentCommand.Delimeter = null;
+                    currentCommand.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
                 }
                 if (currentParser.Left == tempParser)
+                {
                     currentParser = currentParser.Left;
+                    if (currentParser.Left != null)
+                    {
+                        currentCommand = (ScriptComNonterminalExpression)currentCommand.ExpressionLeft;
+                        currentCommand.CreateNextSyntaxTree(currentParser);
+                    }
+                    else
+                        break;
+                }
+
                 //this.ExpressionRight = new SupportingComTerminalExpression();
                 //this.Delimeter = new DelimiterTerminalExpression();
                 //this.ExpressionLeft = new ScriptComNonterminalExpression();

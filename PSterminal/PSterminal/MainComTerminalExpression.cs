@@ -24,9 +24,17 @@ namespace PSterminal
             set { _verb = value; }
         }
 
+        private Parser _mainParser;
+
+        public Parser MainParser
+        {
+            get { return _mainParser; }
+            set { _mainParser = value; }
+        }
+
         public MainComTerminalExpression(Parser parser)
         {
-
+            MainParser = parser;
         }
 
         public void Interpret()

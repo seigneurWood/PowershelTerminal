@@ -35,6 +35,13 @@ namespace PSterminal
         public MainComTerminalExpression(Parser parser)
         {
             MainParser = parser;
+            for (int i = 0; i < parser.TokenList.Count; i++)
+            {
+                if (parser.TokenList.ElementAt(i).Token == "get" || parser.TokenList.ElementAt(i).Token == "set")
+                    Verb = new VerbScriptCommandExpression(parser.TokenList.ElementAt(i).Token);
+                if (parser.TokenList.ElementAt(i).Token == "process" || parser.TokenList.ElementAt(i).Token == "volume")
+                    Noun = new NounScriptTerminalExpression(parser.TokenList.ElementAt(i).Token);
+            }
         }
 
         public void Interpret()

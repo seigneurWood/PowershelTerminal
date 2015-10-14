@@ -24,6 +24,12 @@ namespace PSterminal
             NounList.Add("childitem");
             NounList.Add("location");
         }
+
+        public NounScriptTerminalExpression(string name)
+        {
+            Name = name;
+        }
+
         public void Interpret()
         {
         }

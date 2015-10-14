@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class Command
+    public abstract class Command
     {
+        public abstract void Excute() { }
     }
 }

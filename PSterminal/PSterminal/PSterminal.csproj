@@ -59,6 +59,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="CommonParamTerminalExpression.cs" />
     <Compile Include="Lexer.cs" />
+    <Compile Include="MainOperationCommand.cs" />
     <Compile Include="MainComTerminalExpression.cs" />
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />

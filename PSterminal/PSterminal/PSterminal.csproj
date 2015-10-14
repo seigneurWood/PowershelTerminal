@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BreadthFirstIterator.cs" />
     <Compile Include="DelimiterTerminalExpression.cs" />
     <Compile Include="IAbstractExpression.cs" />
     <Compile Include="Command.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="ParserIterator.cs" />
     <Compile Include="VerbScriptCommandExpression.cs" />
     <Compile Include="ScriptComNonterminalExpression.cs" />
     <Compile Include="Terminal.cs" />

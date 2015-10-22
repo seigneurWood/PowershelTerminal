@@ -16,7 +16,6 @@ C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.pdb
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.exe
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.pdb
-C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.csprojResolveAssemblyReference.cache
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\MainWindow.baml
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\MainWindow.g.cs
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\App.g.cs
@@ -24,3 +23,5 @@ C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.g.resources
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.Properties.Resources.resources
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.csproj.GenerateResource.Cache
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.exe.CodeAnalysisLog.xml
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.exe.lastcodeanalysissucceeded

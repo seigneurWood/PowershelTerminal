@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 14.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="14.0">
+ <Targets>
+  <Target Name="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\PSterminal.exe">
+   <Modules>
+    <Module Name="psterminal.exe">
+     <Messages>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Подпишите 'PSterminal.exe' с использованием ключа строгого имени.</Issue>
+      </Message>
+      <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+       <Issue Certainty="95" Level="Error">Пометьте 'PSterminal.exe' как CLSCompliant(true), поскольку он предоставляет типы, видимые извне.</Issue>
+      </Message>
+      <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+       <Issue Certainty="95" Level="Warning">Так как сборка 'PSterminal.exe' содержит файл ResX-ресурса, пометьте его атрибутом NeutralResourcesLanguage, указав язык ресурсов внутри сборки. Это может ускорить поиск ресурса при первом извлечении.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="PSterminal">
+       <Types>
+        <Type Name="BreadthFirstIterator" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Queue" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="BreadthFirstIterator.cs" Line="60">Установите доступ к 'BreadthFirstIterator.Queue' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Lexer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Name="LanguageIndependentMemberParameter" Certainty="75" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="25">В члене 'Lexer.Lexer(string)' продумайте замену идентификатора типа данных "String" в имени параметра 'inputString' на более универсальный термин, такой как "value".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#AllBroken(System.Int32[])" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="153">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.AllBroken(int[])'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetFinalState(System.Int32[])" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="123">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.GetFinalState(int[])'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IdentifyChar(System.Char,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="175">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.IdentifyChar(char, int)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IdentifyDash(System.Char,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="198">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.IdentifyDash(char, int)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IdentifyInt(System.Char,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="267">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.IdentifyInt(char, int)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IdentifyPipe(System.Char,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="244">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.IdentifyPipe(char, int)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IdentifySpace(System.Char,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="221">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.IdentifySpace(char, int)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitState()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="44">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Lexer.InitState()'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OutputList" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="39">Установите доступ к 'Lexer.OutputList' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Lexer.cs" Line="39">Измените 'List&lt;string&gt;' в 'Lexer.OutputList' так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MainComTerminalExpression" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(PSterminal.Parser)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Проверить аргументы или открытые методы" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainComTerminalExpression.cs" Line="18">В видимом извне методе 'MainComTerminalExpression.MainComTerminalExpression(Parser)' проверьте параметр 'parser' перед его использованием.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MainOperationCommand" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(PSterminal.MainComTerminalExpression)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Проверить аргументы или открытые методы" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="23">В видимом извне методе 'MainOperationCommand.MainOperationCommand(MainComTerminalExpression)' проверьте параметр 'mainCom' перед его использованием.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Dictionary" Kind="Property" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="42">Установите доступ к 'MainOperationCommand.Dictionary' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Excute()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="exucute" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="75">'MainOperationCommand.Excute()' объявляет переменную 'exucute' типа 'object[]', которая никогда не используется или которой только присваивается значение. Используйте эту переменную, или удалите ее.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExcuteCommand(System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="86">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'MainOperationCommand.ExcuteCommand(object)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IsCorrect()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="81">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'MainOperationCommand.IsCorrect()'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ListExp" Kind="Property" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="36">Установите доступ к 'MainOperationCommand.ListExp' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainOperationCommand.cs" Line="36">Измените 'List&lt;MainComTerminalExpression&gt;' в 'MainOperationCommand.ListExp' так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MainWindow" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="f" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainWindow.xaml.cs" Line="54">'MainWindow.MainWindow()' объявляет переменную 'f' типа 'int', которая никогда не используется или которой только присваивается значение. Используйте эту переменную, или удалите ее.</Issue>
+            </Message>
+            <Message Id="lexer" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainWindow.xaml.cs" Line="35">'MainWindow.MainWindow()' объявляет переменную 'lexer' типа 'Lexer', которая никогда не используется или которой только присваивается значение. Используйте эту переменную, или удалите ее.</Issue>
+            </Message>
+            <Message Id="System.Windows.Controls.TextBox.set_Text(System.String)" TypeName="Не передавать литералы в качестве локализованных параметров" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="MainWindow.xaml.cs" Line="30">Метод 'MainWindow.MainWindow()' передает строку-литерал, как параметр "value" при вызове 'TextBox.Text.set(string)'. Вместо этого выполните поиск следующей строки (строк) в таблице источника: "get-process | sort-object".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="NounScriptTerminalExpression" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#FillList()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="NounScriptTerminalExpression.cs" Line="29">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'NounScriptTerminalExpression.FillList()'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Parser" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Collections.Generic.List`1&lt;PSterminal.TokenReader&gt;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="15">Измените 'List&lt;TokenReader&gt;' в 'Parser.Parser(List&lt;TokenReader&gt;)' так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CheckError()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="iterator" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="45">'Parser.CheckError()' объявляет переменную 'iterator' типа 'BreadthFirstIterator', которая никогда не используется или которой только присваивается значение. Используйте эту переменную, или удалите ее.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IsCopy(System.Collections.Generic.List`1&lt;PSterminal.TokenReader&gt;,System.Collections.Generic.List`1&lt;PSterminal.TokenReader&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="98">Возможно, у 'Parser.IsCopy(List&lt;TokenReader&gt;, List&lt;TokenReader&gt;)' нет предшествующих открытых или защищенных вызывающих.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="98">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'Parser.IsCopy(List&lt;TokenReader&gt;, List&lt;TokenReader&gt;)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TokenList" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="22">Установите доступ к 'Parser.TokenList' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="Parser.cs" Line="22">Измените 'List&lt;TokenReader&gt;' в 'Parser.TokenList' так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TokenReader" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#AddToList(PSterminal.TokenReader)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="69">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'TokenReader.AddToList(TokenReader)'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TokenReaderList" Kind="Property" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="27">Установите доступ к 'TokenReader.TokenReaderList' только для чтения, удалив установщик свойств.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="27">Измените 'List&lt;TokenReader&gt;' в 'TokenReader.TokenReaderList' так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ToString()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="60">В связи с тем, что поведение 'int.ToString()' может изменяться в зависимости от языка и региональных настроек текущего пользователя, следует заменить этот вызов в 'TokenReader.ToString()' вызовом 'int.ToString(IFormatProvider)'. Если результат 'int.ToString(IFormatProvider)' базируется на пользовательском вводе, укажите 'CultureInfo.CurrentCulture' в качестве параметра "IformatProvider". В ином случае, если результат будет храниться и использоваться программой, например при сохранении на диск или в базу данных, следует указать 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="62">В связи с тем, что поведение 'int.ToString()' может изменяться в зависимости от языка и региональных настроек текущего пользователя, следует заменить этот вызов в 'TokenReader.ToString()' вызовом 'int.ToString(IFormatProvider)'. Если результат 'int.ToString(IFormatProvider)' базируется на пользовательском вводе, укажите 'CultureInfo.CurrentCulture' в качестве параметра "IformatProvider". В ином случае, если результат будет храниться и использоваться программой, например при сохранении на диск или в базу данных, следует указать 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="TokenReader.cs" Line="64">В связи с тем, что поведение 'int.ToString()' может изменяться в зависимости от языка и региональных настроек текущего пользователя, следует заменить этот вызов в 'TokenReader.ToString()' вызовом 'int.ToString(IFormatProvider)'. Если результат 'int.ToString(IFormatProvider)' базируется на пользовательском вводе, укажите 'CultureInfo.CurrentCulture' в качестве параметра "IformatProvider". В ином случае, если результат будет храниться и использоваться программой, например при сохранении на диск или в базу данных, следует указать 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="VerbScriptCommandExpression" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#FillList()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-10-22 08:58:38Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal" File="VerbScriptCommandExpression.cs" Line="27">Параметр "this" ("Me" в Visual Basic) никогда не используется в 'VerbScriptCommandExpression.FillList()'. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+   <Name>Сборки должны иметь допустимые строгие имена</Name>
+   <Description>Либо строгое имя у сборки отсутствует или недействительно, либо действительность строгого имени зависит от конфигурации компьютера. В этом состоянии не следует выполнять развертывание сборки. Наиболее общие причины этого: 1). После подписания содержимое сборки было изменено. 2). Сбой в процессе подписания. 3). Сборка была подписана с задержкой. 4). В реестре существует раздел, разрешивший успешное выполнение проверки (чего не было бы в противном случае).</Description>
+   <Resolution Name="NoStrongName">Подпишите {0} с использованием ключа строгого имени.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182127.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Избегайте невызываемого частного кода</Name>
+   <Description>Имеется невызываемый код, не видимый извне и не являющийся известной точкой входа во время выполнения. Если это нарушение выведено ошибочно, отправьте отчет об ошибке в группу анализа кода Visual Studio.</Description>
+   <Resolution Name="Default">Возможно, у {0} нет предшествующих открытых или защищенных вызывающих.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182264.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+   <Name>Свойства, возвращающие коллекции, должны быть доступны только для чтения</Name>
+   <Description>Свойства, возвращающие коллекции, должны быть доступны только для чтения, чтобы пользователи не могли полностью заменить резервное хранилище. Пользователи все же могут изменить содержимое коллекции вызовом соответствующих методов для коллекции. Отметьте, что класс XmlSerializer имеет специальную поддержку для десериализации коллекций только для чтения. Дополнительные сведения см. в обзоре XmlSerializer.</Description>
+   <Resolution Name="Default">Установите доступ к {0} только для чтения, удалив установщик свойств.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182327.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+   <Name>Не предоставляйте универсальные списки</Name>
+   <Description>Не предоставляйте List&lt;T&gt; в объектных моделях. Вместо этого используйте Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;. List&lt;T&gt; предназначен для использования из реализации, но не в API объектной модели. List&lt;T&gt; оптимизирован с точки зрения производительности, но за счет более длительного отслеживания версий. Например, если вы возвратите List&lt;T&gt; в клиентский код, то никогда не сможете получить уведомление, когда клиентский код изменит коллекцию.</Description>
+   <Resolution Name="Default">Измените {0} в {1} так, чтобы использовать Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; или KeyedCollection&lt;K,V&gt;</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182142.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+   <Name>Идентификаторы не должны содержать имен типов</Name>
+   <Description>Не используйте специфических для данного языка имен типов в параметрах, членах и идентификаторах типов данных в параметрах. Имена типов могут не быть интуитивно понятными для всех разработчиков. Рекомендуется вместо этого выбрать универсальное имя, такое как "value". Убедитесь, что имя типа использовано так, как оно определено в библиотеке .NET Framework, и совсем не используйте специфических для данного языка имен типов. Примеры имен типов, специфических для C#: "float" (используйте "Single", если универсальное имя не подходит); "ulong" (используйте "UInt64", если универсальное имя не подходит).</Description>
+   <Resolution Name="LanguageIndependentMemberParameter">В члене {0} продумайте замену идентификатора типа данных "{1}" в имени параметра {2} на более универсальный термин, такой как "value".</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb531486.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+   <Name>Пометьте сборки атрибутом CLSCompliantAttribute</Name>
+   <Description>Сборки должны явно объявлять о своей CLS-совместимости при помощи атрибута CLSCompliant. Сборка без этого атрибута не является CLS-совместимой. Сборки, модули и типы могут быть CLS-совместимыми, даже если некоторые их части не являются CLS-совместимыми. Применимы следующие правила: 1). Если элемент помечен как CLSCompliant, все его несовместимые члены должны иметь атрибут CLSCompliant, аргументу которого установлено значение False. 2). Каждый CLS-несовместимый член должен быть дополнен сравнимым CLS-совместимым альтернативным членом.</Description>
+   <Resolution Name="Default">Пометьте {0} как CLSCompliant(true), поскольку он предоставляет типы, видимые извне.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182156.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+   <Name>Помечайте сборки атрибутом NeutralResourcesLanguageAttribute</Name>
+   <Description>Атрибут NeutralResourcesLanguage оповещает ResourceManager о языке, используемом для объявления в сборке ресурсов, нейтральных по языку и региональным параметрам. При поиске ресурсов с теми же языком и региональными параметрами, что и нейтральные по языку ресурсы, ResourceManager автоматически использует ресурсы, расположенные в основной сборке, и не ищет вспомогательную сборку с текущими языком и региональными параметрами интерфейса пользователя для текущего потока. Это улучшает поиск первого загруженного ресурса и может уменьшить рабочие наборы.</Description>
+   <Resolution Name="Default">Так как сборка {0} содержит файл ResX-ресурса, пометьте его атрибутом NeutralResourcesLanguage, указав язык ресурсов внутри сборки. Это может ускорить поиск ресурса при первом извлечении.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb385967.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+   <Name>Пометьте члены как статические</Name>
+   <Description>Методы, которые не обращаются к данным экземпляров и не вызывают методы экземпляров, могут быть определены как статические (Shared в Visual Basic). После этого компилятор создаст невиртуальные места для вызова этих членов, что предотвратит во время выполнения проверку для каждого вызова, что текущий указатель на объект не имеет значения NULL. Это может привести к ощутимому росту производительности для требовательных к производительности кодов. В некоторых случаях ошибка доступа к текущему экземпляру объекта указывает на проблемы с правильностью кода.</Description>
+   <Resolution Name="Default">Параметр "this" ("Me" в Visual Basic) никогда не используется в {0}. Пометьте член как static (или Shared в среде Visual Basic) либо используйте "this" или "Me" в теле метода или хотя бы в одном методе доступа к свойству.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms245046.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+   <Name>Удалите неиспользуемые локальные переменные</Name>
+   <Description>Удалите локальные переменные, которые не используются или которым только присваиваются значения в реализациях методов.</Description>
+   <Resolution Name="Default">{0} объявляет переменную {1} типа {2}, которая никогда не используется или которой только присваивается значение. Используйте эту переменную, или удалите ее.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182278.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Указывайте IFormatProvider</Name>
+   <Description>Если существует перегрузка, которая принимает аргумент IFormatProvider, следует всегда вызывать ее, а не другую перегрузку, не принимающую этот аргумент. Некоторые методы во время выполнения преобразовывают значение в представление строки или из него. Они принимают строковый параметр, который содержит один или несколько знаков, которые называются спецификаторами формата и указывают, как следует преобразовывать значение. Если смысл спецификатора формата зависит от языка и региональных настроек, форматируемый объект предоставляет действительные символы, которые используются в представлении строки. В сценариях, в которых поведение при сортировке и сравнении не зависит от языка и региональных настроек, следует указать CultureInfo.InvariantCulture, в ином случае следует указывать CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="IFormatProviderAlternateString">В связи с тем, что поведение {0} может изменяться в зависимости от языка и региональных настроек текущего пользователя, следует заменить этот вызов в {1} вызовом {2}. Если результат {2} базируется на пользовательском вводе, укажите {3} в качестве параметра "IformatProvider". В ином случае, если результат будет храниться и использоваться программой, например при сохранении на диск или в базу данных, следует указать {4}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182190.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Не передавать литералы в качестве локализованных параметров" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>Не передавать литералы в качестве локализованных параметров</Name>
+   <Description>Строки литералов, внедренные в исходный код, сложно локализировать. Избегайте передачи строк типа литерал в качестве аргументов в случаях, когда ожидается локализованная строка.</Description>
+   <Resolution Name="KnownValue">Метод {0} передает строку-литерал, как параметр "{1}" при вызове {2}. Вместо этого выполните поиск следующей строки (строк) в таблице источника: {3}.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182187.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Проверить аргументы или открытые методы" Category="Microsoft.Design" CheckId="CA1062">
+   <Name>Проверить аргументы или открытые методы</Name>
+   <Description>Все аргументы ссылок, передаваемые внешним видимым методам должны проверяться на NULL (Nothing в VB). При необходимости вызывает исключение System.ArgumentNullException, если аргумент равен "null".</Description>
+   <Resolution Name="Default">В видимом извне методе {0} проверьте параметр '{1}' перед его использованием.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182182.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Категория</String>
+  <String Key="Certainty">Достоверность</String>
+  <String Key="CollapseAll">Свернуть все</String>
+  <String Key="CheckId">ИД проверки</String>
+  <String Key="Error">Ошибка</String>
+  <String Key="Errors">ошибки</String>
+  <String Key="ExpandAll">Развернуть все</String>
+  <String Key="Help">Справка</String>
+  <String Key="Line">Строка</String>
+  <String Key="Messages">сообщения</String>
+  <String Key="LocationNotStoredInPdb">[расположение не сохранено в PDB]</String>
+  <String Key="Project">Проект</String>
+  <String Key="Resolution">Разрешение</String>
+  <String Key="Rule">Правило</String>
+  <String Key="RuleFile">Файл правил</String>
+  <String Key="RuleDescription">Описание правила</String>
+  <String Key="Source">Источник</String>
+  <String Key="Status">Состояние</String>
+  <String Key="Target">Цель</String>
+  <String Key="Warning">Предупреждение</String>
+  <String Key="Warnings">предупреждения</String>
+  <String Key="ReportTitle">Отчет по анализу кода</String>
+ </Localized>
+</FxCopReport>

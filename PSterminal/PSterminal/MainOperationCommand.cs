@@ -1,45 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace PSterminal
 {
-    public class MainOperationCommand: Command
+    public class MainOperationCommand : Command
     {
-        static public Dictionary<MainComTerminalExpression, object> dictionary = new Dictionary<MainComTerminalExpression, object>();
-        static public List<MainComTerminalExpression> listExp = new List<MainComTerminalExpression>();
+        private static Dictionary<MainComTerminalExpression, object> dictionary = new Dictionary<MainComTerminalExpression, object>();
+        private static List<MainComTerminalExpression> listExp = new List<MainComTerminalExpression>();
 
         private MainComTerminalExpression _terminalCommand;
-
-        public MainComTerminalExpression TerminalCommand
-        {
-            get { return _terminalCommand; }
-            set { _terminalCommand = value; }
-        }
 
         public MainOperationCommand(MainComTerminalExpression mainCom)
         {
             //TerminalCommand = mainCom;
             FillList();
-            for (int i = 0; i < listExp.Count; i++)
+            for (int i = 0; i < ListExp.Count; i++)
             {
-                if(listExp.ElementAt(i).Noun == mainCom.Noun && listExp.ElementAt(i).Verb == mainCom.Verb)
-                    TerminalCommand = mainCom;
+                if (ListExp.ElementAt(i).Noun == mainCom.Noun && ListExp.ElementAt(i).Verb == mainCom.Verb)
+                {
+                    this.TerminalCommand = mainCom;
+                }
                 else
-                    TerminalCommand = null;
+                {
+                    this.TerminalCommand = null;
+                }
             }
+        }
+
+        public static List<MainComTerminalExpression> ListExp
+        {
+            get { return MainOperationCommand.listExp; }
+            set { MainOperationCommand.listExp = value; }
+        }
+
+        public static Dictionary<MainComTerminalExpression, object> Dictionary
+        {
+            get { return MainOperationCommand.dictionary; }
+            set { MainOperationCommand.dictionary = value; }
+        }
+
+        public MainComTerminalExpression TerminalCommand
+        {
+            get { return this._terminalCommand; }
+            set { this._terminalCommand = value; }
+        }
+
+        public static void FillList()
+        {
+            TokenReader t = new TokenReader(0, 0, "get", -10);
+            TokenReader t2 = new TokenReader(0, 0, "process", -10);
+            List<TokenReader> tokList = new List<TokenReader>();
+            tokList.Add(t);
+            tokList.Add(t2);
+            Parser parser = new Parser(tokList);
+            MainComTerminalExpression mainCom = new MainComTerminalExpression(parser);
+            ListExp.Add(mainCom);
+        }
+
+        public static void FillDict()
+        {
+            Dictionary.Add(ListExp.ElementAt(0), Process.GetProcesses());
         }
 
         public override void Excute()
         {
-            for (int i = 0; i < dictionary.Count; i++)
+            for (int i = 0; i < Dictionary.Count; i++)
             {
-                if (this.TerminalCommand == dictionary.ElementAt(i).Key)
+                if (this.TerminalCommand == Dictionary.ElementAt(i).Key)
                 {
-                    object[] exucute = ExcuteCommand(dictionary[dictionary.ElementAt(i).Key]);
+                    object[] exucute = ExcuteCommand(Dictionary[Dictionary.ElementAt(i).Key]);
                 }
             }
         }
@@ -49,27 +82,13 @@ namespace PSterminal
             return true;
         }
 
-        static public void FillList()
-        {
-            TokenReader t = new TokenReader(0, 0, "get", -10);
-            TokenReader t2 = new TokenReader(0, 0, "process", -10);
-            List<TokenReader> tList = new List<TokenReader>();
-            tList.Add(t);
-            tList.Add(t2);
-            Parser parser = new Parser(tList);
-            MainComTerminalExpression mainCom = new MainComTerminalExpression(parser);
-            listExp.Add(mainCom);
-        }
-
-        static public void FillDict()
-        {
-            dictionary.Add(listExp.ElementAt(0), Process.GetProcesses());
-        }
-
         private object[] ExcuteCommand(object objectForExcute)
         {
             if (objectForExcute == Process.GetProcesses())
+            {
                 return Process.GetProcesses();
+            }
+
             return null;
         }
     }

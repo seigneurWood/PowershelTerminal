@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class ParamTerminalExpression:IAbstractExpression
+    public class ParamTerminalExpression : IAbstractExpression
     {
         private string _nameParam;
+        private string _paramValue;
+
+        public ParamTerminalExpression(string paramName, string paramValue)
+        {
+            this.NameParam = paramName;
+            this.ParamValue = paramValue;
+        }
 
         public string NameParam
         {
-            get { return _nameParam; }
-            set { _nameParam = value; }
+            get { return this._nameParam; }
+            set { this._nameParam = value; }
         }
-        private string _paramValue;
 
         public string ParamValue
         {
-            get { return _paramValue; }
-            set { _paramValue = value; }
+            get { return this._paramValue; }
+            set { this._paramValue = value; }
         }
-        public ParamTerminalExpression(string paramName, string paramValue)
-        {
-            NameParam = paramName;
-            ParamValue = paramValue;
-        }
+
         public void Interpret()
         {
         }

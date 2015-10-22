@@ -6,45 +6,49 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class MainComTerminalExpression: IAbstractExpression
+    public class MainComTerminalExpression : IAbstractExpression
     {
         private NounScriptTerminalExpression _noun;
-
-        public NounScriptTerminalExpression Noun
-        {
-            get { return _noun; }
-            set { _noun = value; }
-        }
-
         private VerbScriptCommandExpression _verb;
-
-        public VerbScriptCommandExpression Verb
-        {
-            get { return _verb; }
-            set { _verb = value; }
-        }
-
         private Parser _mainParser;
-
-        public Parser MainParser
-        {
-            get { return _mainParser; }
-            set { _mainParser = value; }
-        }
 
         public MainComTerminalExpression(Parser parser)
         {
-            MainParser = parser;
+            this.MainParser = parser;
             for (int i = 0; i < parser.TokenList.Count; i++)
             {
                 if (parser.TokenList.ElementAt(i).Token == "get" || parser.TokenList.ElementAt(i).Token == "set")
-                    Verb = new VerbScriptCommandExpression(parser.TokenList.ElementAt(i).Token);
+                {
+                    this.Verb = new VerbScriptCommandExpression(parser.TokenList.ElementAt(i).Token);
+                }
+
                 if (parser.TokenList.ElementAt(i).Token == "process" || parser.TokenList.ElementAt(i).Token == "volume")
-                    Noun = new NounScriptTerminalExpression(parser.TokenList.ElementAt(i).Token);
+                {
+                    this.Noun = new NounScriptTerminalExpression(parser.TokenList.ElementAt(i).Token);
+                }
             }
         }
 
+        public NounScriptTerminalExpression Noun
+        {
+            get { return this._noun; }
+            set { this._noun = value; }
+        }
+
+        public VerbScriptCommandExpression Verb
+        {
+            get { return this._verb; }
+            set { this._verb = value; }
+        }
+
+        public Parser MainParser
+        {
+            get { return this._mainParser; }
+            set { this._mainParser = value; }
+        }
+
         public void Interpret()
-        { }
+        { 
+        }
     }
 }

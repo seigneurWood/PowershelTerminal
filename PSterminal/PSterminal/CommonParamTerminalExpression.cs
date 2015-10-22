@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class CommonParamTerminalExpression: IAbstractExpression
+    public class CommonParamTerminalExpression : IAbstractExpression
     {
         private string _nameCommonParameter;
+        private string _commonParameterValue;
+
+        public CommonParamTerminalExpression(string nameCommonParameter, string value)
+        {
+            this.NameCommonParameter = nameCommonParameter;
+            this.CommonParameterValue = value;
+        }
 
         public string NameCommonParameter
         {
-            get { return _nameCommonParameter; }
-            set { _nameCommonParameter = value; }
+            get { return this._nameCommonParameter; }
+            set { this._nameCommonParameter = value; }
         }
-        private string _commonParameterValue;
 
         public string CommonParameterValue
         {
-            get { return _commonParameterValue; }
-            set { _commonParameterValue = value; }
-        }
-        public CommonParamTerminalExpression(string nameCommonParameter, string value)
-        {
-            NameCommonParameter = nameCommonParameter;
-            CommonParameterValue = value;
+            get { return this._commonParameterValue; }
+            set { this._commonParameterValue = value; }
         }
 
         public void Interpret()

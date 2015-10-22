@@ -13,8 +13,8 @@ namespace PSterminal
 
         public string Script
         {
-            get { return _script; }
-            set { _script = value; }
+            get { return this._script; }
+            set { this._script = value; }
         }
     }
 }

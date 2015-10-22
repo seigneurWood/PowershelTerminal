@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class SupportingComTerminalExpression: IAbstractExpression
+    public class SupportingComTerminalExpression : IAbstractExpression
     {
         private Parser _supportCommand;
 
-        public Parser SupportCommand
-        {
-            get { return _supportCommand; }
-            set { _supportCommand = value; }
-        }
-
         public SupportingComTerminalExpression(Parser parser)
         {
-            SupportCommand = parser;
+            this.SupportCommand = parser;
         }
+
+        public Parser SupportCommand
+        {
+            get { return this._supportCommand; }
+            set { this._supportCommand = value; }
+        }
+
         public void Interpret()
-        { }
+        { 
+        }
     }
 }

@@ -8,42 +8,48 @@ namespace PSterminal
 {
     public class TokenReader
     {
-        static public List<TokenReader> TokenReaderList = new List<TokenReader>();
+        private static List<TokenReader> tokenReaderList = new List<TokenReader>();
         private int _startingPosistion;
-
-        public int StartingPosistion
-        {
-            get { return _startingPosistion; }
-            set { _startingPosistion = value; }
-        }
         private int _endingPosition;
-
-        public int EndingPosition
-        {
-            get { return _endingPosition; }
-            set { _endingPosition = value; }
-        }
         private string _token;
-
-        public string Token
-        {
-            get { return _token; }
-            set { _token = value; }
-        }
         private int _state;
-
-        public int State
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
 
         public TokenReader(int startingPos, int endingPos, string token, int state)
         {
-            StartingPosistion = startingPos;
-            EndingPosition = endingPos;
-            Token = token;
-            State = state;
+            this.StartingPosistion = startingPos;
+            this.EndingPosition = endingPos;
+            this.Token = token;
+            this.State = state;
+        }
+
+        public static List<TokenReader> TokenReaderList
+        {
+            get { return TokenReader.tokenReaderList; }
+            set { TokenReader.tokenReaderList = value; }
+        }
+
+        public int StartingPosistion
+        {
+            get { return this._startingPosistion; }
+            set { this._startingPosistion = value; }
+        }
+        
+        public int EndingPosition
+        {
+            get { return this._endingPosition; }
+            set { this._endingPosition = value; }
+        }
+
+        public string Token
+        {
+            get { return this._token; }
+            set { this._token = value; }
+        }
+        
+        public int State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
 
         public override string ToString()
@@ -61,21 +67,21 @@ namespace PSterminal
 
         public void AddToList(TokenReader token)
         {
-            TokenReaderList.Add(token);
+            tokenReaderList.Add(token);
         }
-        //public void CheckVerbExpression(List<string> tokenList)
-        //{
-        //}
 
-        //public IAbstractExpression ReadToken(List<string> tokenList)
-        //{
-        //    return ReadNextToken(tokenList);
-        //}
+        ////public void CheckVerbExpression(List<string> tokenList)
+        ////{
+        ////}
 
-        //private IAbstractExpression ReadNextToken(List<string> tokenList)
-        //{
-        //    return new VerbScriptCommandExpression("get");
-        //}
+        ////public IAbstractExpression ReadToken(List<string> tokenList)
+        ////{
+        ////    return ReadNextToken(tokenList);
+        ////}
 
+        ////private IAbstractExpression ReadNextToken(List<string> tokenList)
+        ////{
+        ////    return new VerbScriptCommandExpression("get");
+        ////}
     }
 }

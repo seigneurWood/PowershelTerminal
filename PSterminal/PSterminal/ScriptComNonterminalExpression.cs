@@ -6,53 +6,49 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class ScriptComNonterminalExpression: IAbstractExpression
+    public class ScriptComNonterminalExpression : IAbstractExpression
     {
         private IAbstractExpression _expressionLeft;
+        private IAbstractExpression _expressionRight;
+        private DelimiterTerminalExpression _delimeter;
+        private Parser _parser;
+
+        public ScriptComNonterminalExpression(Parser parser)
+        {
+            this.Parser = parser;
+        }
 
         public IAbstractExpression ExpressionLeft
         {
-            get { return _expressionLeft; }
-            set { _expressionLeft = value; }
+            get { return this._expressionLeft; }
+            set { this._expressionLeft = value; }
         }
-
-        private IAbstractExpression _expressionRight;
 
         public IAbstractExpression ExpressionRight
         {
-            get { return _expressionRight; }
-            set { _expressionRight = value; }
+            get { return this._expressionRight; }
+            set { this._expressionRight = value; }
         }
-
-        private DelimiterTerminalExpression _delimeter;
 
         public DelimiterTerminalExpression Delimeter
         {
-            get { return _delimeter; }
-            set { _delimeter = value; }
+            get { return this._delimeter; }
+            set { this._delimeter = value; }
         }
-
-        private Parser _parser;
 
         public Parser Parser
         {
-            get { return _parser; }
-            set { _parser = value; }
+            get { return this._parser; }
+            set { this._parser = value; }
         }
-
 
         public void Interpret()
         {  
         }
 
-        public ScriptComNonterminalExpression(Parser parser)
-        {
-            Parser = parser;
-        }
-
         public void CreateSyntaxTree()
         {
-            CreateNextSyntaxTree(this.Parser);
+            this.CreateNextSyntaxTree(this.Parser);
         }
 
         private void CreateNextSyntaxTree(Parser currentParser)
@@ -77,6 +73,7 @@ namespace PSterminal
                     currentCommand.Delimeter = null;
                     currentCommand.ExpressionRight = new SupportingComTerminalExpression(parserIterator.Queue.Dequeue());
                 }
+
                 if (currentParser.Left == tempParser)
                 {
                     currentParser = currentParser.Left;
@@ -86,7 +83,9 @@ namespace PSterminal
                         currentCommand.CreateNextSyntaxTree(currentParser);
                     }
                     else
+                    {
                         break;
+                    }
                 }
 
                 //this.ExpressionRight = new SupportingComTerminalExpression();

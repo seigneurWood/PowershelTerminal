@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class DelimiterTerminalExpression: IAbstractExpression
+    public class DelimiterTerminalExpression : IAbstractExpression
     {
         private string _delimiter;
 
-        public string Delimiter
-        {
-            get { return _delimiter; }
-            set { _delimiter = value; }
-        }
-
         public DelimiterTerminalExpression()
         {
-            Delimiter = "|";
+            this.Delimiter = "|";
+        }
+
+        public string Delimiter
+        {
+            get { return this._delimiter; }
+            set { this._delimiter = value; }
         }
 
         public void Interpret()

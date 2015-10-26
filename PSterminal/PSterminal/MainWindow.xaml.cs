@@ -44,11 +44,11 @@ namespace PSterminal
             TextScript.Text += "\n";
             TextScript.Text += "\n";
 
-            Parser parser = new Parser(TokenReader.TokenReaderList);
-            parser.CreateTree();
+            //Parser parser = new Parser(TokenReader.TokenReaderList);
+            //parser.CreateTree();
             ////parser.CheckError();
 
-            ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(parser);
+            ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
             test.CreateSyntaxTree();
 
             int f = 10;

@@ -65,7 +65,6 @@
     <Compile Include="MainComTerminalExpression.cs" />
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
-    <Compile Include="Parser.cs" />
     <Compile Include="ParserIterator.cs" />
     <Compile Include="SupportingComTerminalExpression.cs" />
     <Compile Include="VerbScriptCommandExpression.cs" />

@@ -8,17 +8,17 @@ namespace PSterminal
 {
     public class SupportingComTerminalExpression : IAbstractExpression
     {
-        private Parser _supportCommand;
+        private List<TokenReader> _tokenList;
 
-        public SupportingComTerminalExpression(Parser parser)
+        public SupportingComTerminalExpression(List<TokenReader> currentTokenList)
         {
-            this.SupportCommand = parser;
+            this.TokenList = currentTokenList;
         }
 
-        public Parser SupportCommand
+        public List<TokenReader> TokenList
         {
-            get { return this._supportCommand; }
-            set { this._supportCommand = value; }
+            get { return _tokenList;}
+            set { _tokenList = value;}
         }
 
         public void Interpret()

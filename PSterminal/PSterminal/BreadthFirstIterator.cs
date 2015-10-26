@@ -8,6 +8,63 @@ namespace PSterminal
 {
     public class BreadthFirstIterator : ParserIterator
     {
+        private Queue<IAbstractExpression> _queue;
+
+        public BreadthFirstIterator(ScriptComNonterminalExpression scriptCommand)
+        {
+            if (scriptCommand == null)
+                return;
+            this.Queue = new Queue<IAbstractExpression>();
+            //Type type = typeof(ScriptComNonterminalExpression);
+
+            while (this.Queue.Count > -1)
+            {
+                if (scriptCommand.ExpressionLeft.GetType() != typeof(MainComTerminalExpression))
+                {
+                    this.Queue.Enqueue((SupportingComTerminalExpression)scriptCommand.ExpressionRight);
+                    scriptCommand = (ScriptComNonterminalExpression)scriptCommand.ExpressionLeft;
+                }
+                if (scriptCommand.ExpressionLeft.GetType() == typeof(MainComTerminalExpression))
+                {
+                    this.Queue.Enqueue((SupportingComTerminalExpression)scriptCommand.ExpressionRight);
+                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionLeft);
+                    break;
+                }
+            }
+
+            //for (; ; )
+            //{
+            //    if (scriptCommand.ExpressionRight != null && scriptCommand.ExpressionLeft.GetType() != typeof(ScriptComNonterminalExpression)
+            //        && scriptCommand.ExpressionRight.GetType() != typeof(SupportingComTerminalExpression))
+            //    {
+            //        this.Queue.Enqueue(scriptCommand.ExpressionRight);
+            //        if (scriptCommand.ExpressionLeft.GetType() != typeof(ScriptComNonterminalExpression))
+            //        {
+            //            scriptCommand = (ScriptComNonterminalExpression)scriptCommand.ExpressionLeft;
+            //        }
+            //        else
+            //        {
+            //            this.Queue.Enqueue(scriptCommand.ExpressionRight);
+            //            this.Queue.Enqueue(scriptCommand.ExpressionLeft);
+            //            break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        this.Queue.Enqueue(scriptCommand.ExpressionRight);
+            //        this.Queue.Enqueue(scriptCommand.ExpressionLeft);
+            //        break;
+            //    }
+            //}
+        }
+
+        public Queue<IAbstractExpression> Queue
+        {
+            get { return _queue; }
+            set { _queue = value; }
+        }
+
+
         //private Queue<Parser> _queue;
         //private bool _nullParser;
 

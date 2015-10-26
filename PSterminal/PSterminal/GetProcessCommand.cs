@@ -8,11 +8,14 @@ namespace PSterminal
 {
     public class GetProcessCommand:Command
     {
-        
-
-        public override void Excute()
+        public override object[] Excute(ScriptComNonterminalExpression script)
         {
-            throw new NotImplementedException();
+            BreadthFirstIterator iterator = new BreadthFirstIterator(script);
+            for (int i = 0; i < iterator.Queue.Count; i++)
+            {
+                
+            }
+            return new object[1];
         }
     }
 }

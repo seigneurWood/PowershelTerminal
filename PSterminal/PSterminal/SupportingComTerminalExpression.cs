@@ -20,6 +20,7 @@ namespace PSterminal
         public SupportingComTerminalExpression(List<TokenReader> tokenList)
         {
             FillSupportComNounList();
+            FillSupportComVerbList();
             this.State = null;
             this.TokenList = tokenList;
             for (int i = 0; i < tokenList.Count; i++)
@@ -29,16 +30,19 @@ namespace PSterminal
                     if (tokenList.ElementAt(i).Token == supportComNounList.ElementAt(j))
                     {
                         Noun = new NounScriptTerminalExpression(supportComNounList.ElementAt(j));
-                        State = Noun.Name;
+                        //State = Noun.Name;
                         break;
                     }
                 }
+            }
+            for (int i = 0; i < tokenList.Count; i++)
+            {
                 for (int j = 0; j < supportComVerbList.Count; j++)
                 {
                     if (tokenList.ElementAt(i).Token == supportComVerbList.ElementAt(j))
                     {
                         Verb = new VerbScriptCommandExpression(supportComVerbList.ElementAt(j));
-                        State = Verb.Name;
+                        //State = Verb.Name;
                         break;
                     }
                 }
@@ -76,11 +80,13 @@ namespace PSterminal
         private void FillSupportComNounList()
         {
             supportComNounList.Add("sort");
+            supportComNounList.Add("force");
         }
 
         private void FillSupportComVerbList()
         {
             supportComVerbList.Add("object");
+            supportComVerbList.Add("recurce");
         }
     }
 }

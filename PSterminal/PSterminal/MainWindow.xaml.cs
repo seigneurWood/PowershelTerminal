@@ -27,7 +27,9 @@ namespace PSterminal
             InitializeComponent();
             ////TextBox t = new TextBox();
             ////t.Undo();
-            TextScript.Text = "get-process -name chrome | sort-object";
+            TextScript.Text = "get-process -name chrome | sort-object | force-recurce";
+            //TextScript.Text = "get-childitem * -include *.csv -recurse | remove-item";
+
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = this.TextScript.Text;
@@ -50,9 +52,11 @@ namespace PSterminal
 
             ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
             test.CreateSyntaxTree();
+            int f = 10;
+            BreadthFirstIterator b = new BreadthFirstIterator(test);
             //test.Interpret();
 
-            int f = 10;
+            f = 11;
         }
 
         private void TextScript_KeyUp(object sender, KeyEventArgs e)

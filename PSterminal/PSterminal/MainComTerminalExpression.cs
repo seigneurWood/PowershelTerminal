@@ -20,6 +20,7 @@ namespace PSterminal
         public MainComTerminalExpression(List<TokenReader> tokenList)
         {
             FillNounList();
+            FillVerbList();
             this.State = null;
             this.TokenList = tokenList;
             this.ParameterList = new List<ParamTerminalExpression>();
@@ -30,7 +31,7 @@ namespace PSterminal
                     if(tokenList.ElementAt(i).Token==nounList.ElementAt(j))
                     {
                         Noun = new NounScriptTerminalExpression(nounList.ElementAt(j));
-                        State = Noun.Name;
+                        //State = Noun.Name;
                         break;
                     }
                 }
@@ -39,7 +40,7 @@ namespace PSterminal
                     if (tokenList.ElementAt(i).Token == verbList.ElementAt(k))
                     {
                         Verb = new VerbScriptCommandExpression(verbList.ElementAt(k));
-                        State = Verb.Name;
+                        //State = Verb.Name;
                         break;
                     }
                 }

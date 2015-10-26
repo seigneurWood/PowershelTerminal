@@ -9,20 +9,48 @@ namespace PSterminal
     public class SupportingComTerminalExpression : IAbstractExpression
     {
         private List<TokenReader> _tokenList;
+        private int _state;
 
-        public SupportingComTerminalExpression(List<TokenReader> currentTokenList)
+        private static List<string> supportComList = new List<string>();
+
+        public SupportingComTerminalExpression(List<TokenReader> tokenList)
         {
-            this.TokenList = currentTokenList;
+            FillSupportComList();
+            this.TokenList = tokenList;
+            for (int i = 0; i < tokenList.Count; i++)
+            {
+                for(int j = 0; j < supportComList.Count; j++)
+                {
+                    if(tokenList.ElementAt(i).Token==supportComList.ElementAt(j))
+                    {
+                        State = 1;
+                    }
+                    else
+                    {
+                        State = 0;
+                    }
+                }
         }
 
         public List<TokenReader> TokenList
         {
-            get { return _tokenList;}
-            set { _tokenList = value;}
+            get { return this._tokenList; }
+            set { this._tokenList = value; }
+        }
+
+        public int State
+        {
+            get { return _state; }
+            set { _state = value; }
         }
 
         public void Interpret()
         { 
+        }
+
+        private void FillSupportComList()
+        {
+            SupportComList.Add("sort-object");
         }
     }
 }

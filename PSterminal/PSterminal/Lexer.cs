@@ -25,7 +25,7 @@ namespace PSterminal
         public Lexer(string inputString)
         {
             this.InputString = inputString;
-            ParseString(inputString);
+            this.ParseString(inputString);
         }
 
         public string InputString

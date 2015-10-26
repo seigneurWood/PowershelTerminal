@@ -38,12 +38,12 @@ namespace PSterminal
 
         public List<TokenReader> TokenList
         {
-            get { return _tokenList;}
-            set { _tokenList = value;}
+            get { return _tokenList; }
+            set { _tokenList = value; }
         }
 
         public void Interpret()
-        {  
+        {
         }
 
         public void CreateSyntaxTree()
@@ -54,19 +54,33 @@ namespace PSterminal
         private void CreateNextSyntaxTree(List<TokenReader> currentTokenList)
         {
             List<TokenReader> currentListRight = new List<TokenReader>();
+            int del = 0;
             for (int i = currentTokenList.Count - 1; i >= 0; i--)
             {
                 if (currentTokenList.ElementAt(i).Token == "|")
                 {
                     this.Delimeter = new DelimiterTerminalExpression();
-                    this.ExpressionLeft = new ScriptComNonterminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>()); //new Parser(currentTokenList.Take(i - 1).ToList<TokenReader>());
-                    Type type = typeof(ScriptComNonterminalExpression);
-                    if (this.ExpressionLeft.GetType() == type)
+                    if (!IsMainCommand(currentTokenList.Take(i - 1).ToList<TokenReader>()))
                     {
-                        //ExpressionLeft.CreateNextTree(this.ExpressionLeft.TokenList);
+                        this.ExpressionLeft = new ScriptComNonterminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>()); //new Parser(currentTokenList.Take(i - 1).ToList<TokenReader>());
                         ((ScriptComNonterminalExpression)this.ExpressionLeft).CreateNextSyntaxTree(((ScriptComNonterminalExpression)this.ExpressionLeft).TokenList);
                     }
+                    else
+                    {
+                        this.ExpressionLeft = new MainComTerminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>());
+                        if (((MainComTerminalExpression)this.ExpressionLeft).State == 0)
+                        { // underline word
+                        }
+                    }
+                    //this.ExpressionLeft = new ScriptComNonterminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>()); //new Parser(currentTokenList.Take(i - 1).ToList<TokenReader>());
+                    //Type type = typeof(ScriptComNonterminalExpression);
+                    //if (this.ExpressionLeft.GetType() == type)
+                    //{
+                    //ExpressionLeft.CreateNextTree(this.ExpressionLeft.TokenList);
+                    //((ScriptComNonterminalExpression)this.ExpressionLeft).CreateNextSyntaxTree(((ScriptComNonterminalExpression)this.ExpressionLeft).TokenList);
+                    //}
                     //this.ExpressionLeft.
+                    del += 1;
                     break;
                 }
                 else
@@ -76,11 +90,23 @@ namespace PSterminal
             }
 
             currentListRight.Reverse();
-            if (currentListRight.Count != this.TokenList.Count)
+            if (del != 0)
             {
-                this.ExpressionRight = new SupportingComTerminalExpression(currentListRight);
+                if (currentListRight.Count != this.TokenList.Count)
+                {
+                    this.ExpressionRight = new SupportingComTerminalExpression(currentListRight);
+                    if (((SupportingComTerminalExpression)this.ExpressionRight).State == 0)
+                    {// underline word 
+                    }
+                }
             }
-
+            else
+            {
+                this.ExpressionLeft = new MainComTerminalExpression(currentListRight);
+                if (((MainComTerminalExpression)this.ExpressionLeft).State == 0)
+                { // underline word
+                }
+            }
             #region //
             //int index = 0;
             //BreadthFirstIterator parserIterator = new BreadthFirstIterator(currentParser);
@@ -122,6 +148,15 @@ namespace PSterminal
             //this.ExpressionLeft = new ScriptComNonterminalExpression();
             //}
             #endregion
+        }
+        private bool IsMainCommand(List<TokenReader> tokenList)
+        {
+            for (int i = 0; i < tokenList.Count; i++)
+            {
+                if (tokenList.ElementAt(i).Token == "|")
+                    return false;
+            }
+            return true;
         }
     }
 }

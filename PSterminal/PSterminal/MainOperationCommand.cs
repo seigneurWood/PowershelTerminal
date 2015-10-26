@@ -56,9 +56,9 @@ namespace PSterminal
             List<TokenReader> tokList = new List<TokenReader>();
             tokList.Add(t);
             tokList.Add(t2);
-            Parser parser = new Parser(tokList);
-            MainComTerminalExpression mainCom = new MainComTerminalExpression(parser);
-            ListExp.Add(mainCom);
+            //Parser parser = new Parser(tokList);
+            //MainComTerminalExpression mainCom = new MainComTerminalExpression(parser);
+            //ListExp.Add(mainCom);
         }
 
         public static void FillDict()

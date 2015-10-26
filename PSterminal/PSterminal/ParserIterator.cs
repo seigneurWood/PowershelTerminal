@@ -8,15 +8,8 @@ namespace PSterminal
 {
     public abstract class ParserIterator
     {
-        private Parser _currentParser;
         private int _index;
         private bool _isDone;
-
-        public Parser CurrentParser
-        {
-            get { return this._currentParser; }
-            protected set { this._currentParser = value; }
-        }
 
         public int Index
         {

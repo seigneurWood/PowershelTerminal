@@ -57,11 +57,11 @@
     </ApplicationDefinition>
     <Compile Include="BreadthFirstIterator.cs" />
     <Compile Include="DelimiterTerminalExpression.cs" />
+    <Compile Include="GetProcessCommand.cs" />
     <Compile Include="IAbstractExpression.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CommonParamTerminalExpression.cs" />
     <Compile Include="Lexer.cs" />
-    <Compile Include="MainOperationCommand.cs" />
     <Compile Include="MainComTerminalExpression.cs" />
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />

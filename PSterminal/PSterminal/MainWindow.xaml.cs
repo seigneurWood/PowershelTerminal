@@ -27,7 +27,7 @@ namespace PSterminal
             InitializeComponent();
             ////TextBox t = new TextBox();
             ////t.Undo();
-            TextScript.Text = "get-process | sort-object";
+            TextScript.Text = "get-process -name chrome | sort-object";
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
             terminal.Script = this.TextScript.Text;
@@ -50,6 +50,7 @@ namespace PSterminal
 
             ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
             test.CreateSyntaxTree();
+            //test.Interpret();
 
             int f = 10;
         }

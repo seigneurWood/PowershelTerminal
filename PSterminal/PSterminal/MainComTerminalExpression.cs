@@ -11,8 +11,8 @@ namespace PSterminal
         private NounScriptTerminalExpression _noun;
         private VerbScriptCommandExpression _verb;
         private List<TokenReader> _tokenList;
-        private List<CommonParamTerminalExpression> _parameterList;
-        private int _state;
+        private List<ParamTerminalExpression> _parameterList;
+        private object _state;
 
         private static List<string> nounList = new List<string>();
         private static List<string> verbList = new List<string>();
@@ -20,8 +20,9 @@ namespace PSterminal
         public MainComTerminalExpression(List<TokenReader> tokenList)
         {
             FillNounList();
-            this.State = 0;
+            this.State = null;
             this.TokenList = tokenList;
+            this.ParameterList = new List<ParamTerminalExpression>();
             for (int i = 0; i < tokenList.Count; i++)
             {
                 for(int j = 0; j < nounList.Count; j++)
@@ -29,11 +30,8 @@ namespace PSterminal
                     if(tokenList.ElementAt(i).Token==nounList.ElementAt(j))
                     {
                         Noun = new NounScriptTerminalExpression(nounList.ElementAt(j));
-                        State = 1;
-                    }
-                    else
-                    {
-                        State = 0;
+                        State = Noun.Name;
+                        break;
                     }
                 }
                 for (int k = 0; k < verbList.Count; k++)
@@ -41,12 +39,17 @@ namespace PSterminal
                     if (tokenList.ElementAt(i).Token == verbList.ElementAt(k))
                     {
                         Verb = new VerbScriptCommandExpression(verbList.ElementAt(k));
-                        State = 1;
+                        State = Verb.Name;
+                        break;
                     }
-                    else
-                    {
-                        State = 0;
-                    }
+                }
+            }
+            for (int i = 0; i < tokenList.Count; i++)
+            {
+                if(tokenList.ElementAt(i).Token=="-" && tokenList.ElementAt(i-1).Token==" ")
+                {
+                    ParamTerminalExpression parameter = new ParamTerminalExpression(tokenList.ElementAt(i + 1).Token, tokenList.ElementAt(i + 3).Token);
+                    ParameterList.Add(parameter);
                 }
             }
             //this.MainParser = parser;
@@ -82,13 +85,13 @@ namespace PSterminal
             set { this._tokenList = value; }
         }
 
-        public List<CommonParamTerminalExpression> ParameterList
+        public List<ParamTerminalExpression> ParameterList
         {
             get { return this._parameterList; }
             set { this._parameterList = value; }
         }
 
-        public int State
+        public object State
         {
             get { return _state; }
             protected set { _state = value; }

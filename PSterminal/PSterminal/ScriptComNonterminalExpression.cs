@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PSterminal
 {
@@ -68,8 +69,9 @@ namespace PSterminal
                     else
                     {
                         this.ExpressionLeft = new MainComTerminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>());
-                        if (((MainComTerminalExpression)this.ExpressionLeft).State == 0)
+                        if (((MainComTerminalExpression)this.ExpressionLeft).State == null)
                         { // underline word
+                            MessageBox.Show("Error");// + ((MainComTerminalExpression)this.ExpressionLeft).Noun + "-" + ((MainComTerminalExpression)this.ExpressionLeft).Verb + " not found");
                         }
                     }
                     //this.ExpressionLeft = new ScriptComNonterminalExpression(currentTokenList.Take(i - 1).ToList<TokenReader>()); //new Parser(currentTokenList.Take(i - 1).ToList<TokenReader>());
@@ -95,16 +97,18 @@ namespace PSterminal
                 if (currentListRight.Count != this.TokenList.Count)
                 {
                     this.ExpressionRight = new SupportingComTerminalExpression(currentListRight);
-                    if (((SupportingComTerminalExpression)this.ExpressionRight).State == 0)
+                    if (((SupportingComTerminalExpression)this.ExpressionRight).State == null)
                     {// underline word 
+                        MessageBox.Show("Error");// + ((SupportingComTerminalExpression)this.ExpressionRight).Noun + "-" + ((SupportingComTerminalExpression)this.ExpressionRight).Verb+" not found");
                     }
                 }
             }
             else
             {
                 this.ExpressionLeft = new MainComTerminalExpression(currentListRight);
-                if (((MainComTerminalExpression)this.ExpressionLeft).State == 0)
+                if (((MainComTerminalExpression)this.ExpressionLeft).State == null)
                 { // underline word
+                    MessageBox.Show("Error");// + ((MainComTerminalExpression)this.ExpressionLeft).Noun + "-"+((MainComTerminalExpression)this.ExpressionLeft).Verb+" not found");
                 }
             }
             #region //

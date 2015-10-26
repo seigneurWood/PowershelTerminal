@@ -9,27 +9,40 @@ namespace PSterminal
     public class SupportingComTerminalExpression : IAbstractExpression
     {
         private List<TokenReader> _tokenList;
-        private int _state;
+        private object _state;
+        private NounScriptTerminalExpression _noun;
 
-        private static List<string> supportComList = new List<string>();
+        private VerbScriptCommandExpression _verb;
+
+        private static List<string> supportComNounList = new List<string>();
+        private static List<string> supportComVerbList = new List<string>();
 
         public SupportingComTerminalExpression(List<TokenReader> tokenList)
         {
-            FillSupportComList();
+            FillSupportComNounList();
+            this.State = null;
             this.TokenList = tokenList;
             for (int i = 0; i < tokenList.Count; i++)
             {
-                for(int j = 0; j < supportComList.Count; j++)
+                for (int j = 0; j < supportComNounList.Count; j++)
                 {
-                    if(tokenList.ElementAt(i).Token==supportComList.ElementAt(j))
+                    if (tokenList.ElementAt(i).Token == supportComNounList.ElementAt(j))
                     {
-                        State = 1;
-                    }
-                    else
-                    {
-                        State = 0;
+                        Noun = new NounScriptTerminalExpression(supportComNounList.ElementAt(j));
+                        State = Noun.Name;
+                        break;
                     }
                 }
+                for (int j = 0; j < supportComVerbList.Count; j++)
+                {
+                    if (tokenList.ElementAt(i).Token == supportComVerbList.ElementAt(j))
+                    {
+                        Verb = new VerbScriptCommandExpression(supportComVerbList.ElementAt(j));
+                        State = Verb.Name;
+                        break;
+                    }
+                }
+            }
         }
 
         public List<TokenReader> TokenList
@@ -38,7 +51,7 @@ namespace PSterminal
             set { this._tokenList = value; }
         }
 
-        public int State
+        public object State
         {
             get { return _state; }
             set { _state = value; }
@@ -48,9 +61,26 @@ namespace PSterminal
         { 
         }
 
-        private void FillSupportComList()
+        public NounScriptTerminalExpression Noun
         {
-            SupportComList.Add("sort-object");
+            get { return _noun; }
+            set { _noun = value; }
+        }
+
+        public VerbScriptCommandExpression Verb
+        {
+            get { return _verb; }
+            set { _verb = value; }
+        }
+
+        private void FillSupportComNounList()
+        {
+            supportComNounList.Add("sort");
+        }
+
+        private void FillSupportComVerbList()
+        {
+            supportComVerbList.Add("object");
         }
     }
 }

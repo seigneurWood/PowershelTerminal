@@ -1,0 +1,13 @@
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Release\PSterminal.exe.config
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Release\PSterminal.exe
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Release\PSterminal.pdb
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.csprojResolveAssemblyReference.cache
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\MainWindow.baml
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\MainWindow.g.cs
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\App.g.cs
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal_MarkupCompile.cache
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.g.resources
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.Properties.Resources.resources
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.csproj.GenerateResource.Cache
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.exe
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Release\PSterminal.pdb

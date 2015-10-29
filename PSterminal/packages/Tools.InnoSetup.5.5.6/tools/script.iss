@@ -1,7 +1,7 @@
 ; Имя приложения
 #define   Name       "PSterminal"
 ; Версия приложения
-#define   Version    "0.0."
+#define   Version    GetFileVersion('PSterminal.exe')
 ; Фирма-разработчик
 #define   Publisher  "vlad"
 ; Сафт фирмы разработчика
@@ -28,7 +28,7 @@ DefaultGroupName={#Name}
 
 ; Каталог, куда будет записан собранный setup и имя исполняемого файла
 OutputDir=..\..\..\..\PSterminalSetup
-OutputBaseFileName={#Name}-Inc({#ver})
+OutputBaseFileName={#Name}-{#Version}
 
 ; Параметры сжатия
 Compression=lzma

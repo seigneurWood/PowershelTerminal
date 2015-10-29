@@ -12,7 +12,7 @@
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
-                    <TextBox Name="TextScript" Background="#FFF1F1A6" KeyUp="TextScript_KeyUp"/>
+                    <TextBox Name="TextScript" Background="Red" KeyUp="TextScript_KeyUp"/>
                 </TabItem>
             </TabControl>
         </Grid>

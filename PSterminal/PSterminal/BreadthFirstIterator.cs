@@ -21,12 +21,12 @@ namespace PSterminal
             {
                 if (scriptCommand.ExpressionLeft.GetType() != typeof(MainComTerminalExpression))
                 {
-                    this.Queue.Enqueue((SupportingComTerminalExpression)scriptCommand.ExpressionRight);
+                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionRight);
                     scriptCommand = (ScriptComNonterminalExpression)scriptCommand.ExpressionLeft;
                 }
                 if (scriptCommand.ExpressionLeft.GetType() == typeof(MainComTerminalExpression))
                 {
-                    this.Queue.Enqueue((SupportingComTerminalExpression)scriptCommand.ExpressionRight);
+                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionRight);
                     this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionLeft);
                     break;
                 }

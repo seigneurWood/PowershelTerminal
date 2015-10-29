@@ -97,7 +97,7 @@ namespace PSterminal
             {
                 if (currentListRight.Count != this.TokenList.Count)
                 {
-                    this.ExpressionRight = new SupportingComTerminalExpression(currentListRight);
+                    this.ExpressionRight = new MainComTerminalExpression(currentListRight);
 
                     //if (((SupportingComTerminalExpression)this.ExpressionRight).State == null)
                     //{// underline word 

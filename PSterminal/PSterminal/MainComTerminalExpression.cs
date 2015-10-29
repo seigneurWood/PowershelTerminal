@@ -123,12 +123,14 @@ namespace PSterminal
             nounList.Add("stop");
             nounList.Add("update");
             nounList.Add("write");
+            nounList.Add("force");
         }
         private void FillVerbList()
         {
             verbList.Add("process");
             verbList.Add("command");
             verbList.Add("object");
+            verbList.Add("recurce");
         }
     }
 }

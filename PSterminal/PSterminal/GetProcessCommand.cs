@@ -11,9 +11,9 @@ namespace PSterminal
         public override object[] Excute(ScriptComNonterminalExpression script)
         {
             BreadthFirstIterator iterator = new BreadthFirstIterator(script);
-            for (int i = 0; i < iterator.Queue.Count; i++)
+            for (int i = iterator.Queue.Count; i > 0; i--)
             {
-                
+                //
             }
             return new object[1];
         }

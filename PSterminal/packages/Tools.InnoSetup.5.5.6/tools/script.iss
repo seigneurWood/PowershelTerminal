@@ -1,13 +1,15 @@
 ; Имя приложения
 #define   Name       "PSterminal"
 ; Версия приложения
-#define   Version    "0.0.1"
+#define   Version    "0.0."
 ; Фирма-разработчик
-#define   Publisher  "S.GLEB"
+#define   Publisher  "vlad"
 ; Сафт фирмы разработчика
-#define   URL        "http://shpytagleb@gmail.com"
+#define   URL        "http://lis.vlad96@gmail.com"
 ; Имя исполняемого модуля
 #define   ExeName    "PSterminal.exe"
+
+#define ver=80
 
 [Setup]
 AppId={{88D8C527-ED86-4304-93C7-84CC759A4B13}
@@ -26,7 +28,7 @@ DefaultGroupName={#Name}
 
 ; Каталог, куда будет записан собранный setup и имя исполняемого файла
 OutputDir=..\..\..\..\PSterminalSetup
-OutputBaseFileName={#Name}-{#Version}
+OutputBaseFileName={#Name}-Inc({#ver})
 
 ; Параметры сжатия
 Compression=lzma

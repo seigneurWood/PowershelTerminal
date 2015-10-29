@@ -25,8 +25,8 @@ DefaultDirName={pf}\{#Name}
 DefaultGroupName={#Name}
 
 ; Каталог, куда будет записан собранный setup и имя исполняемого файла
-OutputDir=..\..\..\..\test-setup
-OutputBaseFileName=test-setup
+OutputDir=..\..\..\..\PSterminalSetup
+OutputBaseFileName={#Name}-{#Version}
 
 ; Параметры сжатия
 Compression=lzma

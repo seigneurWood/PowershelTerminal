@@ -1,7 +1,7 @@
 ; Имя приложения
 #define   Name       "PSterminal"
 ; Версия приложения
-#define   Version    GetFileVersion('PSterminal.exe')
+#define   Version    GetFileVersion("..\..\..\PSterminal\bin\Release\PSterminal.exe")
 ; Фирма-разработчик
 #define   Publisher  "vlad"
 ; Сафт фирмы разработчика

@@ -8,26 +8,28 @@ namespace PSterminal
 {
     public class BreadthFirstIterator : ParserIterator
     {
-        private Queue<IAbstractExpression> _queue;
+        private List<IAbstractExpression> _list;
 
         public BreadthFirstIterator(ScriptComNonterminalExpression scriptCommand)
         {
             if (scriptCommand == null)
                 return;
-            this.Queue = new Queue<IAbstractExpression>();
+            this.List = new List<IAbstractExpression>();
             //Type type = typeof(ScriptComNonterminalExpression);
 
-            while (this.Queue.Count > -1)
+            while (this.List.Count > -1)
             {
                 if (scriptCommand.ExpressionLeft.GetType() != typeof(MainComTerminalExpression))
                 {
-                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionRight);
+                    this.List.Add((MainComTerminalExpression)scriptCommand.ExpressionRight);
                     scriptCommand = (ScriptComNonterminalExpression)scriptCommand.ExpressionLeft;
                 }
                 if (scriptCommand.ExpressionLeft.GetType() == typeof(MainComTerminalExpression))
                 {
-                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionRight);
-                    this.Queue.Enqueue((MainComTerminalExpression)scriptCommand.ExpressionLeft);
+                    if((MainComTerminalExpression)scriptCommand.ExpressionRight != null)
+                        this.List.Add((MainComTerminalExpression)scriptCommand.ExpressionRight);
+                    if((MainComTerminalExpression)scriptCommand.ExpressionLeft != null)
+                        this.List.Add((MainComTerminalExpression)scriptCommand.ExpressionLeft);
                     break;
                 }
             }
@@ -58,10 +60,10 @@ namespace PSterminal
             //}
         }
 
-        public Queue<IAbstractExpression> Queue
+        public List<IAbstractExpression> List
         {
-            get { return _queue; }
-            set { _queue = value; }
+            get { return _list; }
+            set { _list = value; }
         }
 
 

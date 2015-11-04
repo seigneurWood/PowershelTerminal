@@ -30,7 +30,10 @@ namespace PSterminal
                 {
                     if(tokenList.ElementAt(i).Token==nounList.ElementAt(j))
                     {
-                        Noun = new NounScriptTerminalExpression(nounList.ElementAt(j));
+                        string s = nounList.ElementAt(j);
+                        StringBuilder sb = new StringBuilder(s);
+                        sb[0] = char.ToUpper(sb[0]);
+                        Noun = new NounScriptTerminalExpression(sb.ToString());
                         //State = Noun.Name;
                         break;
                     }
@@ -39,7 +42,10 @@ namespace PSterminal
                 {
                     if (tokenList.ElementAt(i).Token == verbList.ElementAt(k))
                     {
-                        Verb = new VerbScriptCommandExpression(verbList.ElementAt(k));
+                        string s = verbList.ElementAt(k);
+                        StringBuilder sb = new StringBuilder(s);
+                        sb[0] = char.ToUpper(sb[0]);
+                        Verb = new VerbScriptCommandExpression(sb.ToString());
                         //State = Verb.Name;
                         break;
                     }

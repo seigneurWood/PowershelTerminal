@@ -6,13 +6,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Button Content="Run" Height="30" Width="60" Grid.Row="2" Click="Button_Click_1"/>
+        <Button Content="Run" Height="30" Width="60" Grid.Row="3" Click="Button_Click_1"/>
+        <TextBox Name="tbOut" Grid.Row="2" Background="#FF6DF160"/>
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
-                    <TextBox Name="TextScript" Background="Red" KeyUp="TextScript_KeyUp"/>
+                    <TextBox Name="TextScript" Background="#FFFFE46B" KeyUp="TextScript_KeyUp"/>
                 </TabItem>
             </TabControl>
         </Grid>

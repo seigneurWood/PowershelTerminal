@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public class GetProcessCommand: Command
+    public class GetProcessCommand : Command
     {
+        private static ParamTerminalExpression[] parameterMassive;
         public override object[] Excute(MainComTerminalExpression command, object[] outputMass)
         {
             //object[] outputMass = null;
@@ -17,15 +18,15 @@ namespace PSterminal
             }
             else
             {
-                outputMass = ExcuteWithParameters(command);
+                outputMass = ExcuteWithParameters(command, outputMass);
             }
             return outputMass;
         }
-        private object[] ExcuteWithParameters(MainComTerminalExpression command)
+        private object[] ExcuteWithParameters(MainComTerminalExpression command, object[] outputMass)
         {
-            object[] outputMass = null;
+            //object[] outputMass = null;
             List<ParamTerminalExpression> parameters = command.ParameterList;
-            foreach(var parameter in parameters)
+            foreach (var parameter in parameters)
             {
                 if (parameter.NameParam == "name")
                 {
@@ -45,6 +46,10 @@ namespace PSterminal
                 }
             }
             return outputMass;
+        }
+        public GetProcessCommand()
+        {
+            
         }
     }
 }

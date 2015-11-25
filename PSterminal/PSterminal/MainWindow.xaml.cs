@@ -27,7 +27,7 @@ namespace PSterminal
             InitializeComponent();
             ////TextBox t = new TextBox();
             ////t.Undo();
-            TextScript.Text = "get-process -name chrome"; // | sort-object | force-recurce";
+            TextScript.Text = "get-process"; // | sort-object | force-recurce";
             //TextScript.Text = "get-childitem * -include *.csv -recurse | remove-item";
 
             ////TextScript.Text += Convert.ToString((int)('9'));
@@ -57,7 +57,8 @@ namespace PSterminal
             object[] obj = collection.Excute(null,o);
             foreach(var ob in obj)
             {
-                tbOut.Text += ob.ToString()+'\n';
+                if(ob!=null)
+                    tbOut.Text += ob.ToString()+'\n';
             }
             int f = 10;
            // BreadthFirstIterator b = new BreadthFirstIterator(test);

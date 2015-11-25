@@ -12,9 +12,9 @@ namespace PSterminal
         public override object[] Excute(MainComTerminalExpression command, object[] outputMass)
         {
             //object[] outputMass = null;
-            if (command.ParameterList == null)
+            if (command.ParameterList.Count == 0)
             {
-                outputMass = System.Diagnostics.Process.GetProcesses();
+                outputMass = DefaultGetProcess();
             }
             else
             {
@@ -46,6 +46,25 @@ namespace PSterminal
                 }
             }
             return outputMass;
+        }
+        private string[] DefaultGetProcess()
+        {
+            string[] allProcess = new string[System.Diagnostics.Process.GetProcesses().Length+1];
+            string header =String.Format("{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}" ,"Handles","NPM","PM","WS","VM","CPU","Id","Process name");
+            allProcess[0] = header;
+            StringBuilder currentProcess = new StringBuilder();
+            System.Diagnostics.Process[] proc = System.Diagnostics.Process.GetProcesses();
+            for(int i=0; i < System.Diagnostics.Process.GetProcesses().Length+1;i++)
+            {
+                string str = proc[i].Handle.ToString(); //,proc[i].NonpagedSystemMemorySize,
+                  //  proc[i].PagedSystemMemorySize,proc[i].WorkingSet,proc[i].VirtualMemorySize,proc[i].UserProcessorTime.TotalSeconds,
+                  //  proc[i].Id,proc[i].ProcessName); "{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}"
+                allProcess[i++] = str;
+                str = null;
+                //currentProcess.Remove(0,1);
+               // "{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}"
+            }
+            return allProcess;
         }
         public GetProcessCommand()
         {

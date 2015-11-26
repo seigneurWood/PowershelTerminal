@@ -12,6 +12,7 @@ namespace PSterminal
         public override object[] Excute(MainComTerminalExpression command, object[] outputMass)
         {
             //object[] outputMass = null;
+            int a = 0;
             if (command.ParameterList.Count == 0)
             {
                 outputMass = DefaultGetProcess();
@@ -19,6 +20,7 @@ namespace PSterminal
             else
             {
                 outputMass = ExcuteWithParameters(command, outputMass);
+                a = 1;
             }
             return outputMass;
         }

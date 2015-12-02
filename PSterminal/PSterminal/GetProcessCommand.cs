@@ -56,13 +56,20 @@ namespace PSterminal
             allProcess[0] = header;
             StringBuilder currentProcess = new StringBuilder();
             System.Diagnostics.Process[] proc = System.Diagnostics.Process.GetProcesses();
-            for(int i=0; i < System.Diagnostics.Process.GetProcesses().Length+1;i++)
+            for(int i=0; i < System.Diagnostics.Process.GetProcesses().Length;i++)
             {
-                string str = proc[i].Handle.ToString(); //,proc[i].NonpagedSystemMemorySize,
-                  //  proc[i].PagedSystemMemorySize,proc[i].WorkingSet,proc[i].VirtualMemorySize,proc[i].UserProcessorTime.TotalSeconds,
-                  //  proc[i].Id,proc[i].ProcessName); "{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}"
-                allProcess[i++] = str;
-                str = null;
+                try
+                {
+                    string str = proc[i].Handle.ToString(); //,proc[i].NonpagedSystemMemorySize,
+                                                            //  proc[i].PagedSystemMemorySize,proc[i].WorkingSet,proc[i].VirtualMemorySize,proc[i].UserProcessorTime.TotalSeconds,
+                                                            //  proc[i].Id,proc[i].ProcessName); "{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}"
+                    allProcess[i++] = str;
+                    str = null;
+                }
+                catch
+                {
+
+                }
                 //currentProcess.Remove(0,1);
                // "{0,0} {1,10} {2,10} {3,15} {4,10} {5,10} {6,10} {7,20}"
             }

@@ -14,7 +14,7 @@
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
-                    <TextBox Name="TextScript" KeyUp="TextScript_KeyUp"/>
+                    <RichTextBox Name="TextScript" KeyUp="TextScript_KeyUp"/>
                 </TabItem>
             </TabControl>
         </Grid>

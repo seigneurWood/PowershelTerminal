@@ -28,40 +28,48 @@ namespace PSterminal
             InitializeComponent();
             ////TextBox t = new TextBox();
             ////t.Undo();
-            TextScript.Text = "get-process"; // | sort-object | force-recurce";
+            //TextScript.Text = "get-process"; // | sort-object | force-recurce";
             //TextScript.Text = "get-childitem * -include *.csv -recurse | remove-item";
+
+            FlowDocument doc = new FlowDocument();
+            Paragraph par = new Paragraph();
+            par.Inlines.Add("get-process");
+            doc.Blocks.Add(par);
+            TextScript.Document = doc;
 
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
-            terminal.Script = this.TextScript.Text;
+            //terminal.Script = this.TextScript.Text;
 
-            Lexer lexer = new Lexer(TextScript.Text);
+            //Lexer lexer = new Lexer(TextScript.Text);
 
-            TextScript.Text += "\n";
+            //TextScript.Text += "\n";
             ////TextScript.Text += TextScript.Text.Substring(4, 10);
-            for (int i = 0; i < TokenReader.TokenReaderList.Count; i++)
-            {
-                TextScript.Text += TokenReader.TokenReaderList.ElementAt(i).ToString() + "\n";
-            }
 
-            TextScript.Text += "\n";
-            TextScript.Text += "\n";
+            //TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
+            //for (int i = 0; i < TokenReader.TokenReaderList.Count; i++)
+            //{
+            //    t.Text += TokenReader.TokenReaderList.ElementAt(i).ToString() + "\n";
+            //}
+
+            //TextScript.Text += "\n";
+            //TextScript.Text += "\n";
 
             //Parser parser = new Parser(TokenReader.TokenReaderList);
             //parser.CreateTree();
             ////parser.CheckError();
 
-            ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
-            test.CreateSyntaxTree();
-            CommandCollection collection = new CommandCollection(test);
-            object[] o = null;
-            object[] obj = collection.Excute(null,o);
-            foreach(var ob in obj)
-            {
+            //ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
+            //test.CreateSyntaxTree();
+            //CommandCollection collection = new CommandCollection(test);
+            //object[] o = null;
+            //object[] obj = collection.Excute(null,o);
+            //foreach(var ob in obj)
+            //{
                 //if(ob!=null)
                     
                     //tbOut. += ob.ToString()+'\n';
-            }
+           // }
             int f = 10;
             // BreadthFirstIterator b = new BreadthFirstIterator(test);
             //test.Interpret();

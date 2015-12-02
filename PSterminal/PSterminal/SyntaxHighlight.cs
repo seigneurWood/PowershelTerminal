@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSterminal
 {
-    public interface Terminal
+    public abstract class SyntaxHighlight
     {
-        SyntaxHighlight CreateSyntaxHighlight();
     }
 }

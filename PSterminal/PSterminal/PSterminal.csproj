@@ -75,6 +75,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BreadthFirstIterator.cs" />
+    <Compile Include="CmdSyntaxHighlight.cs" />
+    <Compile Include="CmdTerminal.cs" />
     <Compile Include="CommandCollection.cs" />
     <Compile Include="DelimiterTerminalExpression.cs" />
     <Compile Include="GetProcessCommand.cs" />
@@ -86,10 +88,13 @@
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
     <Compile Include="ParserIterator.cs" />
+    <Compile Include="PowershellSyntaxHighlight.cs" />
     <Compile Include="SupportingComTerminalExpression.cs" />
+    <Compile Include="SyntaxHighlight.cs" />
+    <Compile Include="Terminal.cs" />
     <Compile Include="VerbScriptCommandExpression.cs" />
     <Compile Include="ScriptComNonterminalExpression.cs" />
-    <Compile Include="Terminal.cs" />
+    <Compile Include="PowershellTerminal.cs" />
     <Compile Include="TokenReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ namespace PSterminal
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Terminal terminal = new Terminal();
+        private PowershellTerminal terminal = new PowershellTerminal();
 
         public MainWindow()
         {
@@ -57,12 +58,66 @@ namespace PSterminal
             object[] obj = collection.Excute(null,o);
             foreach(var ob in obj)
             {
-                if(ob!=null)
-                    tbOut.Text += ob.ToString()+'\n';
+                //if(ob!=null)
+                    
+                    //tbOut. += ob.ToString()+'\n';
             }
             int f = 10;
-           // BreadthFirstIterator b = new BreadthFirstIterator(test);
+            // BreadthFirstIterator b = new BreadthFirstIterator(test);
             //test.Interpret();
+
+
+            FlowDocument document = new FlowDocument();
+            Paragraph paragraph = new Paragraph();
+           // paragraph.Inlines.Add((new Run("текст")));//\n работает" + "И прибавления тоже" + "Удачи")));
+            //paragraph.Inlines.Add(new Run("hello-hello \n"));
+            paragraph.Inlines.Add(new Run("cmd \n"));
+            //paragraph.Inlines.Add(new Run("hello -hello \n"));
+            document.Blocks.Add(paragraph);
+            tbOut.Document = document;
+
+            //PowershellTerminal powershell = new PowershellTerminal();
+            //powershell.CreateSyntaxHighlight(tbOut);
+            //tbOut = powershell.CreateSyntaxHighlight(tbOut).PaintOver();
+            //PowershellSyntaxHighlight power = new PowershellSyntaxHighlight(document,document.ContentStart,document.ContentEnd);
+            CmdSyntaxHighlight cmd = new CmdSyntaxHighlight(document);
+            tbOut.Document = cmd.Document;
+
+            //tbOut.SelectAll();
+            //tbOut.SelectionBrush = new SolidColorBrush(Colors.Bisque);
+            //string str = tbOut.Selection.Text;
+
+            // TextRange tr = new TextRange(tbOut.Document.ContentStart)
+            // MatchCollection allIp = Regex.Matches(tbOut., @"Slovo");
+
+            //var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+            //allText.ClearAllProperties();
+            //// MatchCollection regex_results = Regex.Matches(allText.Text, @"-(.*?)");
+            //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
+            //string res1 = regex_results[0].Groups[0].Value;
+            //string res2 = regex_results[1].Groups[0].Value;
+
+            //// string pattern = @"hello";
+            //Regex regex = new Regex(res2, RegexOptions.IgnoreCase);
+
+            //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+            //// allText.ClearAllProperties();
+
+            //var start = tbOut.Document.ContentStart;
+            //while (start != null && start.CompareTo(tbOut.Document.ContentEnd) < 0)
+            //{
+            //    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+            //    {
+            //        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+
+            //        var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+            //            start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+            //        textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.LawnGreen));
+
+            //        start = textrange.End;
+            //    }
+            //    start = start.GetNextContextPosition(LogicalDirection.Forward);
+            //}
 
             f = 11;
         }

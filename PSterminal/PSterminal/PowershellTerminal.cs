@@ -18,9 +18,29 @@ namespace PSterminal
             set { this._script = value; }
         }
 
-        public PowershellSyntaxHighlight CreateSyntaxHighlight(FlowDocument richBox)
+        public PowershellSyntaxHighlight PowershellHighlight
         {
-            return new PowershellSyntaxHighlight(richBox);
+            get
+            {
+                return _powershellHighlight;
+            }
+
+            set
+            {
+                _powershellHighlight = value;
+            }
         }
+
+        private PowershellSyntaxHighlight _powershellHighlight;
+
+        public PowershellTerminal(FlowDocument richBox)
+        {
+            PowershellHighlight = new PowershellSyntaxHighlight(richBox);
+        }
+
+        //private PowershellSyntaxHighlight CreateSyntaxHighlight(FlowDocument richBox)
+        //{
+        //    return new PowershellSyntaxHighlight(richBox);
+        //}
     }
 }

@@ -1,20 +1,36 @@
 ﻿<Window x:Class="PSterminal.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="725">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Button Content="Run" Height="30" Width="60" Grid.Row="3" Click="Button_Click_1"/>
-        <RichTextBox Name="tbOut" Grid.Row="2"/>
+        <Button Content="Run" Height="30" Width="60" Grid.Row="4" Click="Button_Click_1"/>
+        <RichTextBox Name="tbOut" Grid.Row="2">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <TextBox Name="tb" TextAlignment="Left"/>
+        </ScrollViewer>
         <Grid Grid.Row="1">
             <TabControl>
                 <TabItem Header="untitled">
-                    <RichTextBox Name="TextScript" KeyUp="TextScript_KeyUp"/>
+                    <RichTextBox Name="TextScript" KeyUp="TextScript_KeyUp" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </RichTextBox.Resources>
+                    </RichTextBox>
                 </TabItem>
             </TabControl>
         </Grid>

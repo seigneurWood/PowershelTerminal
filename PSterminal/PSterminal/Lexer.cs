@@ -24,6 +24,7 @@ namespace PSterminal
 
         public Lexer(string inputString)
         {
+            TokenReader.TokenReaderList.Clear();
             this.InputString = inputString;
             this.ParseString(inputString);
         }

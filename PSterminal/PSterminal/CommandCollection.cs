@@ -15,9 +15,10 @@ namespace PSterminal
             ScriptCommand = script;
         }
 
-        public override object[] Excute(MainComTerminalExpression command, object[] outputMass)
+        public override string Excute(MainComTerminalExpression command, string outputMass)
         {
             BreadthFirstIterator iterator = new BreadthFirstIterator(this.ScriptCommand);
+            StringBuilder sb = new StringBuilder(outputMass);
             //object[] outputMass = null;
             while (iterator.List.Count != 0)
             {
@@ -33,8 +34,10 @@ namespace PSterminal
                 object Obj = Activator.CreateInstance(T);
                 outputMass = ((Command)Obj).Excute((MainComTerminalExpression)iterator.List.ElementAt(iterator.List.Count - 1),outputMass);
                 iterator.List.RemoveAt(iterator.List.Count - 1);
+                sb.Append("\n\n");
+                sb.Append(outputMass);
             }
-            return outputMass;
+            return sb.ToString();
         }
 
         public ScriptComNonterminalExpression ScriptCommand

@@ -24,3 +24,4 @@ C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.Properties.Resources.resources
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.csproj.GenerateResource.Cache
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal.csprojResolveAssemblyReference.cache
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\System.Management.Automation.dll

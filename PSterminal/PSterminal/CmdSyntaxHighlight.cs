@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
@@ -47,6 +48,7 @@ namespace PSterminal
                     var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
                         start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
                     textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Gold));
+                    textrange.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
                     start = textrange.End;
                 }

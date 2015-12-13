@@ -10,6 +10,7 @@ namespace PSterminal
     public class CmdTerminal //: Terminal
     {
         private string _script;
+        private CmdSyntaxHighlight _cmdHighlight;
 
         public string Script
         {
@@ -17,9 +18,27 @@ namespace PSterminal
             set { this._script = value; }
         }
 
-        public CmdSyntaxHighlight CreateSyntaxHighlight(FlowDocument document)
+        public CmdSyntaxHighlight CmdHighlight
         {
-             return new CmdSyntaxHighlight(document);
+            get
+            {
+                return _cmdHighlight;
+            }
+
+            set
+            {
+                _cmdHighlight = value;
+            }
         }
+
+        public CmdTerminal(FlowDocument document)
+        {
+            CmdHighlight = new CmdSyntaxHighlight(document);
+        }
+
+        //public CmdSyntaxHighlight CreateSyntaxHighlight(FlowDocument document)
+        //{
+        //     return new CmdSyntaxHighlight(document);
+        //}
     }
 }

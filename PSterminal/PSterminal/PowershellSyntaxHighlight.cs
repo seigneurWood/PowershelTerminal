@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -48,9 +49,13 @@ namespace PSterminal
                 {
                     var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
 
+                    Match m = Regex.Match(match.ToString(), @".*?$");
+                    string s = m.ToString().Split(' ')[0];
+
                     var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+                        start.GetPositionAtOffset(match.Index + s.Length, LogicalDirection.Backward));
                     textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.BlueViolet));
+                    textrange.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
                     start = textrange.End;
                 }

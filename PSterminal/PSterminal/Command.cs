@@ -9,6 +9,6 @@ namespace PSterminal
     public abstract class Command
     {
         //public abstract void Excute();
-        public abstract object[] Excute(MainComTerminalExpression command,object[] massObject);
+        public abstract string Excute(MainComTerminalExpression command,string massObject);
     }
 }

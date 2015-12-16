@@ -21,6 +21,7 @@ namespace PSterminal
     /// </summary>
     public partial class MainWindow : Window
     {
+        RichTextBox TextScript;
         //private PowershellTerminal terminal = new PowershellTerminal();
         List<string> commandInTerminal = new List<string>();
         public MainWindow()
@@ -31,6 +32,15 @@ namespace PSterminal
             ////t.Undo();
             //TextScript.Text = "get-process"; // | sort-object | force-recurce";
             //TextScript.Text = "get-childitem * -include *.csv -recurse | remove-item";
+
+            TextScript = new RichTextBox();
+
+            TabItem tb = new TabItem();
+            tb.Header = "untl1";
+            this.TabControlScript.Items.Add(tb);
+            TabItem tb2 = new TabItem();
+            tb.Header = "untl2";
+            this.TabControlScript.Items.Add(tb2);
 
             FlowDocument doc = new FlowDocument();
             Paragraph par = new Paragraph();
@@ -79,42 +89,42 @@ namespace PSterminal
             //test.Interpret();
 
 
-            FlowDocument document = new FlowDocument();
-            Paragraph paragraph = new Paragraph();
-            // paragraph.Inlines.Add((new Run("текст")));//\n работает" + "И прибавления тоже" + "Удачи")));
-            //paragraph.Inlines.Add(new Run("hello-hello \n"));
-            paragraph.Inlines.Add(new Run("get-process -name chrome"));
-           // Paragraph p = new Paragraph();
-           // p.Inlines.Add("gfd");
-            //paragraph.Inlines.Add(new Run("\ngess"));
-            //paragraph.Inlines.Add(new Run("\ngerocess"));
-            //paragraph.Inlines.Add(new Run("hello -hello \n"));
-            document.Blocks.Add(paragraph);
-            paragraph = new Paragraph();
-            paragraph.Inlines.Add(new Run("get-command"));
-            document.Blocks.Add(paragraph);
-           // document.Blocks.Add(p);
-            tbOut.Document = document;
+           // FlowDocument document = new FlowDocument();
+           // Paragraph paragraph = new Paragraph();
+           // // paragraph.Inlines.Add((new Run("текст")));//\n работает" + "И прибавления тоже" + "Удачи")));
+           // //paragraph.Inlines.Add(new Run("hello-hello \n"));
+           // paragraph.Inlines.Add(new Run("get-process -name chrome"));
+           //// Paragraph p = new Paragraph();
+           //// p.Inlines.Add("gfd");
+           // //paragraph.Inlines.Add(new Run("\ngess"));
+           // //paragraph.Inlines.Add(new Run("\ngerocess"));
+           // //paragraph.Inlines.Add(new Run("hello -hello \n"));
+           // document.Blocks.Add(paragraph);
+           // paragraph = new Paragraph();
+           // paragraph.Inlines.Add(new Run("get-command"));
+           // document.Blocks.Add(paragraph);
+           //// document.Blocks.Add(p);
+           // tbOut.Document = document;
 
-            string[] str = GetDocumentText(tbOut.Document).Split('\n');
-            for(int i=0;i<str.Length-1;i++)
-            {
-                Lexer lexer = new Lexer(str[i]);
-                ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
-                test.CreateSyntaxTree();
-                CommandCollection collection = new CommandCollection(test);
-                string o = "";
-                string obj = collection.Excute(null, o);
-                tb.AppendText(obj);
-                //int numberOfParag = obj.Split('\n').Length;
-                //for(int j=0; j< numberOfParag;j++)
-                //{
-                    //Paragraph paragr = new Paragraph();
-                    //paragr.Inlines.Add(obj);
-                    //tbOut.Document.Blocks.Add(paragr);
-               // }
-                //MessageBox.Show(obj);
-            }
+            //string[] str = GetDocumentText(tbOut.Document).Split('\n');
+            //for(int i=0;i<str.Length-1;i++)
+            //{
+            //    Lexer lexer = new Lexer(str[i]);
+            //    ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
+            //    test.CreateSyntaxTree();
+            //    CommandCollection collection = new CommandCollection(test);
+            //    string o = "";
+            //    string obj = collection.Excute(null, o);
+            //    tb.AppendText(obj);
+            //    //int numberOfParag = obj.Split('\n').Length;
+            //    //for(int j=0; j< numberOfParag;j++)
+            //    //{
+            //        //Paragraph paragr = new Paragraph();
+            //        //paragr.Inlines.Add(obj);
+            //        //tbOut.Document.Blocks.Add(paragr);
+            //   // }
+            //    //MessageBox.Show(obj);
+            //}
 
             //Lexer lexer = new Lexer(text.ToString());
             //ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
@@ -144,51 +154,51 @@ namespace PSterminal
             // TextRange tr = new TextRange(tbOut.Document.ContentStart)
             // MatchCollection allIp = Regex.Matches(tbOut., @"Slovo");
 
-            var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-            allText.ClearAllProperties();
-            MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\s");
-            //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
-            //string res1 = regex_results[0].Groups[0].Value;
-            string res2 = regex_results[0].Groups[0].Value;
+            //var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+            //allText.ClearAllProperties();
+            //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\s");
+            ////MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
+            ////string res1 = regex_results[0].Groups[0].Value;
+            //string res2 = regex_results[0].Groups[0].Value;
 
-            //// string pattern = @"hello";
-            Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
+            ////// string pattern = @"hello";
+            //Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
 
-            //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-            //// allText.ClearAllProperties();
-            //tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
-            var start = tbOut.Document.ContentStart;
-            while (start != null && start.CompareTo(tbOut.Document.ContentEnd) < 0)
-            {
-                if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                {
-                    var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                    // string[] matchMass = match.ToString().Split(@'(\s+)');
-                    //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                    //Match m = Regex.Match(match.ToString(), @".*?$");
-                    ////string s = m.ToString().Split(' ')[0];
-                    //string[] s = match.ToString().Split(' ');
-                    if (match.ToString() == "get-process")
-                    {
-                        var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                            start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                        textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.DarkBlue));
-                        if (textrange.Text == "")
-                        {
-                            int b = 0;
-                        }
+            ////// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+            ////// allText.ClearAllProperties();
+            ////tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
+            //var start = tbOut.Document.ContentStart;
+            //while (start != null && start.CompareTo(tbOut.Document.ContentEnd) < 0)
+            //{
+            //    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+            //    {
+            //        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+            //        // string[] matchMass = match.ToString().Split(@'(\s+)');
+            //        //if (match.Value != "get-process\n" || match.Value != "get-process ")
+            //        //Match m = Regex.Match(match.ToString(), @".*?$");
+            //        ////string s = m.ToString().Split(' ')[0];
+            //        //string[] s = match.ToString().Split(' ');
+            //        if (match.ToString() == "get-process")
+            //        {
+            //            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+            //                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+            //            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.DarkBlue));
+            //            if (textrange.Text == "")
+            //            {
+            //                int b = 0;
+            //            }
 
-                        start = textrange.End;
-                    }
-                    //else
-                    {
+            //            start = textrange.End;
+            //        }
+            //        //else
+            //        {
 
-                    }
-                }
-                start = start.GetNextContextPosition(LogicalDirection.Forward);
-            }
+            //        }
+            //    }
+            //    start = start.GetNextContextPosition(LogicalDirection.Forward);
+            //}
 
-            f = 11;
+            //f = 11;
         }
 
         private void TextScript_KeyUp(object sender, KeyEventArgs e)
@@ -431,6 +441,18 @@ namespace PSterminal
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             UpdateRTB();
+            tb.Text = "";
+            string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                Lexer lexer = new Lexer(str[i]);
+                ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
+                test.CreateSyntaxTree();
+                CommandCollection collection = new CommandCollection(test);
+                string o = "";
+                string obj = collection.Excute(null, o);
+                tb.AppendText(obj);
+            }
         }
 
         private void Azaza()

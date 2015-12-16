@@ -2,40 +2,198 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="725">
+    <Window.Resources>
+        <Style x:Key="SeparatorStyle"
+           TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1,0,0,0"/>
+            <Setter Property="BorderBrush" Value="#FFC5C5C5"/>
+            <Setter Property="Margin" Value="1,0,-2,0"/>
+            <Setter Property="Width" Value="4"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="35"/>
+        </Style>
+
+        <!--Style x:Key="RichTextBox" TargetType="RichTextBox">
+            <Setter>
+        </-->
+
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border x:Name="ButtonBorder" Style="{StaticResource ButtonStyle}">
+                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="true">
+                    <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="1"/>
+                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#FF4577FF"/>
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFB3C8FF"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="ImageStyle" TargetType="Image">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition/>
+            <RowDefinition Height="35"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFBAC8F9"/>
+                    <GradientStop Color="#FFF5F8FF" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <Button Name="NewScript" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\newdoc.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Button Name="OpenScript" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\OpenFile.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Button Name="Save" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\save.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Button Name="Copy" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Copy.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Button Name="Paste" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\paste.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Border Style="{StaticResource SeparatorStyle}"/>
+            <Button Name="Undo" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Undo.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Button Name="Redo" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Redo.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <Border Style="{StaticResource SeparatorStyle}"/>
+            <Button Name="Run" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Go.png" Height="17" Width="17"/>
+            </Button>
+            <!--Separator Width="3" Height="auto"/-->
+            <Border Style="{StaticResource SeparatorStyle}"/>
+            <Button Name="RunPowerShell" Template="{StaticResource ButtonTemplate}">
+                <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\powershell.png" Style="{StaticResource ImageStyle}"/>
+            </Button>
+            <!--Border Style="{StaticResource SeparatorStyle}"/>
+            <Button Content="View1" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="View2" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="View3" Style="{StaticResource ButtonStyle}"/>
+            <Border Style="{StaticResource SeparatorStyle}"/>
+            <Button Content="ViewCommand" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="NoViewCommand" Style="{StaticResource ButtonStyle}"/-->
+        </StackPanel>
         <Button Content="Run" Height="30" Width="60" Grid.Row="4" Click="Button_Click_1"/>
-        <RichTextBox Name="tbOut" Grid.Row="2">
+        <!--RichTextBox Name="tbOut" Grid.Row="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
                 </Style>
             </RichTextBox.Resources>
-        </RichTextBox>
+        </-->
         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="tb" TextAlignment="Left"/>
+            <TextBox Name="tb" TextAlignment="Left" FontFamily="Lucida Console">
+            </TextBox>
         </ScrollViewer>
-        <Grid Grid.Row="1">
-            <TabControl>
-                <TabItem Header="untitled">
-                    <RichTextBox Name="TextScript" KeyUp="TextScript_KeyUp" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
-                        <RichTextBox.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0"/>
-                            </Style>
-                        </RichTextBox.Resources>
-                    </RichTextBox>
-                </TabItem>
+        <Grid Grid.Row="2">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0.088"/>
+                    <GradientStop Color="#FFFAFDAC"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TabControl x:Name="TabControlScript">
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <RichTextBox Name="TextScript" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
+                            <RichTextBox.Resources>
+                                <Style TargetType="{x:Type Paragraph}">
+                                    <Setter Property="Margin" Value="0"/>
+                                </Style>
+                            </RichTextBox.Resources>
+                        </RichTextBox>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Grid x:Name="TabItemPanel">
+                                            <!--<Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="10"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>-->
+                                            <Border x:Name="Border1" Background="White" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
+                                                    BorderBrush="DarkGreen" BorderThickness="2">
+                                                
+                                            </Border>
+                                            <Border x:Name="Border2" BorderThickness="0" BorderBrush="Gray"
+                                                    CornerRadius="10,10,0,0" Height="25" HorizontalAlignment="Stretch">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="15"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                    <Button Grid.Column="1" Margin="2,0,2,0" Height="10" Content="X"/>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter TargetName="Border1" Property="Background" Value="White"/>
+                                            <Setter TargetName="Border1" Property="CornerRadius" Value="10,10,0,0"/>
+                                            <Setter TargetName="Border1" Property="BorderThickness" Value="2,2,2,0"/>
+                                            <Setter TargetName="Border1" Property="Margin" Value="0,0,0,-1"/>
+                                            <Setter TargetName="Border1" Property="Height" Value="29"/>
+
+                                            <Setter TargetName="Border2" Property="Background" Value="White"/>
+                                            <Setter TargetName="Border2" Property="CornerRadius" Value="10,10,0,0"/>
+                                            <Setter TargetName="Border2" Property="BorderThickness" Value="2,2,2,0"/>
+                                        </Trigger>
+
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="false"/>
+                                                <Condition Property="IsMouseOver" Value="true"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border1" Property="Background" Value="White"/>
+                                        </MultiTrigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
             </TabControl>
         </Grid>
         <Menu>
-            <MenuItem  Header="File">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFBAC8F9" Offset="1"/>
+                    <GradientStop Color="#FFF5F8FF"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem Grid.Column="0" Grid.Row="0" Header="File">
                 <MenuItem Header="New"></MenuItem>
                 <MenuItem Header="Open"></MenuItem>
                 <MenuItem Header="Save"></MenuItem>
@@ -50,6 +208,10 @@
                 <MenuItem Header="Cut"></MenuItem>
                 <MenuItem Header="Copy"></MenuItem>
                 <MenuItem Header="Paste"></MenuItem>
+            </MenuItem>
+            <MenuItem Grid.Column="2" Header="View" Grid.Row="0">
+                <MenuItem Header="Setting of syntax highlighting"/>
+                <MenuItem Header="Setting of command window"/>
             </MenuItem>
         </Menu>
     </Grid>

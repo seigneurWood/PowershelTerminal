@@ -70,7 +70,8 @@ namespace PSterminal
                
                 { "command",   @"^(\w+-\w+)|(\w+-\w+$)" },
                 { "parameter",  @"(-\w+)|(-\w+$)"},
-                { "ident", @"(\p{L}\w*)|(-)|(;)|(\p{N}\w*)"},
+                { "ident", @"(\p{L}\w*)|(\p{N}\w*)"}, // |(=)|(:)|(.)|(_)|(+)|(?)|(,)|(<)|(>)|{N}
+                { "punct", @"[;+.,'(\)-/{}(|):<>=]"},
                // { "ident", @"(\w*)"},
               //  { "command",   @"(\w*-\w*\s)|(\w*-\w*$)" },
               //  { "command",   @"((.*)-(.*))" }, //@"((\s+)(.*?)-(.*?)\s+)|((.*?)-(.*?)\s+)|((.*?)-(.*?)\n)"}, ///????? right expression @"((.*)-(.*))" 
@@ -101,7 +102,8 @@ namespace PSterminal
                 { "command", TokenType.Command},
                 { "parameter", TokenType.Parameter},
                 { "space", null },
-                { "ident", TokenType.Ident}
+                { "ident", TokenType.Ident},
+                { "punct", null}
             };
 
         IEnumerable<QualifiedToken> Parse()
@@ -120,8 +122,10 @@ namespace PSterminal
                 //}
                 var match = (recognizer)
                         .Match(restLine);
-                
+
                 //string s = match.Groups[1].Value;
+                //var nameAndGroup;
+
                 var nameAndGroup =
                         names.Select(name => new { name, group = match.Groups[name] })
                              .Single(ng => ng.group.Success);

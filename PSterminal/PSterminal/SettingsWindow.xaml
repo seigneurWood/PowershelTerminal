@@ -4,8 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSterminal"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="300" Width="300">
+        Title="SettingsWindow" Height="300" Width="450">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FFA2A2A2"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border x:Name="ButtonBorder" Style="{StaticResource ButtonStyle}">
+                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="true">
+                    <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="1"/>
+                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#FF4577FF"/>
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFB3C8FF"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <TabControl x:Name="TabControlScript">
             <TabItem Header="AAA">
@@ -15,14 +35,59 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Name="ColorPicker" Height="30" Width="70" Grid.Row="2"/>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="PowerShell Cmdlet Highlight" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <wpfTool:ColorPicker Grid.Column="1" Height="20" Width="50"/>
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Example"/>
+                            <RichTextBox Grid.Row="1" Height="25" Width="150" IsReadOnly="True"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Parameter Highlight" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <wpfTool:ColorPicker Grid.Column="1" Height="20" Width="50"/>
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Example"/>
+                            <RichTextBox Grid.Row="1" Height="25" Width="150" IsReadOnly="True"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Button Template="{StaticResource ButtonTemplate}" Name="SaveHighlight" Height="30" Width="70" Content="Save" BorderBrush="{x:Null}">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFADCBFF" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="AAA"/>
-            
-            
-            
-                <TabControl.Resources>
+
+
+
+            <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Template">
                         <Setter.Value>
@@ -36,19 +101,18 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>-->
-                                        <Border x:Name="Border1" Background="White" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
-                                                    BorderBrush="DarkGreen" BorderThickness="2">
+                                        <Border x:Name="Border1" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
+                                                    BorderBrush="#FFC5C5C5" BorderThickness="2">
 
                                         </Border>
-                                        <Border x:Name="Border2" BorderThickness="0" BorderBrush="Gray"
-                                                    CornerRadius="10,10,0,0" Height="25" HorizontalAlignment="Stretch">
+                                        <Border x:Name="Border2" BorderThickness="0" BorderBrush="#FFC5C5C5"
+                                                    CornerRadius="10,10,0,0" Height="25" HorizontalAlignment="Center">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                                
                                             </Grid>
                                         </Border>
                                     </Grid>
@@ -64,7 +128,7 @@
                                         <Setter TargetName="Border2" Property="Background" Value="White"/>
                                         <Setter TargetName="Border2" Property="CornerRadius" Value="10,10,0,0"/>
                                         <Setter TargetName="Border2" Property="BorderThickness" Value="2,2,2,0"/>
-                                        
+
                                     </Trigger>
 
 
@@ -74,7 +138,7 @@
                                             <Condition Property="IsMouseOver" Value="true"/>
                                         </MultiTrigger.Conditions>
                                         <Setter TargetName="Border1" Property="Background" Value="White"/>
-                                        
+
                                         <!--Setter TargetName="ButtonClose" Property="Visibility" Value="Hidden"/-->
                                     </MultiTrigger>
 
@@ -84,6 +148,12 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
+            <TabControl.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#FFD9E5FD" Offset="1"/>
+                </LinearGradientBrush>
+            </TabControl.Background>
         </TabControl>
     </Grid>
 </Window>

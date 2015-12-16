@@ -28,3 +28,4 @@ C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\SettingsWindow.g.cs
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\PSterminal_MarkupCompile.lref
 C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\obj\Debug\SettingsWindow.baml
+C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\bin\Debug\Xceed.Wpf.Toolkit.dll

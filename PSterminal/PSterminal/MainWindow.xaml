@@ -19,9 +19,17 @@
             <Setter Property="Width" Value="35"/>
         </Style>
 
-        <!--Style x:Key="RichTextBox" TargetType="RichTextBox">
-            <Setter>
-        </-->
+        <ControlTemplate x:Key="ButtonCloseStyle" TargetType="Button">
+            <Border x:Name="Border" BorderThickness="0" Background="Transparent">
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\closeIcon.png"
+                       Height="10" Width="10"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#FFCDCDCD"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
 
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
             <Border x:Name="ButtonBorder" Style="{StaticResource ButtonStyle}">
@@ -110,7 +118,7 @@
         <Grid Grid.Row="2">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0.088"/>
+                    <GradientStop Color="White" Offset="0.201"/>
                     <GradientStop Color="#FFFAFDAC"/>
                 </LinearGradientBrush>
             </Grid.Background>
@@ -149,10 +157,14 @@
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
-                                                        <ColumnDefinition Width="15"/>
+                                                        <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                                    <Button Grid.Column="1" Margin="2,0,2,0" Height="10" Content="X"/>
+                                                    <TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                                    <Button x:Name="ButtonClose" IsEnabled="False" 
+                                                            Visibility="Collapsed" Grid.Column="1" Margin="0,0,2,0" Width="15" Height="15" 
+                                                            Click="ButtonClose_Click" Template="{StaticResource ButtonCloseStyle}">
+                                                        
+                                                    </Button>
                                                 </Grid>
                                             </Border>
                                         </Grid>
@@ -168,7 +180,11 @@
                                             <Setter TargetName="Border2" Property="Background" Value="White"/>
                                             <Setter TargetName="Border2" Property="CornerRadius" Value="10,10,0,0"/>
                                             <Setter TargetName="Border2" Property="BorderThickness" Value="2,2,2,0"/>
+                                            <Setter TargetName="ButtonClose" Property="IsEnabled" Value="True"/>
+                                            <Setter TargetName="ButtonClose" Property="Visibility" Value="Visible"/>
+                                            <Setter TargetName="ButtonClose" Property="Margin" Value="-3,0,2,0"/>
                                         </Trigger>
+                                        
 
                                         <MultiTrigger>
                                             <MultiTrigger.Conditions>
@@ -176,6 +192,8 @@
                                                 <Condition Property="IsMouseOver" Value="true"/>
                                             </MultiTrigger.Conditions>
                                             <Setter TargetName="Border1" Property="Background" Value="White"/>
+                                            <Setter TargetName="ButtonClose" Property="IsEnabled" Value="False"/>
+                                            <!--Setter TargetName="ButtonClose" Property="Visibility" Value="Hidden"/-->
                                         </MultiTrigger>
 
                                     </ControlTemplate.Triggers>

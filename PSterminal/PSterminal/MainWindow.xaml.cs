@@ -440,19 +440,21 @@ namespace PSterminal
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UpdateRTB();
-            tb.Text = "";
-            string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                Lexer lexer = new Lexer(str[i]);
-                ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
-                test.CreateSyntaxTree();
-                CommandCollection collection = new CommandCollection(test);
-                string o = "";
-                string obj = collection.Excute(null, o);
-                tb.AppendText(obj);
-            }
+            //UpdateRTB();
+            //tb.Text = "";
+            //string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
+            //for (int i = 0; i < str.Length - 1; i++)
+            //{
+            //    Lexer lexer = new Lexer(str[i]);
+            //    ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
+            //    test.CreateSyntaxTree();
+            //    CommandCollection collection = new CommandCollection(test);
+            //    string o = "";
+            //    string obj = collection.Excute(null, o);
+            //    tb.AppendText(obj);
+            //}
+            SettingsWindow set = new SettingsWindow();
+            set.ShowDialog();
         }
 
         private void Azaza()
@@ -876,6 +878,14 @@ namespace PSterminal
                 strBuilder.AppendLine(completeTextRange.Text);
             }
             return strBuilder.ToString();
+        }
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            //(sender as Border).BorderThickness = new Thickness(2);
+            //(sender as Border).BorderBrush = new SolidColorBrush(Colors.Gray);
+            //(sender as Border).Background = new SolidColorBrush(Colors.Transparent);
+            MessageBox.Show("aa");
         }
     }
 }

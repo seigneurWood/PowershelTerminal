@@ -42,12 +42,12 @@ namespace PSterminal
             tb.Header = "untl2";
             this.TabControlScript.Items.Add(tb2);
 
-            FlowDocument doc = new FlowDocument();
-            Paragraph par = new Paragraph();
-            par.Inlines.Add(new Run("get-process -name chrome"));
-           // par.Inlines.Add(new Run("get-process"));
-            doc.Blocks.Add(par);
-            TextScript.Document = doc;
+           // FlowDocument doc = new FlowDocument();
+           // Paragraph par = new Paragraph();
+           // par.Inlines.Add(new Run("get-process -name chrome"));
+           //// par.Inlines.Add(new Run("get-process"));
+           // doc.Blocks.Add(par);
+           // TextScript.Document = doc;
 
 
 
@@ -438,23 +438,36 @@ namespace PSterminal
 
         }
 
+        private void RunCommnad()
+        {
+            string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                Lexer lexer = new Lexer(str[i]);
+                ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
+                test.CreateSyntaxTree();
+                CommandCollection collection = new CommandCollection(test);
+                string o = "";
+                string obj = collection.Excute(null, o);
+                tb.AppendText(obj);
+            }
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //UpdateRTB();
-            //tb.Text = "";
-            //string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
-            //for (int i = 0; i < str.Length - 1; i++)
-            //{
-            //    Lexer lexer = new Lexer(str[i]);
-            //    ScriptComNonterminalExpression test = new ScriptComNonterminalExpression(TokenReader.TokenReaderList);
-            //    test.CreateSyntaxTree();
-            //    CommandCollection collection = new CommandCollection(test);
-            //    string o = "";
-            //    string obj = collection.Excute(null, o);
-            //    tb.AppendText(obj);
-            //}
-            SettingsWindow set = new SettingsWindow();
-            set.ShowDialog();
+            UpdateRTB();
+            tb.Text = "";
+            TextRange textCommand = new TextRange(TextScript.Document.ContentStart, TextScript.Document.ContentEnd);
+            if(textCommand.Text != "\r\n")
+            {
+                RunCommnad();
+            }
+            else
+            {
+                tb.Text = "Empty";
+            }
+            //SettingsWindow set = new SettingsWindow();
+            //set.ShowDialog();
         }
 
         private void Azaza()
@@ -861,11 +874,13 @@ namespace PSterminal
 
         async void UpdateRTB()
         {
-            TextScript.IsEnabled = false;
-            var doc = TextScript.Document;
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            //object text = TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox;
+            (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).IsEnabled = false;
+            var doc = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
             foreach (var par in GetParagraphs(doc.Blocks).ToList())
                 await UpdateParagraph(par);
-            TextScript.IsEnabled = true;
+            (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).IsEnabled = true;
         }
 
         private string GetDocumentText(FlowDocument document)

@@ -3,6 +3,85 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="725">
     <Window.Resources>
+
+        <Style x:Key="MenuStyle" TargetType="MenuItem">
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="MenuBorder" Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="Col0" MinWidth="15" Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuTextColumnGroup"/>
+                                    <!--ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup"/-->
+                                    <ColumnDefinition x:Name="Col3" Width="14"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Content for the menu text etc -->
+                                <ContentPresenter Grid.Column="1"
+                                          Margin="8,2,8,2"
+                                          x:Name="HeaderHost"
+                                          RecognizesAccessKey="True"
+                                          ContentSource="Header"/>
+                                <!-- Arrow drawn path which points to the next level of the menu -->
+                                <Grid Grid.Column="3" Margin="4,0,6,0" x:Name="ArrowPanel" VerticalAlignment="Center">
+                                    <Path x:Name="ArrowPanelPath" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="LightGray" Data="M0,0 L0,8 L4,4 z"/>
+                                </Grid>
+                                <!-- The Popup is the body of the menu which expands down or across depending on the level of the item -->
+                                <Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" x:Name="SubMenuPopup" Focusable="false" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                                    <Border x:Name="SubMenuBorder" Background="LightGray" BorderBrush="Gray" BorderThickness="1" Padding="1">
+                                        <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
+                                            <!-- StackPanel holds children of the menu. This is set by IsItemsHost=True -->
+                                            <StackPanel HorizontalAlignment="Left" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                        </Grid>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Role = TopLevelHeader : this is the root menu item in a menu; the Popup expands down -->
+                            <Trigger Property="Role" Value="TopLevelHeader">
+                                <Setter Property="Padding" Value="6,1,6,1"/>
+                                <Setter Property="Placement" Value="Bottom" TargetName="SubMenuPopup"/>
+                                <Setter Property="MinWidth" Value="2" TargetName="Col0"/>
+                                <Setter Property="Width" Value="Auto" TargetName="Col3"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel"/>
+                            </Trigger>
+                            <!-- Role = TopLevelItem :  this is a child menu item from the top level without any child items-->
+                            <Trigger Property="Role" Value="TopLevelItem">
+                                <Setter Property="Padding" Value="6,1,6,1"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel"/>
+                            </Trigger>
+                            <!-- Role = SubMenuHeader : this is a child menu item which does not have children -->
+                            <Trigger Property="Role" Value="SubmenuHeader">
+                                <Setter Property="DockPanel.Dock" Value="Top"/>
+                                <Setter Property="Padding" Value="0,2,0,2"/>
+                            </Trigger>
+                            <!-- Role = SubMenuItem : this is a child menu item which has children-->
+                            <Trigger Property="Role" Value="SubmenuItem">
+                                <Setter Property="DockPanel.Dock" Value="Top"/>
+                                <Setter Property="Padding" Value="0,2,0,2"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel"/>
+                            </Trigger>
+                            <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+                                <Setter Property="PopupAnimation" Value="None" TargetName="SubMenuPopup"/>
+                            </Trigger>
+                            <!-- Using the system colors for the Menu Highlight and IsEnabled-->
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter Property="Background" Value="#FFAAAAAA" TargetName="MenuBorder"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="SeparatorStyle"
            TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1,0,0,0"/>
@@ -26,7 +105,7 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="Control.IsMouseOver" Value="true">
-                    <Setter TargetName="Border" Property="Background" Value="#FFCDCDCD"/>
+                    <Setter TargetName="Border" Property="Background" Value="#FFDE4B4B"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -38,15 +117,19 @@
             <ControlTemplate.Triggers>
                 <Trigger Property="Control.IsMouseOver" Value="true">
                     <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="1"/>
-                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#FF4577FF"/>
-                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFB3C8FF"/>
+                    <!--Setter TargetName="ButtonBorder" Property="BorderBrush" Value="Gray"/-->
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFA8A8A8"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="White"/>
+                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="Gray"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
         <Style x:Key="ImageStyle" TargetType="Image">
-            <Setter Property="Width" Value="20"/>
-            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="22"/>
+            <Setter Property="Height" Value="22"/>
         </Style>
     </Window.Resources>
     <Grid Name="MainGrid">
@@ -57,13 +140,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FFBAC8F9"/>
-                    <GradientStop Color="#FFF5F8FF" Offset="1"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFDEDEDE">
             <Button Name="NewScript" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\newdoc.png" Style="{StaticResource ImageStyle}"/>
             </Button>
@@ -115,17 +192,11 @@
             <TextBox Name="tb" TextAlignment="Left" FontFamily="Lucida Console">
             </TextBox>
         </ScrollViewer>
-        <Grid Grid.Row="2">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0.201"/>
-                    <GradientStop Color="#FFFAFDAC"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+        <Grid Grid.Row="2" Background="#FFDEDEDE">
             <TabControl x:Name="TabControlScript">
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <RichTextBox Name="TextScript" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
+                        <RichTextBox x:Name="TextScript" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">
                                     <Setter Property="Margin" Value="0"/>
@@ -148,11 +219,11 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>-->
-                                            <Border x:Name="Border1" Background="White" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
-                                                    BorderBrush="DarkGreen" BorderThickness="2">
+                                            <Border x:Name="Border1" Background="#FFAEAEAE" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
+                                                    BorderBrush="#FFC5C5C5" BorderThickness="2">
                                                 
                                             </Border>
-                                            <Border x:Name="Border2" BorderThickness="0" BorderBrush="Gray"
+                                            <Border x:Name="Border2" BorderThickness="0" BorderBrush="#FFC5C5C5"
                                                     CornerRadius="10,10,0,0" Height="25" HorizontalAlignment="Stretch">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -204,32 +275,26 @@
                 </TabControl.Resources>
             </TabControl>
         </Grid>
-        <Menu>
-            <Menu.Background>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FFBAC8F9" Offset="1"/>
-                    <GradientStop Color="#FFF5F8FF"/>
-                </LinearGradientBrush>
-            </Menu.Background>
-            <MenuItem Grid.Column="0" Grid.Row="0" Header="File">
-                <MenuItem Header="New"></MenuItem>
-                <MenuItem Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="SaveAs..."></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Exit"></MenuItem>
+        <Menu Background="#FFDEDEDE">
+            <MenuItem Style="{DynamicResource MenuStyle}" Background="#FF9C9C9C" Grid.Column="0" Grid.Row="0" Header="File">
+                <MenuItem Header="New" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Open" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Save" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="SaveAs..." Style="{DynamicResource MenuStyle}"></MenuItem>
+                <Separator Height="2"/>
+                <MenuItem Header="Exit" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
-            <MenuItem Grid.Column="1" Header="Edit" Grid.Row="0">
-                <MenuItem Name="miUndo" Header="Undo" ></MenuItem>
-                <MenuItem Name="miRedo" Header="Redo" ></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Cut"></MenuItem>
-                <MenuItem Header="Copy"></MenuItem>
-                <MenuItem Header="Paste"></MenuItem>
+            <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="1" Header="Edit" Grid.Row="0">
+                <MenuItem Name="miUndo" Header="Undo" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Name="miRedo" Header="Redo" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <Separator Height="5"></Separator>
+                <MenuItem Header="Cut" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Copy" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Paste" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
-            <MenuItem Grid.Column="2" Header="View" Grid.Row="0">
-                <MenuItem Header="Setting of syntax highlighting"/>
-                <MenuItem Header="Setting of command window"/>
+            <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="2" Header="View" Grid.Row="0">
+                <MenuItem Header="Setting of syntax highlighting" Style="{DynamicResource MenuStyle}"/>
+                <MenuItem Header="Setting of command window" Style="{DynamicResource MenuStyle}"/>
             </MenuItem>
         </Menu>
     </Grid>

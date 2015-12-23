@@ -141,13 +141,13 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFDEDEDE">
-            <Button Name="NewScript" Template="{StaticResource ButtonTemplate}">
+            <Button Name="NewScript" Command="New" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\newdoc.png" Style="{StaticResource ImageStyle}"/>
             </Button>
-            <Button Name="OpenScript" Template="{StaticResource ButtonTemplate}">
+            <Button Name="OpenScript" Command="Open" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\OpenFile.png" Style="{StaticResource ImageStyle}"/>
             </Button>
-            <Button Name="Save" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Save" Command="Save" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\save.png" Style="{StaticResource ImageStyle}"/>
             </Button>
             <Button Name="Copy" Template="{StaticResource ButtonTemplate}">
@@ -193,7 +193,7 @@
             </TextBox>
         </ScrollViewer>
         <Grid Grid.Row="2" Background="#FFDEDEDE">
-            <TabControl x:Name="TabControlScript">
+            <TabControl x:Name="TabControlScript" SelectionChanged="TabControlScript_SelectionChanged" >
                 <TabControl.ContentTemplate>
                     <DataTemplate>
                         <RichTextBox x:Name="TextScript" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
@@ -230,7 +230,8 @@
                                                         <ColumnDefinition/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                                    <ContentPresenter ContentSource="Header" Margin="5,5,5,5" RecognizesAccessKey="True"/>
+                                                        <!--TextBlock Grid.Column="0" Text="PowerShellScript1.ps1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/-->
                                                     <Button x:Name="ButtonClose" IsEnabled="False" 
                                                             Visibility="Collapsed" Grid.Column="1" Margin="0,0,2,0" Width="15" Height="15" 
                                                             Click="ButtonClose_Click" Template="{StaticResource ButtonCloseStyle}">
@@ -295,6 +296,10 @@
             <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="2" Header="View" Grid.Row="0">
                 <MenuItem Header="Setting of syntax highlighting" Style="{DynamicResource MenuStyle}"/>
                 <MenuItem Header="Setting of command window" Style="{DynamicResource MenuStyle}"/>
+            </MenuItem>
+            <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="3" Header="Terminal" Grid.Row="0">
+                <MenuItem Header="Cmd" Style="{DynamicResource MenuStyle}"/>
+                <MenuItem Header="Powershell" Style="{DynamicResource MenuStyle}"/>
             </MenuItem>
         </Menu>
     </Grid>

@@ -5,42 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace PSterminal
 {
-    public class PowershellTerminal //: Terminal
+    public class PowerShellTerminal : AbstractTerminal
     {
-        private string _script;
-
-        public string Script
+        public PowerShellTerminal(Brush commandBrush, Brush parameterBrush)
         {
-            get { return this._script; }
-            set { this._script = value; }
+            this.HighLight = new PowershellHighlight(commandBrush, parameterBrush);
         }
 
-        public PowershellSyntaxHighlight PowershellHighlight
+        public override Brush CommandHighlight()
         {
-            get
-            {
-                return _powershellHighlight;
-            }
-
-            set
-            {
-                _powershellHighlight = value;
-            }
+            return this.HighLight.CommandBrush();
         }
 
-        private PowershellSyntaxHighlight _powershellHighlight;
-
-        public PowershellTerminal(FlowDocument richBox)
+        public override Brush ParameterHighlight()
         {
-            PowershellHighlight = new PowershellSyntaxHighlight(richBox);
+            return this.HighLight.ParameterBrush();
         }
-
-        //private PowershellSyntaxHighlight CreateSyntaxHighlight(FlowDocument richBox)
-        //{
-        //    return new PowershellSyntaxHighlight(richBox);
-        //}
     }
 }

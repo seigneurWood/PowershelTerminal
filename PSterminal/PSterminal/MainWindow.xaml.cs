@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,9 +22,13 @@ namespace PSterminal
     /// </summary>
     public partial class MainWindow : Window
     {
-        RichTextBox TextScript;
         //private PowershellTerminal terminal = new PowershellTerminal();
         List<string> commandInTerminal = new List<string>();
+        List<ScriptTab> scriptTabsList = new List<ScriptTab>();
+        int prev = 0;
+        RichTextBox TextScript;
+        AbstractTerminal terminal;
+        Brush br = new SolidColorBrush(Colors.Aquamarine);
         public MainWindow()
         {
             InitializeComponent();
@@ -33,23 +38,54 @@ namespace PSterminal
             //TextScript.Text = "get-process"; // | sort-object | force-recurce";
             //TextScript.Text = "get-childitem * -include *.csv -recurse | remove-item";
 
-            TextScript = new RichTextBox();
+            //TextScript = new RichTextBox();
 
             TabItem tb = new TabItem();
             tb.Header = "untl1";
-            this.TabControlScript.Items.Add(tb);
+            TabControlScript.Items.Add(tb);
+            ScriptTab scriptTab1 = new ScriptTab(new FlowDocument(), tb);
+            scriptTabsList.Add(scriptTab1);
+
             TabItem tb2 = new TabItem();
-            tb.Header = "untl2";
-            this.TabControlScript.Items.Add(tb2);
+            tb2.Header = "untl2";
+            TabControlScript.Items.Add(tb2);
+            ScriptTab scriptTab2 = new ScriptTab(new FlowDocument(), tb2);
+            scriptTabsList.Add(scriptTab2);
 
-           // FlowDocument doc = new FlowDocument();
-           // Paragraph par = new Paragraph();
-           // par.Inlines.Add(new Run("get-process -name chrome"));
-           //// par.Inlines.Add(new Run("get-process"));
-           // doc.Blocks.Add(par);
-           // TextScript.Document = doc;
+            TabItem tb3 = new TabItem();
+            tb3.Header = "untl3";
+            TabControlScript.Items.Add(tb3);
+            ScriptTab scriptTab3 = new ScriptTab(new FlowDocument(), tb3);
+            scriptTabsList.Add(scriptTab3);
 
+            // Создание привязки
+            CommandBinding bind = new CommandBinding(ApplicationCommands.New);
 
+            // Присоединение обработчика событий
+            bind.Executed += NewScriptExecuted;
+
+            // Регистрация привязки
+            this.CommandBindings.Add(bind);
+
+            CommandBinding bind2 = new CommandBinding(ApplicationCommands.Open);
+            bind2.Executed += ShowOpenFileDialog;
+            this.CommandBindings.Add(bind2);
+
+            CommandBinding bind3 = new CommandBinding(ApplicationCommands.Save);
+            bind3.Executed += SaveScript;
+            this.CommandBindings.Add(bind3);
+
+            terminal = new PowerShellTerminal(new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
+
+            // FlowDocument doc = new FlowDocument();
+            // Paragraph par = new Paragraph();
+            // par.Inlines.Add(new Run("get-process -name chrome"));
+            //// par.Inlines.Add(new Run("get-process"));
+            // doc.Blocks.Add(par);
+            // TextScript.Document = doc;
+
+            TabControlScript.SelectedIndex = 0;
+            prev = TabControlScript.SelectedIndex;
 
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
@@ -201,6 +237,15 @@ namespace PSterminal
             //f = 11;
         }
 
+        private void NewScriptExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            TabItem t = new TabItem();
+            t.Header = "untl"+(scriptTabsList.Count+1).ToString();
+            TabControlScript.Items.Add(t);
+            ScriptTab newScriptTab = new ScriptTab(new FlowDocument(), t);
+            scriptTabsList.Add(newScriptTab);
+        }
+
         private void TextScript_KeyUp(object sender, KeyEventArgs e)
         {
             //Paragraph p = new Paragraph();
@@ -210,7 +255,6 @@ namespace PSterminal
             if (e.IsUp)
             {
                 UpdateRTB();
-
 
                 //var allText = new TextRange(TextScript.Document.ContentStart, TextScript.Document.ContentEnd);
                 //allText.ClearAllProperties();
@@ -438,9 +482,9 @@ namespace PSterminal
 
         }
 
-        private void RunCommnad()
+        private void RunCommand(RichTextBox rtb)
         {
-            string[] str = GetDocumentText(TextScript.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
+            string[] str = GetDocumentText(rtb.Document).Split('\n'); // GetDocumentText(TextScript.Document).Split('\n');
             for (int i = 0; i < str.Length - 1; i++)
             {
                 Lexer lexer = new Lexer(str[i]);
@@ -455,321 +499,326 @@ namespace PSterminal
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            UpdateRTB();
-            tb.Text = "";
-            TextRange textCommand = new TextRange(TextScript.Document.ContentStart, TextScript.Document.ContentEnd);
-            if(textCommand.Text != "\r\n")
-            {
-                RunCommnad();
-            }
-            else
-            {
-                tb.Text = "Empty";
-            }
+            //UpdateRTB();
+            //tb.Text = "";
+            //WriteChagedToDocument((TabItem)TabControlScript.SelectedItem);
+
+            //ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            //TextRange textCommand = new TextRange((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentStart,
+            //    (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentEnd);
+            //if (textCommand.Text != "\r\n")
+            //{
+            //    RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
+            //}
+            //else
+            //{
+            //    tb.Text = "Empty";
+            //}
             //SettingsWindow set = new SettingsWindow();
             //set.ShowDialog();
         }
 
-        private void Azaza()
-        {
-            TextRange text = new TextRange(TextScript.Document.ContentStart, TextScript.Document.ContentEnd);
-            string currentSplitText = text.Text.Split('\r')[0];
-            string[] currentText = currentSplitText.Split(' ');
+        //private void Azaza()
+        //{
+        //    TextRange text = new TextRange(TextScript.Document.ContentStart, TextScript.Document.ContentEnd);
+        //    string currentSplitText = text.Text.Split('\r')[0];
+        //    string[] currentText = currentSplitText.Split(' ');
 
-            for (int i = 0; i < commandInTerminal.Count; i++)
-            {
-                if (currentText[currentText.Length - 1] == "")
-                {
-                    // method
-                    text.ClearAllProperties();
-                    MatchCollection regex_results = Regex.Matches(text.Text, @"(.*?)-(.*?)\s");
-                    if (regex_results.Count != 0)
-                    {
-                        string res2 = regex_results[0].Groups[0].Value;
+        //    for (int i = 0; i < commandInTerminal.Count; i++)
+        //    {
+        //        if (currentText[currentText.Length - 1] == "")
+        //        {
+        //            // method
+        //            text.ClearAllProperties();
+        //            MatchCollection regex_results = Regex.Matches(text.Text, @"(.*?)-(.*?)\s");
+        //            if (regex_results.Count != 0)
+        //            {
+        //                string res2 = regex_results[0].Groups[0].Value;
 
-                        //// string pattern = @"hello";
-                        Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
+        //                //// string pattern = @"hello";
+        //                Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
 
-                        //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-                        //// allText.ClearAllProperties();
-                        // tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
-                        if (regex.ToString() == "get-process")
-                        {
-                            var start = TextScript.Document.ContentStart;
-                            while (start != null && start.CompareTo(TextScript.Document.ContentEnd) < 0)
-                            {
-                                if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                                {
-                                    var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                                    // string[] matchMass = match.ToString().Split(@'(\s+)');
-                                    //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                                    //Match m = Regex.Match(match.ToString(), @".*?$");
-                                    ////string s = m.ToString().Split(' ')[0];
-                                    //string[] s = match.ToString().Split(' ');
+        //                //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+        //                //// allText.ClearAllProperties();
+        //                // tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
+        //                if (regex.ToString() == "get-process")
+        //                {
+        //                    var start = TextScript.Document.ContentStart;
+        //                    while (start != null && start.CompareTo(TextScript.Document.ContentEnd) < 0)
+        //                    {
+        //                        if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //                        {
+        //                            var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                            // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                            //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                            //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                            ////string s = m.ToString().Split(' ')[0];
+        //                            //string[] s = match.ToString().Split(' ');
 
-                                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
+        //                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
 
-                                    start = textrange.End;
+        //                            start = textrange.End;
 
-                                    //else
+        //                            //else
 
 
 
-                                }
-                                start = start.GetNextContextPosition(LogicalDirection.Forward);
-                            }
-                        }
-                    }
-                }
-            }
-            if (!Char.IsWhiteSpace(text.Text[text.Text.Length - 1]))
-            {
-                //var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-                text.ClearAllProperties();
-                MatchCollection regex_results = Regex.Matches(text.Text, @"(.*?)-(.*?)\s");
-                //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
-                //string res1 = regex_results[0].Groups[0].Value;
-                if (regex_results.Count != 0)
-                {
-                    string res2 = regex_results[0].Groups[0].Value;
+        //                        }
+        //                        start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    if (!Char.IsWhiteSpace(text.Text[text.Text.Length - 1]))
+        //    {
+        //        //var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+        //        text.ClearAllProperties();
+        //        MatchCollection regex_results = Regex.Matches(text.Text, @"(.*?)-(.*?)\s");
+        //        //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
+        //        //string res1 = regex_results[0].Groups[0].Value;
+        //        if (regex_results.Count != 0)
+        //        {
+        //            string res2 = regex_results[0].Groups[0].Value;
 
-                    //// string pattern = @"hello";
-                    Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
+        //            //// string pattern = @"hello";
+        //            Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
 
-                    //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-                    //// allText.ClearAllProperties();
-                    // tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
-                    if (regex.ToString() == "get-process")
-                    {
-                        var start = TextScript.Document.ContentStart;
-                        while (start != null && start.CompareTo(TextScript.Document.ContentEnd) < 0)
-                        {
-                            if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                            {
-                                var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                                // string[] matchMass = match.ToString().Split(@'(\s+)');
-                                //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                                //Match m = Regex.Match(match.ToString(), @".*?$");
-                                ////string s = m.ToString().Split(' ')[0];
-                                //string[] s = match.ToString().Split(' ');
-                                if (match.ToString() == "get-process")
-                                {
-                                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
-                                    if (textrange.Text == "")
-                                    {
-                                        int b = 0;
-                                    }
+        //            //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+        //            //// allText.ClearAllProperties();
+        //            // tbOut.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
+        //            if (regex.ToString() == "get-process")
+        //            {
+        //                var start = TextScript.Document.ContentStart;
+        //                while (start != null && start.CompareTo(TextScript.Document.ContentEnd) < 0)
+        //                {
+        //                    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //                    {
+        //                        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                        // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                        //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                        //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                        ////string s = m.ToString().Split(' ')[0];
+        //                        //string[] s = match.ToString().Split(' ');
+        //                        if (match.ToString() == "get-process")
+        //                        {
+        //                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
+        //                            if (textrange.Text == "")
+        //                            {
+        //                                int b = 0;
+        //                            }
 
-                                    start = textrange.End;
-                                }
-                                //else
-                                {
+        //                            start = textrange.End;
+        //                        }
+        //                        //else
+        //                        {
 
-                                }
-                            }
-                            start = start.GetNextContextPosition(LogicalDirection.Forward);
-                        }
-                    }
-                }
-            }
-        }
+        //                        }
+        //                    }
+        //                    start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
-        private void SpacePowerCmdltHighlight(FlowDocument document)
-        {
-            var allText = new TextRange(document.ContentStart, document.ContentEnd);
-            allText.ClearAllProperties();
-            MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\s");
+        //private void SpacePowerCmdltHighlight(FlowDocument document)
+        //{
+        //    var allText = new TextRange(document.ContentStart, document.ContentEnd);
+        //    allText.ClearAllProperties();
+        //    MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\s");
 
-            if (regex_results.Count != 0)
-            {
-                string res2 = regex_results[0].Groups[0].Value;
+        //    if (regex_results.Count != 0)
+        //    {
+        //        string res2 = regex_results[0].Groups[0].Value;
 
-                //// string pattern = @"hello";
-                Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
+        //        //// string pattern = @"hello";
+        //        Regex regex = new Regex(res2.Split(' ')[0], RegexOptions.IgnoreCase);
 
-                var start = document.ContentStart;
-                while (start != null && start.CompareTo(document.ContentEnd) < 0)
-                {
-                    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                    {
-                        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                        // string[] matchMass = match.ToString().Split(@'(\s+)');
-                        //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                        //Match m = Regex.Match(match.ToString(), @".*?$");
-                        ////string s = m.ToString().Split(' ')[0];
-                        //string[] s = match.ToString().Split(' ');
-                        if (match.ToString() == "get-process")
-                        {
-                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
-                            if (textrange.Text == "")
-                            {
-                                int b = 0;
-                            }
+        //        var start = document.ContentStart;
+        //        while (start != null && start.CompareTo(document.ContentEnd) < 0)
+        //        {
+        //            if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //            {
+        //                var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                ////string s = m.ToString().Split(' ')[0];
+        //                //string[] s = match.ToString().Split(' ');
+        //                if (match.ToString() == "get-process")
+        //                {
+        //                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
+        //                    if (textrange.Text == "")
+        //                    {
+        //                        int b = 0;
+        //                    }
 
-                            start = textrange.End;
-                        }
-                        //else
-                        {
+        //                    start = textrange.End;
+        //                }
+        //                //else
+        //                {
 
-                        }
-                    }
-                    start = start.GetNextContextPosition(LogicalDirection.Forward);
-                }
-            }
-        }
+        //                }
+        //            }
+        //            start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //        }
+        //    }
+        //}
 
-        private void EnterPowerCmdltHighlight(FlowDocument document)
-        {
-            var allText = new TextRange(document.ContentStart, document.ContentEnd);
-            allText.ClearAllProperties();
-            MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\n");
+        //private void EnterPowerCmdltHighlight(FlowDocument document)
+        //{
+        //    var allText = new TextRange(document.ContentStart, document.ContentEnd);
+        //    allText.ClearAllProperties();
+        //    MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)\n");
 
-            if (regex_results.Count != 0)
-            {
-                string res2 = regex_results[0].Groups[0].Value;
+        //    if (regex_results.Count != 0)
+        //    {
+        //        string res2 = regex_results[0].Groups[0].Value;
 
-                //// string pattern = @"hello";
-                Regex regex = new Regex(res2, RegexOptions.IgnoreCase); ////???????????????????????????????????????????????????????????????????????????
+        //        //// string pattern = @"hello";
+        //        Regex regex = new Regex(res2, RegexOptions.IgnoreCase); ////???????????????????????????????????????????????????????????????????????????
 
-                var start = document.ContentStart;
-                while (start != null && start.CompareTo(document.ContentEnd) < 0)
-                {
-                    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                    {
-                        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                        // string[] matchMass = match.ToString().Split(@'(\s+)');
-                        //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                        //Match m = Regex.Match(match.ToString(), @".*?$");
-                        ////string s = m.ToString().Split(' ')[0];
-                        //string[] s = match.ToString().Split(' ');
-                        if (match.ToString() == "get-process")
-                        {
-                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
-                            if (textrange.Text == "")
-                            {
-                                int b = 0;
-                            }
+        //        var start = document.ContentStart;
+        //        while (start != null && start.CompareTo(document.ContentEnd) < 0)
+        //        {
+        //            if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //            {
+        //                var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                ////string s = m.ToString().Split(' ')[0];
+        //                //string[] s = match.ToString().Split(' ');
+        //                if (match.ToString() == "get-process")
+        //                {
+        //                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Aquamarine));
+        //                    if (textrange.Text == "")
+        //                    {
+        //                        int b = 0;
+        //                    }
 
-                            start = textrange.End;
-                        }
-                        //else
-                        {
+        //                    start = textrange.End;
+        //                }
+        //                //else
+        //                {
 
-                        }
-                    }
-                    start = start.GetNextContextPosition(LogicalDirection.Forward);
-                }
-            }
-        }
+        //                }
+        //            }
+        //            start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //        }
+        //    }
+        //}
 
-        private void SpaceParameterPowerCmdltHighlight(FlowDocument document)
-        {
-            var allText = new TextRange(document.ContentStart, document.ContentEnd);
-            allText.ClearAllProperties();
-            MatchCollection regex_results = Regex.Matches(allText.Text, @"\s-(.*?)\s");
-            //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
-            //string res1 = regex_results[0].Groups[0].Value;
-            if (regex_results.Count != 0)
-            {
-                string res2 = regex_results[0].Groups[0].Value;
+        //private void SpaceParameterPowerCmdltHighlight(FlowDocument document)
+        //{
+        //    var allText = new TextRange(document.ContentStart, document.ContentEnd);
+        //    allText.ClearAllProperties();
+        //    MatchCollection regex_results = Regex.Matches(allText.Text, @"\s-(.*?)\s");
+        //    //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
+        //    //string res1 = regex_results[0].Groups[0].Value;
+        //    if (regex_results.Count != 0)
+        //    {
+        //        string res2 = regex_results[0].Groups[0].Value;
 
-                //// string pattern = @"hello";
-                Regex regex = new Regex(res2.Split(' ')[1], RegexOptions.IgnoreCase);
+        //        //// string pattern = @"hello";
+        //        Regex regex = new Regex(res2.Split(' ')[1], RegexOptions.IgnoreCase);
 
-                //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-                //// allText.ClearAllProperties();
-                //TextScript.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
-                var start = document.ContentStart;
-                while (start != null && start.CompareTo(document.ContentEnd) < 0)
-                {
-                    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                    {
-                        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                        // string[] matchMass = match.ToString().Split(@'(\s+)');
-                        //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                        //Match m = Regex.Match(match.ToString(), @".*?$");
-                        ////string s = m.ToString().Split(' ')[0];
-                        //string[] s = match.ToString().Split(' ');
-                        if (match.ToString() == "-name")
-                        {
-                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.HotPink));
-                            if (textrange.Text == "")
-                            {
-                                int b = 0;
-                            }
+        //        //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+        //        //// allText.ClearAllProperties();
+        //        //TextScript.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
+        //        var start = document.ContentStart;
+        //        while (start != null && start.CompareTo(document.ContentEnd) < 0)
+        //        {
+        //            if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //            {
+        //                var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                ////string s = m.ToString().Split(' ')[0];
+        //                //string[] s = match.ToString().Split(' ');
+        //                if (match.ToString() == "-name")
+        //                {
+        //                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.HotPink));
+        //                    if (textrange.Text == "")
+        //                    {
+        //                        int b = 0;
+        //                    }
 
-                            start = textrange.End;
-                        }
-                        //else
-                        {
+        //                    start = textrange.End;
+        //                }
+        //                //else
+        //                {
 
-                        }
-                    }
-                    start = start.GetNextContextPosition(LogicalDirection.Forward);
-                }
-            }
-        }
+        //                }
+        //            }
+        //            start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //        }
+        //    }
+        //}
 
-        private void EnterParameterPowerCmdltHighlight(FlowDocument document)
-        {
-            var allText = new TextRange(document.ContentStart, document.ContentEnd);
-            allText.ClearAllProperties();
-            MatchCollection regex_results = Regex.Matches(allText.Text, @"-(.*?)\n");
-            //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
-            //string res1 = regex_results[0].Groups[0].Value;
-            if (regex_results.Count != 0)
-            {
-                string res2 = regex_results[0].Groups[0].Value;
+        //private void EnterParameterPowerCmdltHighlight(FlowDocument document)
+        //{
+        //    var allText = new TextRange(document.ContentStart, document.ContentEnd);
+        //    allText.ClearAllProperties();
+        //    MatchCollection regex_results = Regex.Matches(allText.Text, @"-(.*?)\n");
+        //    //MatchCollection regex_results = Regex.Matches(allText.Text, @"(.*?)-(.*?)");
+        //    //string res1 = regex_results[0].Groups[0].Value;
+        //    if (regex_results.Count != 0)
+        //    {
+        //        string res2 = regex_results[0].Groups[0].Value;
 
-                //// string pattern = @"hello";
-                Regex regex = new Regex(res2.Split('\r')[0], RegexOptions.IgnoreCase);/////////?????????????????????????????????????????????????????????????????????
+        //        //// string pattern = @"hello";
+        //        Regex regex = new Regex(res2.Split('\r')[0], RegexOptions.IgnoreCase);/////////?????????????????????????????????????????????????????????????????????
 
-                //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
-                //// allText.ClearAllProperties();
-                //TextScript.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
-                var start = document.ContentStart;
-                while (start != null && start.CompareTo(document.ContentEnd) < 0)
-                {
-                    if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                    {
-                        var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
-                        // string[] matchMass = match.ToString().Split(@'(\s+)');
-                        //if (match.Value != "get-process\n" || match.Value != "get-process ")
-                        //Match m = Regex.Match(match.ToString(), @".*?$");
-                        ////string s = m.ToString().Split(' ')[0];
-                        //string[] s = match.ToString().Split(' ');
-                        if (match.ToString() == "-name")
-                        {
-                            var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
-                                start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
-                            textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.HotPink));
-                            if (textrange.Text == "")
-                            {
-                                int b = 0;
-                            }
+        //        //// var allText = new TextRange(tbOut.Document.ContentStart, tbOut.Document.ContentEnd);
+        //        //// allText.ClearAllProperties();
+        //        //TextScript.Document.Blocks.Add(new Paragraph(new Run(regex.ToString())));
+        //        var start = document.ContentStart;
+        //        while (start != null && start.CompareTo(document.ContentEnd) < 0)
+        //        {
+        //            if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //            {
+        //                var match = regex.Match(start.GetTextInRun(LogicalDirection.Forward));
+        //                // string[] matchMass = match.ToString().Split(@'(\s+)');
+        //                //if (match.Value != "get-process\n" || match.Value != "get-process ")
+        //                //Match m = Regex.Match(match.ToString(), @".*?$");
+        //                ////string s = m.ToString().Split(' ')[0];
+        //                //string[] s = match.ToString().Split(' ');
+        //                if (match.ToString() == "-name")
+        //                {
+        //                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward),
+        //                        start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+        //                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.HotPink));
+        //                    if (textrange.Text == "")
+        //                    {
+        //                        int b = 0;
+        //                    }
 
-                            start = textrange.End;
-                        }
-                        //else
-                        {
+        //                    start = textrange.End;
+        //                }
+        //                //else
+        //                {
 
-                        }
-                    }
-                    start = start.GetNextContextPosition(LogicalDirection.Forward);
-                }
-            }
-        }
+        //                }
+        //            }
+        //            start = start.GetNextContextPosition(LogicalDirection.Forward);
+        //        }
+        //    }
+        //}
 
+        #region Norm
         #region Отслеживание Run LinerBreak
         IEnumerable<RawText> ExtractText(IEnumerable<Inline> inlines)
         {
@@ -843,14 +892,11 @@ namespace PSterminal
 
         Brush GetBrushForTokenType(TokenType tokenType)
         {
+
             switch (tokenType)
             {
-                case TokenType.Command: return Brushes.Aquamarine;
+                case TokenType.Command: return terminal.CommandHighlight();
                 case TokenType.Parameter: return Brushes.HotPink;
-                //case TokenType.Ident: return Brushes.LimeGreen;
-                //case TokenType.Number: return Brushes.Cyan;
-                //case TokenType.Punct: return Brushes.Gray;
-                //case TokenType.String: return Brushes.DarkRed;
             }
             return null;
         }
@@ -872,7 +918,7 @@ namespace PSterminal
             }
         }
 
-        async void UpdateRTB()
+        async Task UpdateRTB()
         {
             ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
             //object text = TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox;
@@ -882,6 +928,7 @@ namespace PSterminal
                 await UpdateParagraph(par);
             (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).IsEnabled = true;
         }
+        #endregion
 
         private string GetDocumentText(FlowDocument document)
         {
@@ -895,12 +942,208 @@ namespace PSterminal
             return strBuilder.ToString();
         }
 
+        private void WriteChagedToDocument(TabItem tabitem)
+        {
+            for(int i=0;i<scriptTabsList.Count;i++)
+            {
+                if(scriptTabsList.ElementAt(i).TabItem.Equals(tabitem))
+                {
+                    MessageBox.Show(i.ToString());
+                    ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+                    scriptTabsList.ElementAt(i).Document = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
+                }
+            }
+        }
+
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             //(sender as Border).BorderThickness = new Thickness(2);
             //(sender as Border).BorderBrush = new SolidColorBrush(Colors.Gray);
             //(sender as Border).Background = new SolidColorBrush(Colors.Transparent);
-            MessageBox.Show("aa");
+            //MessageBox.Show(e.Handled.ToString());
+            MessageBox.Show((TabControlScript.SelectedItem as TabItem).Header.ToString());
+        }
+
+        private void TabControlScript_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+                if (this.IsLoaded)
+                {
+                    //TextRange text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
+                    //MessageBox.Show(text.Text);
+                    ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+                    scriptTabsList.ElementAt(prev).Document.Blocks.Clear();
+                    CopyText((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document, scriptTabsList.ElementAt(prev).Document);
+                    //text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
+                    //MessageBox.Show(text.Text);
+                    //scriptTabsList.ElementAt(prev).Document = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
+                    prev = TabControlScript.SelectedIndex;
+                    (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.Blocks.Clear();
+                    CopyText(scriptTabsList.ElementAt(prev).Document, (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document);
+
+                    //  MessageBox.Show(prev.ToString());
+
+                }
+            //UpdateRTB();
+        }
+        private void CopyText(FlowDocument docCopyIn, FlowDocument docCopyOut)
+        {
+            var doc = docCopyIn;
+            List<string> splitText = new List<string>();
+            string[] splitTextNewLine = GetDocumentText(docCopyIn).Split('\n');
+            for(int i=0;i<splitTextNewLine.Length-1;i++)
+            {
+                string[] splitTextR = splitTextNewLine[i].Split('\r');
+                splitText.Add(splitTextR[0]);
+            }
+            for(int i=0;i<splitText.Count;i++)
+            {
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run(splitText[i]));
+                docCopyOut.Blocks.Add(paragraph);
+            }
+           // UpdateRTB();
+            //MessageBox.Show(GetDocumentText(docCopyIn));
+        }
+
+        private string SaveTextScript(FlowDocument document)
+        {
+            List<string> splitText = new List<string>();
+            string[] splitTextNewLine = GetDocumentText(document).Split('\n');
+            for (int i = 0; i < splitTextNewLine.Length - 1; i++)
+            {
+                string[] splitTextR = splitTextNewLine[i].Split('\r');
+                splitText.Add(splitTextR[0]);
+            }
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i<splitText.Count;i++)
+            {
+                sb.AppendLine(splitText.ElementAt(i));
+            }
+            return sb.ToString();
+        }
+
+        private void ShowOpenFileDialog(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            dlg.DefaultExt = ".ps1";
+            dlg.Filter = "PowerShell scripts (.ps1)|*.ps1";
+
+            // Display OpenFileDialog by calling ShowDialog method
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                string[] textInFile = File.ReadAllLines(filename);
+                FlowDocument doc = new FlowDocument();
+                for(int i=0;i<textInFile.Length;i++)
+                {
+                    doc.Blocks.Add(new Paragraph(new Run(textInFile[i])));
+                }
+                TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
+                MessageBox.Show(t.Text);
+                TabItem tab = new TabItem();
+                tab.Header = filename.Split('\\')[filename.Split('\\').Length-1];
+                ScriptTab scriptTab = new ScriptTab(doc, tab);
+                scriptTab.Path = filename;
+                scriptTab.Name = tab.Header.ToString();
+                TabControlScript.Items.Add(tab);
+                scriptTabsList.Add(scriptTab);
+                //    FileNameTextBox.Text = filename;
+            }
+        }
+
+        private void ShowSaveFileDialog()
+        {
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = (TabControlScript.SelectedItem as TabItem).Header.ToString(); // Default file name
+            dlg.DefaultExt = ".ps1"; // Default file extension
+            dlg.Filter = "PowerShell scripts (.ps1)|*.ps1"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                //File.Create(filename);
+                for (int i = 0; i < scriptTabsList.Count; i++)
+                {
+                    if(scriptTabsList.ElementAt(i).TabItem == TabControlScript.SelectedItem as TabItem)
+                    {
+                        scriptTabsList.ElementAt(i).TabItem.Header = dlg.FileName.Split('\\')[filename.Split('\\').Length - 1].Split('.')[0];
+                        scriptTabsList.ElementAt(i).Path = dlg.FileName;
+                        scriptTabsList.ElementAt(i).Name = dlg.FileName.Split('\\')[filename.Split('\\').Length - 1].Split('.')[0];
+                        ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+                        //scriptTabsList.ElementAt(i).Document = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
+                        CopyText((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document, scriptTabsList.ElementAt(i).Document);
+                        string cont = SaveTextScript(scriptTabsList.ElementAt(i).Document);
+                        File.WriteAllText(filename, cont);
+                        break;
+                        //File.AppendText(SaveScript(scriptTabsList.ElementAt(i).Document));
+                    }
+                }
+                (TabControlScript.SelectedItem as TabItem).Header = dlg.FileName.Split('\\')[filename.Split('\\').Length - 1].Split('.')[0];
+                //File.AppendText(SaveScript())
+            }
+        }
+
+        private void ReSaveScript()
+        {
+            for (int i = 0; i < scriptTabsList.Count; i++)
+            {
+                if (scriptTabsList.ElementAt(i).TabItem == TabControlScript.SelectedItem as TabItem)
+                {
+                    File.WriteAllText(scriptTabsList.ElementAt(i).Path, "");
+                    FlowDocument fakeDoc = new FlowDocument();
+                    CopyText(fakeDoc, scriptTabsList.ElementAt(i).Document);
+                    ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+                    CopyText((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document, scriptTabsList.ElementAt(i).Document);
+                    string cont = SaveTextScript(scriptTabsList.ElementAt(i).Document);
+                    File.WriteAllText(scriptTabsList.ElementAt(i).Path, cont);
+                    break;
+                    //File.AppendText(SaveScript(scriptTabsList.ElementAt(i).Document));
+                }
+            }
+        }
+
+        private void SaveScript(object sender, ExecutedRoutedEventArgs e)
+        {
+            for (int i = 0; i < scriptTabsList.Count; i++)
+            {
+                if (scriptTabsList.ElementAt(i).TabItem == TabControlScript.SelectedItem as TabItem)
+                {
+                    if(IsSaved(scriptTabsList.ElementAt(i)))
+                    {
+                        ReSaveScript();
+                        break;
+                    }
+                    else
+                    {
+                        ShowSaveFileDialog();
+                        break;
+                    }
+                }
+            }
+        }
+        private bool IsSaved(ScriptTab script)
+        {
+            if (script.Path != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

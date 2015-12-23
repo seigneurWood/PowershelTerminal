@@ -83,33 +83,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AbstractTerminal.cs" />
     <Compile Include="BreadthFirstIterator.cs" />
-    <Compile Include="CmdSyntaxHighlight.cs" />
-    <Compile Include="CmdTerminal.cs" />
     <Compile Include="CommandCollection.cs" />
+    <Compile Include="DarkSideStyle.cs" />
     <Compile Include="DelimiterTerminalExpression.cs" />
     <Compile Include="GetCommandCommand.cs" />
     <Compile Include="GetProcessCommand.cs" />
+    <Compile Include="HighlightBase.cs" />
     <Compile Include="HighlightLexer.cs" />
     <Compile Include="IAbstractExpression.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CommonParamTerminalExpression.cs" />
     <Compile Include="Lexer.cs" />
+    <Compile Include="LightSideStyle.cs" />
     <Compile Include="MainComTerminalExpression.cs" />
     <Compile Include="NounScriptTerminalExpression.cs" />
     <Compile Include="ParamTerminalExpression.cs" />
     <Compile Include="ParserIterator.cs" />
-    <Compile Include="PowershellSyntaxHighlight.cs" />
+    <Compile Include="PowershellHighlight.cs" />
+    <Compile Include="PowerShellTerminal.cs" />
+    <Compile Include="ScriptTab.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StyleBase.cs" />
     <Compile Include="SupportingComTerminalExpression.cs" />
-    <Compile Include="SyntaxHighlight.cs" />
-    <Compile Include="Terminal.cs" />
     <Compile Include="Tokens.cs" />
     <Compile Include="VerbScriptCommandExpression.cs" />
     <Compile Include="ScriptComNonterminalExpression.cs" />
-    <Compile Include="PowershellTerminal.cs" />
     <Compile Include="TokenReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

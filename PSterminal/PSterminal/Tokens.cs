@@ -7,11 +7,13 @@ using System.Windows.Documents;
 
 namespace PSterminal
 {
-    enum TokenType
+    public enum TokenType
     {
         Command,
         Parameter,
-        Ident
+        Ident,
+        CommandCmd,
+        ParameterCmd
         //Ident,
         //Comment,
         //Keyword,

@@ -19,6 +19,9 @@
                                     <!--ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup"/-->
                                     <ColumnDefinition x:Name="Col3" Width="14"/>
                                 </Grid.ColumnDefinitions>
+                                
+                                <!-- Glyph is a checkmark if needed for a checkable menu -->
+                                
                                 <!-- Content for the menu text etc -->
                                 <ContentPresenter Grid.Column="1"
                                           Margin="8,2,8,2"
@@ -76,6 +79,8 @@
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Foreground" Value="Black"/>
                             </Trigger>
+                            
+                            
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -281,7 +286,7 @@
                 <MenuItem Header="New" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Open" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Save" Style="{DynamicResource MenuStyle}"></MenuItem>
-                <MenuItem Header="SaveAs..." Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Save As..." Style="{DynamicResource MenuStyle}"></MenuItem>
                 <Separator Height="2"/>
                 <MenuItem Header="Exit" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
@@ -294,12 +299,8 @@
                 <MenuItem Header="Paste" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
             <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="2" Header="View" Grid.Row="0">
-                <MenuItem Header="Setting of syntax highlighting" Style="{DynamicResource MenuStyle}"/>
-                <MenuItem Header="Setting of command window" Style="{DynamicResource MenuStyle}"/>
-            </MenuItem>
-            <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="3" Header="Terminal" Grid.Row="0">
-                <MenuItem Header="Cmd" Style="{DynamicResource MenuStyle}"/>
-                <MenuItem Header="Powershell" Style="{DynamicResource MenuStyle}"/>
+                <MenuItem Header="Setting" Style="{DynamicResource MenuStyle}"/>
+                <!--MenuItem Header="Setting of command window" Style="{DynamicResource MenuStyle}"/-->
             </MenuItem>
         </Menu>
     </Grid>

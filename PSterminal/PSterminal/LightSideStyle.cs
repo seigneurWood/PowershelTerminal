@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace PSterminal
         public LightSideStyle()
         {
             this.MainColor = new SolidColorBrush(Colors.LightGray);
-            this.InputTextBoxBrush = new SolidColorBrush(Colors.White);
+            this.InputTextBoxBrush = new SolidColorBrush(Colors.Black);
             this.OutputTextBoxBrush = new SolidColorBrush(Colors.White);
             this.MarkingColor = new SolidColorBrush(Color.FromArgb(0xFF, 0xAA, 0xAA, 0xAA));
             this.FontForeground = new SolidColorBrush(Colors.Black);

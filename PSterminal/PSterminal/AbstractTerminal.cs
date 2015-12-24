@@ -12,6 +12,7 @@ namespace PSterminal
     public abstract class AbstractTerminal
     {
         private HighlightBase _highLight;
+        private StyleBase _style;
 
         public HighlightBase HighLight
         {
@@ -26,6 +27,19 @@ namespace PSterminal
             }
         }
 
+        public StyleBase Style
+        {
+            get
+            {
+                return _style;
+            }
+
+            set
+            {
+                _style = value;
+            }
+        }
+
         public virtual Brush CommandHighlight()
         {
             return new SolidColorBrush(Colors.Black);
@@ -36,29 +50,5 @@ namespace PSterminal
             return new SolidColorBrush(Colors.Black);
         }
 
-        //public virtual Brush MenuBackgroundBrush()
-        //{
-        //    return new SolidColorBrush(Colors.LightGray);
-        //}
-
-        //public virtual Brush MenuBorderBrush()  
-        //{
-        //    return new SolidColorBrush(Colors.Gray);
-        //}
-
-        //public virtual Brush MenuFontBrush()
-        //{
-        //    return new SolidColorBrush(Colors.Black);
-        //}
-        
-        //public virtual Brush InputTextBoxBackgroundBrush()
-        //{
-        //    return new SolidColorBrush(Colors.White);
-        //}
-
-        //public virtual Brush OutputTextBoxBackgroundBrush()
-        //{
-        //    return new SolidColorBrush(Colors.White);
-        //}
     }
 }

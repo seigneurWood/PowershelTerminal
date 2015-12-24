@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows.Media;
 
 namespace PSterminal
 {
-    public abstract class StyleBase
+    public abstract class StyleBase: INotifyPropertyChanged
     {
         private Brush _inputTextBoxBrush;
         private Brush _outputTextBoxBrush;
@@ -31,6 +32,7 @@ namespace PSterminal
             set
             {
                 _inputTextBoxBrush = value;
+                OnPropertyChanged("InputTextBoxBrush");
             }
         }
 
@@ -154,5 +156,14 @@ namespace PSterminal
         public abstract void ChangeBackgroundTextBox(Brush InputTextboxBrush, Brush OutputTextboxBrush);
         public abstract void ChangeFont(int FontSize, Brush FontForeground);
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

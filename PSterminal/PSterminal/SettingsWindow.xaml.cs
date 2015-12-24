@@ -23,5 +23,11 @@ namespace PSterminal
         {
             InitializeComponent();
         }
+        private void UpdateCommandTextbox()
+        {
+            TextRange textrange = new TextRange(tbCommnad.Document.ContentStart, tbCommnad.Document.ContentEnd);
+            //textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(dtpCommnadHighlight.));
+
+        }
     }
 }

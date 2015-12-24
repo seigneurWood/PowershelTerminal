@@ -77,6 +77,7 @@ namespace PSterminal
 
             terminal = new PowerShellTerminal(new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
 
+            //DataContext = terminal.Style.InputTextBoxBrush;
             // FlowDocument doc = new FlowDocument();
             // Paragraph par = new Paragraph();
             // par.Inlines.Add(new Run("get-process -name chrome"));
@@ -983,7 +984,7 @@ namespace PSterminal
                     //  MessageBox.Show(prev.ToString());
 
                 }
-            //UpdateRTB();
+            UpdateRTB();
         }
         private void CopyText(FlowDocument docCopyIn, FlowDocument docCopyOut)
         {
@@ -1145,5 +1146,6 @@ namespace PSterminal
                 return false;
             }
         }
+
     }
 }

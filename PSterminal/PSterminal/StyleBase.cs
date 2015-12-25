@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace PSterminal
 {
-    public abstract class StyleBase: INotifyPropertyChanged
+    public abstract class StyleBase
     {
         private Brush _inputTextBoxBrush;
         private Brush _outputTextBoxBrush;
@@ -20,7 +20,6 @@ namespace PSterminal
         private Brush _borderTabItemColor;
         private Brush _markingTabItemColor;
         private Brush _backgroundTabItemColor;
-        
 
         public Brush InputTextBoxBrush
         {
@@ -32,7 +31,6 @@ namespace PSterminal
             set
             {
                 _inputTextBoxBrush = value;
-                OnPropertyChanged("InputTextBoxBrush");
             }
         }
 

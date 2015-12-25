@@ -9,8 +9,8 @@ namespace PSterminal
 {
     public abstract class HighlightBase
     {
-        public abstract Brush CommandBrush();
+        public abstract SolidColorBrush CommandBrush();
 
-        public abstract Brush ParameterBrush();
+        public abstract SolidColorBrush ParameterBrush();
     }
 }

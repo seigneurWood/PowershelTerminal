@@ -33,6 +33,7 @@ namespace PSterminal
         {
             InitializeComponent();
             commandInTerminal.Add("get-process");
+            this.DataContext = this.mainWindow;
             ////TextBox t = new TextBox();
             ////t.Undo();
             //TextScript.Text = "get-process"; // | sort-object | force-recurce";
@@ -75,7 +76,11 @@ namespace PSterminal
             bind3.Executed += SaveScript;
             this.CommandBindings.Add(bind3);
 
-            terminal = new PowerShellTerminal(new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
+            CommandBinding bind4 = new CommandBinding(ApplicationCommands.Find);
+            bind4.Executed += OpenSettings;
+            this.CommandBindings.Add(bind4);
+
+            terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
 
             //DataContext = terminal.Style.InputTextBoxBrush;
             // FlowDocument doc = new FlowDocument();
@@ -87,6 +92,8 @@ namespace PSterminal
 
             TabControlScript.SelectedIndex = 0;
             prev = TabControlScript.SelectedIndex;
+
+            MainColor = terminal.Style.MainColor;
 
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
@@ -245,6 +252,21 @@ namespace PSterminal
             TabControlScript.Items.Add(t);
             ScriptTab newScriptTab = new ScriptTab(new FlowDocument(), t);
             scriptTabsList.Add(newScriptTab);
+        }
+
+        private Brush mainColor = new SolidColorBrush();
+
+        public Brush MainColor
+        {
+            get
+            {
+                return mainColor;
+            }
+
+            set
+            {
+                mainColor = value;
+            }
         }
 
         private void TextScript_KeyUp(object sender, KeyEventArgs e)
@@ -500,6 +522,11 @@ namespace PSterminal
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            //SettingsWindow w = new SettingsWindow();
+            //w.Owner = this;
+            //w.ShowDialog();
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
             //UpdateRTB();
             //tb.Text = "";
             //WriteChagedToDocument((TabItem)TabControlScript.SelectedItem);
@@ -897,7 +924,7 @@ namespace PSterminal
             switch (tokenType)
             {
                 case TokenType.Command: return terminal.CommandHighlight();
-                case TokenType.Parameter: return Brushes.HotPink;
+                case TokenType.Parameter: return terminal.ParameterHighlight();
             }
             return null;
         }
@@ -1145,6 +1172,13 @@ namespace PSterminal
             {
                 return false;
             }
+        }
+
+        private void OpenSettings(object sender, ExecutedRoutedEventArgs e)
+        {
+            SettingsWindow set = new SettingsWindow(terminal);
+            set.ShowDialog();
+            UpdateRTB();
         }
 
     }

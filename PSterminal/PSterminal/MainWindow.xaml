@@ -1,4 +1,5 @@
 ﻿<Window x:Class="PSterminal.MainWindow"
+        x:Name="mainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="725">
@@ -145,7 +146,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#FFDEDEDE">
+        <StackPanel x:Name="SupportMenu" Grid.Row="1" Orientation="Horizontal" Background="{Binding MainColor}">
             <Button Name="NewScript" Command="New" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\newdoc.png" Style="{StaticResource ImageStyle}"/>
             </Button>
@@ -197,7 +198,7 @@
             <TextBox Name="tb" TextAlignment="Left" FontFamily="Lucida Console">
             </TextBox>
         </ScrollViewer>
-        <Grid Grid.Row="2" Background="#FFDEDEDE">
+        <Grid Grid.Row="2" Background="{Binding MainColor}">
             <TabControl x:Name="TabControlScript" SelectionChanged="TabControlScript_SelectionChanged" >
                 <TabControl.ContentTemplate>
                     <DataTemplate>
@@ -240,7 +241,6 @@
                                                     <Button x:Name="ButtonClose" IsEnabled="False" 
                                                             Visibility="Collapsed" Grid.Column="1" Margin="0,0,2,0" Width="15" Height="15" 
                                                             Click="ButtonClose_Click" Template="{StaticResource ButtonCloseStyle}">
-                                                        
                                                     </Button>
                                                 </Grid>
                                             </Border>
@@ -281,8 +281,8 @@
                 </TabControl.Resources>
             </TabControl>
         </Grid>
-        <Menu Background="#FFDEDEDE">
-            <MenuItem Style="{DynamicResource MenuStyle}" Background="#FF9C9C9C" Grid.Column="0" Grid.Row="0" Header="File">
+        <Menu x:Name="MainMenu" Background="#FFDEDEDE">
+            <MenuItem Style="{DynamicResource MenuStyle}" Background="{Binding MainColor}" Grid.Column="0" Grid.Row="0" Header="File">
                 <MenuItem Header="New" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Open" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Save" Style="{DynamicResource MenuStyle}"></MenuItem>
@@ -299,8 +299,7 @@
                 <MenuItem Header="Paste" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
             <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="2" Header="View" Grid.Row="0">
-                <MenuItem Header="Setting" Style="{DynamicResource MenuStyle}"/>
-                <!--MenuItem Header="Setting of command window" Style="{DynamicResource MenuStyle}"/-->
+                <MenuItem Header="Setting" Style="{DynamicResource MenuStyle}" Command="Find"/>
             </MenuItem>
         </Menu>
     </Grid>

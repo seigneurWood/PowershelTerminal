@@ -40,12 +40,12 @@ namespace PSterminal
             }
         }
 
-        public virtual Brush CommandHighlight()
+        public virtual SolidColorBrush CommandHighlight()
         {
             return new SolidColorBrush(Colors.Black);
         }
 
-        public virtual Brush ParameterHighlight()
+        public virtual SolidColorBrush ParameterHighlight()
         {
             return new SolidColorBrush(Colors.Black);
         }

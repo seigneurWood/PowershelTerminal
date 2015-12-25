@@ -22,6 +22,7 @@ namespace PSterminal
             this.BorderTabItemColor = new SolidColorBrush(Color.FromArgb(0xFF,0xC5,0xC5,0xC5));
             this.BackgroundTabItemColor = new SolidColorBrush(Color.FromArgb(0xFF,0xAE,0xAE,0xAE));
             this.MarkingTabItemColor = new SolidColorBrush(Colors.White);
+            
         }
 
         public override void ChangeBackgroundTextBox(Brush InputTextboxBrush, Brush OutputTextboxBrush)

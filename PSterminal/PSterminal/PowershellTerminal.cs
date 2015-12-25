@@ -10,32 +10,22 @@ using System.Windows.Media;
 
 namespace PSterminal
 {
-    public class PowerShellTerminal : AbstractTerminal, INotifyPropertyChanged
+    public class PowerShellTerminal : AbstractTerminal
     {
-        public PowerShellTerminal(Brush commandBrush, Brush parameterBrush)
+        public PowerShellTerminal()
         {
-            this.HighLight = new PowershellHighlight(commandBrush, parameterBrush);
+            this.HighLight = new PowershellHighlight();
             this.Style = new LightSideStyle();
         }
 
-        public override Brush CommandHighlight()
+        public override SolidColorBrush CommandHighlight()
         {
             return this.HighLight.CommandBrush();
         }
 
-        public override Brush ParameterHighlight()
+        public override SolidColorBrush ParameterHighlight()
         {
             return this.HighLight.ParameterBrush();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

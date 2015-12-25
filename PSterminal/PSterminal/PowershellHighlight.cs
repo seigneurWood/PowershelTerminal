@@ -9,10 +9,10 @@ namespace PSterminal
 {
     public class PowershellHighlight: HighlightBase
     {
-        private Brush _commandHighlight;
-        private Brush _parameterHighlight;
+        private SolidColorBrush _commandHighlight;
+        private SolidColorBrush _parameterHighlight;
 
-        public Brush CommandHighlight
+        public SolidColorBrush CommandHighlight
         {
             get
             {
@@ -25,7 +25,7 @@ namespace PSterminal
             }
         }
 
-        public Brush ParameterHighlight
+        public SolidColorBrush ParameterHighlight
         {
             get
             {
@@ -38,18 +38,18 @@ namespace PSterminal
             }
         }
 
-        public PowershellHighlight(Brush CommandBrush, Brush ParameterBrush)
+        public PowershellHighlight()
         {
-            CommandHighlight = CommandBrush;
-            ParameterHighlight = ParameterBrush;
+            CommandHighlight = new SolidColorBrush(Colors.Beige);
+            ParameterHighlight = new SolidColorBrush(Colors.BlueViolet);
         }
 
-        public override Brush CommandBrush()
+        public override SolidColorBrush CommandBrush()
         {
             return CommandHighlight;
         }
 
-        public override Brush ParameterBrush()
+        public override SolidColorBrush ParameterBrush()
         {
             return ParameterHighlight;
         }

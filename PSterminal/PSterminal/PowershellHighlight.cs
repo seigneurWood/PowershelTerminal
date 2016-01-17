@@ -40,7 +40,7 @@ namespace PSterminal
 
         public PowershellHighlight()
         {
-            CommandHighlight = new SolidColorBrush(Colors.Beige);
+            CommandHighlight = new SolidColorBrush(Colors.DarkOliveGreen);
             ParameterHighlight = new SolidColorBrush(Colors.BlueViolet);
         }
 

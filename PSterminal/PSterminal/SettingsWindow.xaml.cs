@@ -30,20 +30,11 @@ namespace PSterminal
             //terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Beige), new SolidColorBrush(Colors.Blue));
             //terminal.HighLight = new PowershellHighlight();
             //terminal.Style = new LightSideStyle();
-            //this.DataContext = this.settingWin;
-            //mycolor.Color = Colors.Red;
+            this.DataContext = this.settingWin;
             CommandHighlight = terminal.HighLight.CommandBrush();
             parameterHighlight = terminal.HighLight.ParameterBrush();
-            
-        }
-
-        private SolidColorBrush mycolor = new SolidColorBrush();
-        public SolidColorBrush myColor
-        {
-            get
-            {
-                return mycolor;
-            }
+            MainColor = terminal.Style.MainColor as SolidColorBrush;
+            dtpCommnadHighlight.SelectedColor = CommandHighlight.Color;
         }
 
         private SolidColorBrush mainColor = new SolidColorBrush();
@@ -52,6 +43,10 @@ namespace PSterminal
             get
             {
                 return mainColor;
+            }
+            set
+            {
+                mainColor = value;
             }
         }
 

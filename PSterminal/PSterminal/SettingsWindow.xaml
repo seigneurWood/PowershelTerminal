@@ -27,7 +27,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
-    <Grid x:Name="MainGrid" Background="LightGray">
+    <Grid x:Name="MainGrid" Background="{Binding MainColor}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -65,11 +65,11 @@
                 </Grid.ColumnDefinitions>
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Command Highlight" Grid.Row="0" Grid.Column="0"/>
                 <wpfTool:ColorPicker x:Name="dtpCommnadHighlight" Margin="10,15,10,15" Grid.Row="0" Grid.Column="1" SelectedColorChanged="dtpCommnadHighlight_SelectedColorChanged" />
-                <RichTextBox x:Name="tbCommnad" Grid.Row="0" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding CommandHighlight5, Mode=TwoWay}"/>
+                <RichTextBox x:Name="tbCommnad" Grid.Row="0" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding CommandHighlight}"/>
 
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Parameter Highlight" Grid.Row="1" Grid.Column="0"/>
                 <wpfTool:ColorPicker x:Name="dtpParameterHighlight" Margin="10,15,10,15" Grid.Row="1" Grid.Column="1"/>
-                <RichTextBox x:Name="tbParameter" Grid.Row="1" Grid.Column="2" Height="25" Margin="7,0,7,0"/>
+                <RichTextBox x:Name="tbParameter" Grid.Row="1" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding ParameterHighlight}"/>
             </Grid>
         </Border>
         <Border Grid.Row="2" BorderThickness="1" BorderBrush="Gray" Margin="5">
@@ -88,10 +88,10 @@
                 <Label Content="Output Background" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"/>
                 <Label Content="Font Size" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"/>
                 <Label Content="Font Color" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center"/>
-                <wpfTool:DateTimePicker Name="ScriptColor" Margin="15,3,15,3" Grid.Row="0" Grid.Column="1"/>
-                <wpfTool:DateTimePicker Name="OutputColor" Margin="15,3,15,3" Grid.Row="1" Grid.Column="1"/>
-                <TextBox Name="FontSize" HorizontalAlignment="Left" Margin="15,0,0,0" Height="22" Width="55" Grid.Row="2" Grid.Column="1"/>
-                <wpfTool:DateTimePicker Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1"/>
+                <wpfTool:ColorPicker Name="ScriptColor" Margin="15,3,15,3" Grid.Row="0" Grid.Column="1"/>
+                <wpfTool:ColorPicker Name="OutputColor" Margin="15,3,15,3" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Name="FontSize" HorizontalAlignment="Left" Margin="15,2,0,1" Height="22" Width="40" Grid.Row="2" Grid.Column="1"/>
+                <wpfTool:ColorPicker Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1"/>
             </Grid>
         </Border>
         <Button Grid.Row="3" Height="25" Width="50" Content="Save" Click="Button_Click"/>

@@ -14,13 +14,15 @@ namespace PSterminal
             this.MainColor = new SolidColorBrush(Color.FromArgb(0xFF,0x2B,0x2B,0x2B));
             this.InputTextBoxBrush = new SolidColorBrush(Color.FromArgb(0xFF,0x38,0x38,0x38));
             this.OutputTextBoxBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x38, 0x38, 0x38));
-            this.MarkingColor = new SolidColorBrush(Color.FromArgb(0xFF,0xC3,0x00,0x00));
-            this.FontForeground = new SolidColorBrush(Colors.White);
+            this.MarkingColor = new SolidColorBrush(Color.FromArgb(0xFF,0xFF,0x67,0x67));//(0xFF,0xC3,0x00,0x00));
+            this.UserFontForeground = new SolidColorBrush(Colors.White);
             this.FontSize = 10;
             this.BorderColor = new SolidColorBrush(Colors.DarkRed);
             this.BorderTabItemColor = new SolidColorBrush(Colors.DarkRed);
             this.BackgroundTabItemColor = new SolidColorBrush(Color.FromArgb(0xFF,0xFF,0x5F,0x5F));
             this.MarkingTabItemColor = new SolidColorBrush(Colors.White);
+            this.FontForeground = new SolidColorBrush(Colors.White);
+            this.SeparatorColor = new SolidColorBrush(Colors.Black);
         }
 
         public override void ChangeBackgroundTextBox(Brush InputTextboxBrush, Brush OutputTextboxBrush)
@@ -43,7 +45,7 @@ namespace PSterminal
             }
             if (FontForeground != null)
             {
-                this.FontForeground = FontForeground;
+                this.UserFontForeground = FontForeground;
             }
         }
     }

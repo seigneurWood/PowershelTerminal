@@ -2,11 +2,12 @@
         x:Name="mainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="725">
+        Title="MainWindow" Height="450" Width="725" Loaded="mainWindow_Loaded">
     <Window.Resources>
 
         <Style x:Key="MenuStyle" TargetType="MenuItem">
-            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+            <Setter Property="Foreground" Value="{Binding FontForeground}"/>
+            <!-- Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}" -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
@@ -35,7 +36,7 @@
                                 </Grid>
                                 <!-- The Popup is the body of the menu which expands down or across depending on the level of the item -->
                                 <Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" x:Name="SubMenuPopup" Focusable="false" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-                                    <Border x:Name="SubMenuBorder" Background="LightGray" BorderBrush="Gray" BorderThickness="1" Padding="1">
+                                    <Border x:Name="SubMenuBorder" Background="{Binding MainColor}" BorderBrush="Gray" BorderThickness="1" Padding="1">
                                         <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
                                             <!-- StackPanel holds children of the menu. This is set by IsItemsHost=True -->
                                             <StackPanel HorizontalAlignment="Left" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
@@ -91,7 +92,8 @@
         <Style x:Key="SeparatorStyle"
            TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1,0,0,0"/>
-            <Setter Property="BorderBrush" Value="#FFC5C5C5"/>
+            <Setter Property="BorderBrush" Value="{Binding SeparatorColor}"/>
+            <!-- Setter Property="BorderBrush" Value="#FFC5C5C5"/ -->
             <Setter Property="Margin" Value="1,0,-2,0"/>
             <Setter Property="Width" Value="4"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -138,7 +140,7 @@
             <Setter Property="Height" Value="22"/>
         </Style>
     </Window.Resources>
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" Background="{Binding MainColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="35"/>
@@ -146,7 +148,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel x:Name="SupportMenu" Grid.Row="1" Orientation="Horizontal" Background="{Binding MainColor}">
+        <StackPanel x:Name="SupportMenu" Grid.Row="1" Orientation="Horizontal" Background="{Binding MainColor, Mode=TwoWay,UpdateSourceTrigger=LostFocus}">
             <Button Name="NewScript" Command="New" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\newdoc.png" Style="{StaticResource ImageStyle}"/>
             </Button>
@@ -186,7 +188,7 @@
             <Button Content="ViewCommand" Style="{StaticResource ButtonStyle}"/>
             <Button Content="NoViewCommand" Style="{StaticResource ButtonStyle}"/-->
         </StackPanel>
-        <Button Content="Run" Height="30" Width="60" Grid.Row="4" Click="Button_Click_1"/>
+        <Button Content="Run" Foreground="{Binding FontForeground}" Height="30" Width="60" Grid.Row="4" Click="Button_Click_1"/>
         <!--RichTextBox Name="tbOut" Grid.Row="2">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
@@ -195,14 +197,14 @@
             </RichTextBox.Resources>
         </-->
         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="tb" TextAlignment="Left" FontFamily="Lucida Console">
+            <TextBox Name="tb" FontSize="{Binding SizeOfFont}" Background="{Binding OutputTextBoxBrush}" TextAlignment="Left" FontFamily="Lucida Console">
             </TextBox>
         </ScrollViewer>
         <Grid Grid.Row="2" Background="{Binding MainColor}">
-            <TabControl x:Name="TabControlScript" SelectionChanged="TabControlScript_SelectionChanged" >
+            <TabControl x:Name="TabControlScript" Background="{Binding InputTextBoxBrush}" SelectionChanged="TabControlScript_SelectionChanged" >
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <RichTextBox x:Name="TextScript" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
+                        <RichTextBox x:Name="TextScript" Background="{Binding InputTextBoxBrush}" FontFamily="Lucida Console" FontSize="{Binding SizeOfFont}" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">
                                     <Setter Property="Margin" Value="0"/>
@@ -213,7 +215,8 @@
                 </TabControl.ContentTemplate>
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="Template">
+                        <Setter Property="Foreground" Value="{Binding FontForeground}"/>
+                            <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TabItem}">
                                     <Grid>
@@ -225,11 +228,13 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>-->
-                                            <Border x:Name="Border1" Background="#FFAEAEAE" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
-                                                    BorderBrush="#FFC5C5C5" BorderThickness="2">
-                                                
+                                            <Border x:Name="Border1" Background="{Binding BorderColor}" Height="25" CornerRadius="10,10,5,5" HorizontalAlignment="Stretch"
+                                                BorderBrush="{Binding BorderColor}" BorderThickness="2">
+                                                <!-- Background="#FFAEAEAE" -->
+                                                <!-- Background="#FFC5C5C5" -->
+
                                             </Border>
-                                            <Border x:Name="Border2" BorderThickness="0" BorderBrush="#FFC5C5C5"
+                                            <Border x:Name="Border2" BorderThickness="0" BorderBrush="{Binding BorderColor}"
                                                     CornerRadius="10,10,0,0" Height="25" HorizontalAlignment="Stretch">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -248,13 +253,13 @@
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="true">
-                                            <Setter TargetName="Border1" Property="Background" Value="White"/>
+                                            <Setter TargetName="Border1" Property="Background" Value="{Binding InputTextBoxBrush}"/>
                                             <Setter TargetName="Border1" Property="CornerRadius" Value="10,10,0,0"/>
                                             <Setter TargetName="Border1" Property="BorderThickness" Value="2,2,2,0"/>
                                             <Setter TargetName="Border1" Property="Margin" Value="0,0,0,-1"/>
                                             <Setter TargetName="Border1" Property="Height" Value="29"/>
 
-                                            <Setter TargetName="Border2" Property="Background" Value="White"/>
+                                            <Setter TargetName="Border2" Property="Background" Value="{Binding InputTextBoxBrush}"/>
                                             <Setter TargetName="Border2" Property="CornerRadius" Value="10,10,0,0"/>
                                             <Setter TargetName="Border2" Property="BorderThickness" Value="2,2,2,0"/>
                                             <Setter TargetName="ButtonClose" Property="IsEnabled" Value="True"/>
@@ -268,7 +273,7 @@
                                                 <Condition Property="IsSelected" Value="false"/>
                                                 <Condition Property="IsMouseOver" Value="true"/>
                                             </MultiTrigger.Conditions>
-                                            <Setter TargetName="Border1" Property="Background" Value="White"/>
+                                            <Setter TargetName="Border1" Property="Background" Value="{Binding MarkingColor}"/>
                                             <Setter TargetName="ButtonClose" Property="IsEnabled" Value="False"/>
                                             <!--Setter TargetName="ButtonClose" Property="Visibility" Value="Hidden"/-->
                                         </MultiTrigger>
@@ -281,19 +286,20 @@
                 </TabControl.Resources>
             </TabControl>
         </Grid>
-        <Menu x:Name="MainMenu" Background="#FFDEDEDE">
+        <!-- "#FFDEDEDE" -->
+        <Menu x:Name="MainMenu" Background="{Binding MainColor}">
             <MenuItem Style="{DynamicResource MenuStyle}" Background="{Binding MainColor}" Grid.Column="0" Grid.Row="0" Header="File">
                 <MenuItem Header="New" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Open" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Save" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Save As..." Style="{DynamicResource MenuStyle}"></MenuItem>
-                <Separator Height="2"/>
+                <Separator Height="2" Background="{Binding MainColor}"/>
                 <MenuItem Header="Exit" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
             <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="1" Header="Edit" Grid.Row="0">
                 <MenuItem Name="miUndo" Header="Undo" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Name="miRedo" Header="Redo" Style="{DynamicResource MenuStyle}"></MenuItem>
-                <Separator Height="5"></Separator>
+                <Separator Height="5" Background="{Binding MainColor}"></Separator>
                 <MenuItem Header="Cut" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Copy" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Paste" Style="{DynamicResource MenuStyle}"></MenuItem>

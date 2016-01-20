@@ -27,5 +27,10 @@ namespace PSterminal
         {
             return this.HighLight.ParameterBrush();
         }
+
+        public override SolidColorBrush FontForeground()
+        {
+            return this.Style.FontColor() as SolidColorBrush;
+        }
     }
 }

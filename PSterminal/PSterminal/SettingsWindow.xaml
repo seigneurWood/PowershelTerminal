@@ -7,22 +7,30 @@
         xmlns:local="clr-namespace:PSterminal"
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="400" Width="450">
+        Title="SettingsWindow" Height="480" Width="450">
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="{x:Type Border}">
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#FFA2A2A2"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="45"/>
         </Style>
+
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
             <Border x:Name="ButtonBorder" Style="{StaticResource ButtonStyle}">
-                <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="Control.IsMouseOver" Value="true">
                     <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="1"/>
-                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#FF4577FF"/>
-                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFB3C8FF"/>
+                    <!--Setter TargetName="ButtonBorder" Property="BorderBrush" Value="Gray"/-->
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="#FFA8A8A8"/>
+                    <Setter TargetName="ContentPresenter" Property="TextBlock.Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ButtonBorder" Property="Background" Value="White"/>
+                    <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="Gray"/>
+                    <Setter TargetName="ContentPresenter" Property="TextBlock.Foreground" Value="Black"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -41,14 +49,14 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Content="Style" Grid.Row="0"/>
+                <Label Content="Style" Foreground="{Binding FontForeground}" Grid.Row="0"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Grid Width="35"/>
-                    <RadioButton Name="rbLightStyle" GroupName="group" Content="Light Side" Checked="rbLightStyle_Checked"/>
+                    <RadioButton Name="rbLightStyle" GroupName="group" Content="Light Side" Foreground="{Binding FontForeground}" Checked="rbLightStyle_Checked"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <Grid Width="35"/>
-                    <RadioButton Name="rbDarkSide" GroupName="group" Content="Dark Side" Checked="rbDarkSide_Checked"/>
+                    <RadioButton Name="rbDarkSide" GroupName="group" Content="Dark Side" Foreground="{Binding FontForeground}" Checked="rbDarkSide_Checked"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -63,13 +71,29 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Command Highlight" Grid.Row="0" Grid.Column="0"/>
-                <wpfTool:ColorPicker x:Name="dtpCommnadHighlight" Margin="10,15,10,15" Grid.Row="0" Grid.Column="1" SelectedColorChanged="dtpCommnadHighlight_SelectedColorChanged" />
-                <RichTextBox x:Name="tbCommnad" Grid.Row="0" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding CommandHighlight}"/>
+                <Label HorizontalAlignment="Center" Foreground="{Binding FontForeground}" VerticalAlignment="Center" Content="Command Highlight" Grid.Row="0" Grid.Column="0"/>
+                <wpfTool:ColorPicker SelectedColor="{Binding CommandHighlight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25" x:Name="dtpCommnadHighlight" Margin="10,15,10,15" Grid.Row="0" Grid.Column="1" SelectedColorChanged="dtpCommnadHighlight_SelectedColorChanged" />
+                <RichTextBox x:Name="tbCommnad" Grid.Row="0" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding InputTextBoxBrush}">
+                    <RichTextBox.Document>
+                        <FlowDocument>
+                            <Paragraph>
+                                Text
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox.Document>
+                </RichTextBox>
 
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Parameter Highlight" Grid.Row="1" Grid.Column="0"/>
-                <wpfTool:ColorPicker x:Name="dtpParameterHighlight" Margin="10,15,10,15" Grid.Row="1" Grid.Column="1"/>
-                <RichTextBox x:Name="tbParameter" Grid.Row="1" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding ParameterHighlight}"/>
+                <Label HorizontalAlignment="Center" Foreground="{Binding FontForeground}" VerticalAlignment="Center" Content="Parameter Highlight" Grid.Row="1" Grid.Column="0"/>
+                <wpfTool:ColorPicker SelectedColor="{Binding ParameterHighlight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25" x:Name="dtpParameterHighlight" Margin="10,15,10,15" Grid.Row="1" Grid.Column="1" SelectedColorChanged="dtpParameterHighlight_SelectedColorChanged"/>
+                <RichTextBox x:Name="tbParameter" Grid.Row="1" Grid.Column="2" Height="25" Margin="7,0,7,0" Background="{Binding InputTextBoxBrush}">
+                    <RichTextBox.Document>
+                        <FlowDocument>
+                            <Paragraph>
+                                Text
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox.Document>
+                </RichTextBox>
             </Grid>
         </Border>
         <Border Grid.Row="2" BorderThickness="1" BorderBrush="Gray" Margin="5">
@@ -84,16 +108,16 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Script Background" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
-                <Label Content="Output Background" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"/>
-                <Label Content="Font Size" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"/>
-                <Label Content="Font Color" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center"/>
-                <wpfTool:ColorPicker Name="ScriptColor" Margin="15,3,15,3" Grid.Row="0" Grid.Column="1"/>
-                <wpfTool:ColorPicker Name="OutputColor" Margin="15,3,15,3" Grid.Row="1" Grid.Column="1"/>
-                <TextBox Name="FontSize" HorizontalAlignment="Left" Margin="15,2,0,1" Height="22" Width="40" Grid.Row="2" Grid.Column="1"/>
-                <wpfTool:ColorPicker Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1"/>
+                <Label Content="Script Background" Foreground="{Binding FontForeground}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+                <Label Content="Output Background" Foreground="{Binding FontForeground}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"/>
+                <Label Content="Font Size" Foreground="{Binding FontForeground}" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"/>
+                <Label Content="Font Color" Foreground="{Binding FontForeground}" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center"/>
+                <wpfTool:ColorPicker SelectedColor="{Binding InputTextBoxBrush.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="ScriptColor" Margin="15,3,15,3" Grid.Row="0" Grid.Column="1"/>
+                <wpfTool:ColorPicker SelectedColor="{Binding OutputTextBoxBrush.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Name="OutputColor" Margin="15,3,15,3" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Name="FontSize" HorizontalAlignment="Left" Text="{Binding SizeOfFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,2,0,1" Height="22" Width="40" Grid.Row="2" Grid.Column="1"/>
+                <wpfTool:ColorPicker SelectedColor="{Binding UserFontForeground, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1" SelectedColorChanged="FontColor_SelectedColorChanged" />
             </Grid>
         </Border>
-        <Button Grid.Row="3" Height="25" Width="50" Content="Save" Click="Button_Click"/>
+        <Button Template="{StaticResource ButtonTemplate}" Foreground="{Binding FontForeground}" Grid.Row="3" Height="25" Width="50" Content="Save" Click="Button_Click"/>
     </Grid>
 </Window>

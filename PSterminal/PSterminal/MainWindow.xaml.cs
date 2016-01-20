@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,20 +21,22 @@ namespace PSterminal
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         //private PowershellTerminal terminal = new PowershellTerminal();
         List<string> commandInTerminal = new List<string>();
         List<ScriptTab> scriptTabsList = new List<ScriptTab>();
         int prev = 0;
         RichTextBox TextScript;
-        AbstractTerminal terminal;
+        public static AbstractTerminal Terminal;
         Brush br = new SolidColorBrush(Colors.Aquamarine);
         public MainWindow()
         {
             InitializeComponent();
             commandInTerminal.Add("get-process");
-            this.DataContext = this.mainWindow;
+            this.DataContext = this;
+
+            
             ////TextBox t = new TextBox();
             ////t.Undo();
             //TextScript.Text = "get-process"; // | sort-object | force-recurce";
@@ -80,8 +83,9 @@ namespace PSterminal
             bind4.Executed += OpenSettings;
             this.CommandBindings.Add(bind4);
 
-            terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
+            MainWindow.Terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
 
+            
             //DataContext = terminal.Style.InputTextBoxBrush;
             // FlowDocument doc = new FlowDocument();
             // Paragraph par = new Paragraph();
@@ -93,7 +97,11 @@ namespace PSterminal
             TabControlScript.SelectedIndex = 0;
             prev = TabControlScript.SelectedIndex;
 
-            MainColor = terminal.Style.MainColor;
+            
+            //  MessageBox.Show(MainWindow.Terminal.Style.MainColor.ToString());
+            // MainColor = new SolidColorBrush(Colors.Aqua);//MainWindow.Terminal.Style.MainColor
+
+            //MainColor = terminal.Style.MainColor;
 
             ////TextScript.Text += Convert.ToString((int)('9'));
             ////TextScript.Text += TextScript.Text.Length.ToString();
@@ -133,22 +141,22 @@ namespace PSterminal
             //test.Interpret();
 
 
-           // FlowDocument document = new FlowDocument();
-           // Paragraph paragraph = new Paragraph();
-           // // paragraph.Inlines.Add((new Run("текст")));//\n работает" + "И прибавления тоже" + "Удачи")));
-           // //paragraph.Inlines.Add(new Run("hello-hello \n"));
-           // paragraph.Inlines.Add(new Run("get-process -name chrome"));
-           //// Paragraph p = new Paragraph();
-           //// p.Inlines.Add("gfd");
-           // //paragraph.Inlines.Add(new Run("\ngess"));
-           // //paragraph.Inlines.Add(new Run("\ngerocess"));
-           // //paragraph.Inlines.Add(new Run("hello -hello \n"));
-           // document.Blocks.Add(paragraph);
-           // paragraph = new Paragraph();
-           // paragraph.Inlines.Add(new Run("get-command"));
-           // document.Blocks.Add(paragraph);
-           //// document.Blocks.Add(p);
-           // tbOut.Document = document;
+            // FlowDocument document = new FlowDocument();
+            // Paragraph paragraph = new Paragraph();
+            // // paragraph.Inlines.Add((new Run("текст")));//\n работает" + "И прибавления тоже" + "Удачи")));
+            // //paragraph.Inlines.Add(new Run("hello-hello \n"));
+            // paragraph.Inlines.Add(new Run("get-process -name chrome"));
+            //// Paragraph p = new Paragraph();
+            //// p.Inlines.Add("gfd");
+            // //paragraph.Inlines.Add(new Run("\ngess"));
+            // //paragraph.Inlines.Add(new Run("\ngerocess"));
+            // //paragraph.Inlines.Add(new Run("hello -hello \n"));
+            // document.Blocks.Add(paragraph);
+            // paragraph = new Paragraph();
+            // paragraph.Inlines.Add(new Run("get-command"));
+            // document.Blocks.Add(paragraph);
+            //// document.Blocks.Add(p);
+            // tbOut.Document = document;
 
             //string[] str = GetDocumentText(tbOut.Document).Split('\n');
             //for(int i=0;i<str.Length-1;i++)
@@ -243,6 +251,9 @@ namespace PSterminal
             //}
 
             //f = 11;
+
+            //ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            //(TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Background = new SolidColorBrush(Colors.Black);
         }
 
         private void NewScriptExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -252,21 +263,6 @@ namespace PSterminal
             TabControlScript.Items.Add(t);
             ScriptTab newScriptTab = new ScriptTab(new FlowDocument(), t);
             scriptTabsList.Add(newScriptTab);
-        }
-
-        private Brush mainColor = new SolidColorBrush();
-
-        public Brush MainColor
-        {
-            get
-            {
-                return mainColor;
-            }
-
-            set
-            {
-                mainColor = value;
-            }
         }
 
         private void TextScript_KeyUp(object sender, KeyEventArgs e)
@@ -526,7 +522,10 @@ namespace PSterminal
             //w.Owner = this;
             //w.ShowDialog();
             ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
-            RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
+            //StyleFromSettingsDocument();
+
+            //WriteChangeToSettingsDocument("light","fff","aaaa","fsdf","100");
+            //RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
             //UpdateRTB();
             //tb.Text = "";
             //WriteChagedToDocument((TabItem)TabControlScript.SelectedItem);
@@ -923,10 +922,10 @@ namespace PSterminal
 
             switch (tokenType)
             {
-                case TokenType.Command: return terminal.CommandHighlight();
-                case TokenType.Parameter: return terminal.ParameterHighlight();
+                case TokenType.Command: return MainWindow.Terminal.CommandHighlight();
+                case TokenType.Parameter: return MainWindow.Terminal.ParameterHighlight();
             }
-            return null;
+            return MainWindow.Terminal.Style.FontColor();
         }
 
         IEnumerable<Paragraph> GetParagraphs(BlockCollection blockCollection)
@@ -994,23 +993,24 @@ namespace PSterminal
 
         private void TabControlScript_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                if (this.IsLoaded)
-                {
-                    //TextRange text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
-                    //MessageBox.Show(text.Text);
-                    ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
-                    scriptTabsList.ElementAt(prev).Document.Blocks.Clear();
-                    CopyText((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document, scriptTabsList.ElementAt(prev).Document);
-                    //text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
-                    //MessageBox.Show(text.Text);
-                    //scriptTabsList.ElementAt(prev).Document = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
-                    prev = TabControlScript.SelectedIndex;
-                    (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.Blocks.Clear();
-                    CopyText(scriptTabsList.ElementAt(prev).Document, (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document);
+            if (this.IsLoaded)
+            {
+                //TextRange text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
+                //MessageBox.Show(text.Text);
 
-                    //  MessageBox.Show(prev.ToString());
+                ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+                scriptTabsList.ElementAt(prev).Document.Blocks.Clear();        
+                CopyText((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document, scriptTabsList.ElementAt(prev).Document);
+                //text = new TextRange(scriptTabsList.ElementAt(prev).Document.ContentStart, scriptTabsList.ElementAt(prev).Document.ContentEnd);
+                //MessageBox.Show(text.Text);
+                //scriptTabsList.ElementAt(prev).Document = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document;
+                prev = TabControlScript.SelectedIndex;
+                (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.Blocks.Clear();
+                CopyText(scriptTabsList.ElementAt(prev).Document, (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document);
 
-                }
+                //  MessageBox.Show(prev.ToString());
+
+            }
             UpdateRTB();
         }
         private void CopyText(FlowDocument docCopyIn, FlowDocument docCopyOut)
@@ -1176,10 +1176,280 @@ namespace PSterminal
 
         private void OpenSettings(object sender, ExecutedRoutedEventArgs e)
         {
-            SettingsWindow set = new SettingsWindow(terminal);
+            SettingsWindow set = new SettingsWindow(this);
             set.ShowDialog();
             UpdateRTB();
         }
 
+
+        /////////////////////////////
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+
+        #region BindingProperty
+        public SolidColorBrush MainColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.MainColor as SolidColorBrush;//_back;//MainWindow.Terminal.Style.MainColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.MainColor = value; //_back = value; MainWindow.Terminal.Style.MainColor = value;
+                NotifyPropertyChanged("MainColor");
+            }
+        }
+        public SolidColorBrush MarkingColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.MarkingColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.MarkingColor = value;
+                this.NotifyPropertyChanged("MarkingColor");
+            }
+        }
+
+        public SolidColorBrush BorderColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.BorderColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.BorderColor = value;
+                this.NotifyPropertyChanged("BorderColor");
+            }
+        }
+
+        public SolidColorBrush BorderTabItemColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.BorderTabItemColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.BorderTabItemColor = value;
+                this.NotifyPropertyChanged("BorderTabItemColor");
+            }
+        }
+
+        public SolidColorBrush MarkingTabItemColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.MarkingTabItemColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.MarkingTabItemColor = value;
+                this.NotifyPropertyChanged("MarkingTabItemColor");
+            }
+        }
+
+        public SolidColorBrush BackgroundTabItemColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.BackgroundTabItemColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.BackgroundTabItemColor = value;
+                this.NotifyPropertyChanged("BackgroundTabItemColor");
+            }
+        }
+
+        public Brush InputTextBoxBrush
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.InputTextBoxBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.InputTextBoxBrush = value;
+                this.NotifyPropertyChanged("InputTextBoxBrush");
+            }
+        }
+
+        public Brush OutputTextBoxBrush
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.OutputTextBoxBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.OutputTextBoxBrush = value;
+                this.NotifyPropertyChanged("OutputTextBoxBrush");
+            }
+        }
+
+        public int SizeOfFont
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.FontSize;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.FontSize = value;
+                this.NotifyPropertyChanged("SizeOfFont");
+            }
+        }
+
+        public SolidColorBrush UserFontForeground
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.UserFontForeground as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.UserFontForeground = value;
+                this.NotifyPropertyChanged("FontForeground");
+            }
+        }
+
+        public SolidColorBrush ParameterHighlight
+        {
+            get
+            {
+                return MainWindow.Terminal.HighLight.ParameterBrush();
+            }
+            set
+            {
+                (MainWindow.Terminal.HighLight as PowershellHighlight).ParameterHighlight = value;
+                this.NotifyPropertyChanged("ParameterHighlight");
+            }
+        }
+
+        public SolidColorBrush CommandHighlight
+        {
+            get
+            {
+                return MainWindow.Terminal.HighLight.CommandBrush();
+            }
+
+            set
+            {
+                (MainWindow.Terminal.HighLight as PowershellHighlight).CommandHighlight = value;
+                this.NotifyPropertyChanged("CommandHighlight");
+            }
+        }
+
+        public SolidColorBrush FontForeground
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.FontForeground as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.FontForeground = value;
+                this.NotifyPropertyChanged("FontForeground");
+            }
+        }
+
+        public SolidColorBrush SeparatorColor
+        {
+            get
+            {
+                return MainWindow.Terminal.Style.SeparatorColor as SolidColorBrush;
+            }
+
+            set
+            {
+                MainWindow.Terminal.Style.SeparatorColor = value;
+                this.NotifyPropertyChanged("SeparatorColor");
+            }
+        }
+        #endregion
+
+        private void CreateSettingsFile()
+        {
+            FileInfo file = new FileInfo("settings.ini");
+            if (!file.Exists)
+                file.Create();
+            else MessageBox.Show("File has been created");
+        }
+
+        private void WriteChangeToSettingsDocument(string style, string inputTexboxColor, string outputTexboxColor, string fontColor, string fontSize)
+        {
+            FileStream file = new FileStream("settings.ini", FileMode.Open);
+            using (StreamWriter writer = new StreamWriter(file))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Style: ");
+                sb.AppendLine(style);
+                sb.Append("InputTexboxColor: ");
+                sb.AppendLine(inputTexboxColor);
+                sb.Append("OutputTexboxColor: ");
+                sb.AppendLine(outputTexboxColor);
+                sb.Append("FontColor: ");
+                sb.AppendLine(fontColor);
+                sb.Append("FontSize: ");
+                sb.AppendLine(fontSize);
+                writer.Write(sb.ToString());
+                writer.Close();
+            }
+        }
+
+        private string ReadSettingsDocument()
+        {
+            FileStream file = new FileStream("settings.ini", FileMode.Open);
+            string outputString="";
+            using (StreamReader reader = new StreamReader(file))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(reader.ReadToEnd());
+                reader.Close();
+                outputString = sb.ToString();
+            }
+            return outputString;
+        }
+        private StyleBase StyleFromSettingsDocument()
+        {
+            string style = ReadSettingsDocument().Split('\n')[0].Split(' ')[1].Split('\r')[0];
+            Type T = Type.GetType("PSterminal." + style + "Style");
+            object obj = Activator.CreateInstance(T);
+            return (StyleBase)obj;
+            //Type T = Type.GetType("PSterminal." + nameCommand + "Command");
+           // object Obj = Activator.CreateInstance(T);
+        }
+        private void SettingsForTerminal()
+        {
+            string[] settings = ReadSettingsDocument().Split('\n');
+            for(int i=1; i<settings.Length;i++)
+            {
+                
+            }
+        }
+
+        private void mainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

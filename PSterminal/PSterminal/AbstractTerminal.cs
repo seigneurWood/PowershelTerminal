@@ -40,6 +40,11 @@ namespace PSterminal
             }
         }
 
+        public virtual SolidColorBrush FontForeground()
+        {
+            return new SolidColorBrush(Colors.Black);
+        }
+
         public virtual SolidColorBrush CommandHighlight()
         {
             return new SolidColorBrush(Colors.Black);

@@ -24,6 +24,7 @@ namespace PSterminal
             this.MarkingTabItemColor = new SolidColorBrush(Colors.White);
             this.FontForeground = new SolidColorBrush(Colors.Black);
             this.SeparatorColor = new SolidColorBrush((Color.FromArgb(0xFF, 0xC5, 0xC5, 0xC5)));
+            this.UserFontForeground = new SolidColorBrush(Colors.Tomato);
         }
 
         public override void ChangeBackgroundTextBox(Brush InputTextboxBrush, Brush OutputTextboxBrush)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,10 @@ namespace PSterminal
             //    MainColor = new LightSideStyle().MainColor as SolidColorBrush;
             //    InputTextBoxBrush = new LightSideStyle().InputTextBoxBrush;
             //}
+            if (MainWindow.Terminal.Style is LightSideStyle)
+                rbLightStyle.IsChecked = true;
+            else
+                rbDarkSide.IsChecked = true;
         }
 
         //private SolidColorBrush mainColor = new SolidColorBrush();
@@ -160,11 +165,11 @@ namespace PSterminal
             }
         }
 
-        public Brush InputTextBoxBrush
+        public SolidColorBrush InputTextBoxBrush
         {
             get
             {
-                return main.InputTextBoxBrush as Brush;
+                return main.InputTextBoxBrush as SolidColorBrush;
             }
 
             set
@@ -174,11 +179,11 @@ namespace PSterminal
             }
         }
 
-        public Brush OutputTextBoxBrush
+        public SolidColorBrush OutputTextBoxBrush
         {
             get
             {
-                return main.OutputTextBoxBrush;
+                return main.OutputTextBoxBrush as SolidColorBrush;
             }
 
             set
@@ -202,16 +207,16 @@ namespace PSterminal
             }
         }
 
-        public Color UserFontForeground
+        public SolidColorBrush UserFontForeground
         {
             get
             {
-                return main.UserFontForeground.Color;
+                return main.UserFontForeground as SolidColorBrush;
             }
 
             set
             {
-                main.UserFontForeground.Color = value;
+                main.UserFontForeground = value;
                 this.NotifyPropertyChanged("FontForeground");
             }
         }
@@ -261,6 +266,10 @@ namespace PSterminal
             BorderTabItemColor = style.BorderTabItemColor as SolidColorBrush;
             FontForeground = style.FontForeground as SolidColorBrush;
             SeparatorColor = style.SeparatorColor as SolidColorBrush;
+            style.FontSize = Convert.ToInt32(SizeOfFont);
+            style.InputTextBoxBrush = InputTextBoxBrush;
+            style.OutputTextBoxBrush = OutputTextBoxBrush;
+            MainWindow.Terminal.Style = style;
         }
 
         private void rbDarkSide_Checked(object sender, RoutedEventArgs e)
@@ -274,6 +283,10 @@ namespace PSterminal
             BorderTabItemColor = style.BorderTabItemColor as SolidColorBrush;
             FontForeground = style.FontForeground as SolidColorBrush;
             SeparatorColor = style.SeparatorColor as SolidColorBrush;
+            style.FontSize = Convert.ToInt32(SizeOfFont);
+            style.InputTextBoxBrush = InputTextBoxBrush;
+            style.OutputTextBoxBrush = OutputTextBoxBrush;
+            MainWindow.Terminal.Style = style;
         }
 
         private void dtpCommnadHighlight_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -304,7 +317,55 @@ namespace PSterminal
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string style = "";
+            string inputTexboxColor1 = "";
+            string outputTexboxColor1 = "";
+            string fontColor1 = "";
+            string fontSize1 = "";
+            string userFontForeground1 = "";
+            string commandHightLight1 = "";
+            string parameterHightLight1 = "";
+            if (rbLightStyle.IsChecked == true)
+                style = "LightSide";
+            else
+                style = "DarkSide";
+            inputTexboxColor1 = InputTextBoxBrush.Color.A + "," + InputTextBoxBrush.Color.R + "," + InputTextBoxBrush.Color.G + "," + InputTextBoxBrush.Color.B;
+            outputTexboxColor1 = OutputTextBoxBrush.Color.A + "," + OutputTextBoxBrush.Color.R + "," + OutputTextBoxBrush.Color.G + "," + OutputTextBoxBrush.Color.B;
+            fontColor1 = FontForeground.Color.A + "," + FontForeground.Color.R + "," + FontForeground.Color.G + "," + FontForeground.Color.B;
+            fontSize1 = SizeOfFont.ToString();
+            userFontForeground1 = UserFontForeground.Color.A + "," + UserFontForeground.Color.R + "," + UserFontForeground.Color.G + "," + UserFontForeground.Color.B;
+            commandHightLight1 = CommandHighlight.A + "," + CommandHighlight.R + "," + CommandHighlight.G + "," + CommandHighlight.B;
+            parameterHightLight1 = ParameterHighlight.A + "," + ParameterHighlight.R + "," + ParameterHighlight.G + "," + ParameterHighlight.B;
+            WriteChangeToSettingsDocument(style, inputTexboxColor1, outputTexboxColor1, fontColor1, fontSize1, userFontForeground1, commandHightLight1, parameterHightLight1);
             this.Close();
+        }
+
+        private void WriteChangeToSettingsDocument(string style, string inputTexboxColor, string outputTexboxColor, string fontColor, string fontSize, string userFontForeground,
+            string commandHightLight, string parameterHightLight)
+        {
+            FileStream file = new FileStream("settings.ini", FileMode.Open);
+            using (StreamWriter writer = new StreamWriter(file))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Style: ");
+                sb.AppendLine(style);
+                sb.Append("InputTexboxColor: ");
+                sb.AppendLine(inputTexboxColor);
+                sb.Append("OutputTexboxColor: ");
+                sb.AppendLine(outputTexboxColor);
+                sb.Append("FontColor: ");
+                sb.AppendLine(fontColor);
+                sb.Append("FontSize: ");
+                sb.AppendLine(fontSize);
+                sb.Append("UserFontForeground: ");
+                sb.AppendLine(userFontForeground);
+                sb.Append("CommandHightLight: ");
+                sb.AppendLine(commandHightLight);
+                sb.Append("ParameterHightLight: ");
+                sb.AppendLine(parameterHightLight);
+                writer.Write(sb.ToString());
+                writer.Close();
+            }
         }
 
         /////////////////////////////////////////////////

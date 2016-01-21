@@ -103,7 +103,7 @@ namespace PSterminal
                 { "parameter", TokenType.Parameter},
                 { "space", null },
                 { "ident", TokenType.Ident},
-                { "punct", null}
+                { "punct", TokenType.Punct}
             };
 
         IEnumerable<QualifiedToken> Parse()
@@ -161,6 +161,7 @@ namespace PSterminal
                         EndOffset = end.Item2
                     };
                 }
+
                 //if (tokenType == TokenType.Ident && CheckKeyword(text))/////???????????????????? 
                 //     tokenType = TokenType.Keyword;
 

@@ -13,11 +13,11 @@ namespace PSterminal
         Parameter,
         Ident,
         CommandCmd,
-        ParameterCmd
+        ParameterCmd,
         //Ident,
         //Comment,
         //Keyword,
-        //Punct,
+        Punct
         //String,
         //Number
     }

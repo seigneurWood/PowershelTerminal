@@ -158,26 +158,26 @@
             <Button Name="Save" Command="Save" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\save.png" Style="{StaticResource ImageStyle}"/>
             </Button>
-            <Button Name="Copy" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Copy" Command="Copy" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Copy.png" Style="{StaticResource ImageStyle}"/>
             </Button>
-            <Button Name="Paste" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Paste" Command="Paste" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\paste.png" Style="{StaticResource ImageStyle}"/>
             </Button>
             <Border Style="{StaticResource SeparatorStyle}"/>
-            <Button Name="Undo" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Undo" Command="Undo" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Undo.png" Style="{StaticResource ImageStyle}"/>
             </Button>
-            <Button Name="Redo" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Redo" Command="Redo" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Redo.png" Style="{StaticResource ImageStyle}"/>
             </Button>
             <Border Style="{StaticResource SeparatorStyle}"/>
-            <Button Name="Run" Template="{StaticResource ButtonTemplate}">
+            <Button Name="Run" Command="NotACommand" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\Go.png" Height="17" Width="17"/>
             </Button>
             <!--Separator Width="3" Height="auto"/-->
             <Border Style="{StaticResource SeparatorStyle}"/>
-            <Button Name="RunPowerShell" Template="{StaticResource ButtonTemplate}">
+            <Button Name="RunPowerShell" Command="Help" Template="{StaticResource ButtonTemplate}">
                 <Image Source="C:\Users\Владислав\Desktop\PowershelTerminal\PSterminal\PSterminal\Icon\powershell.png" Style="{StaticResource ImageStyle}"/>
             </Button>
             <!--Border Style="{StaticResource SeparatorStyle}"/>
@@ -197,14 +197,14 @@
             </RichTextBox.Resources>
         </-->
         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="tb" FontSize="{Binding SizeOfFont}" Background="{Binding OutputTextBoxBrush}" TextAlignment="Left" FontFamily="Lucida Console">
+            <TextBox Name="tb" IsReadOnly="True" FontSize="{Binding SizeOfFont}" Foreground="{Binding UserFontForeground}" Background="{Binding OutputTextBoxBrush}" TextAlignment="Left" FontFamily="Lucida Console">
             </TextBox>
         </ScrollViewer>
         <Grid Grid.Row="2" Background="{Binding MainColor}">
             <TabControl x:Name="TabControlScript" Background="{Binding InputTextBoxBrush}" SelectionChanged="TabControlScript_SelectionChanged" >
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <RichTextBox x:Name="TextScript" Background="{Binding InputTextBoxBrush}" FontFamily="Lucida Console" FontSize="{Binding SizeOfFont}" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
+                        <RichTextBox x:Name="TextScript" IsUndoEnabled="True" UndoLimit="100" Foreground="{Binding UserFontForeground}" Background="{Binding InputTextBoxBrush}" FontFamily="Lucida Console" KeyUp="TextScript_KeyUp" BorderThickness="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto">
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">
                                     <Setter Property="Margin" Value="0"/>
@@ -301,7 +301,7 @@
                 <MenuItem Name="miRedo" Header="Redo" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <Separator Height="5" Background="{Binding MainColor}"></Separator>
                 <MenuItem Header="Cut" Style="{DynamicResource MenuStyle}"></MenuItem>
-                <MenuItem Header="Copy" Style="{DynamicResource MenuStyle}"></MenuItem>
+                <MenuItem Header="Copy" Command="ApplicationCommands.Copy" Style="{DynamicResource MenuStyle}"></MenuItem>
                 <MenuItem Header="Paste" Style="{DynamicResource MenuStyle}"></MenuItem>
             </MenuItem>
             <MenuItem Style="{DynamicResource MenuStyle}" Grid.Column="2" Header="View" Grid.Row="0">

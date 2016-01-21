@@ -115,7 +115,7 @@
                 <wpfTool:ColorPicker SelectedColor="{Binding InputTextBoxBrush.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="ScriptColor" Margin="15,3,15,3" Grid.Row="0" Grid.Column="1"/>
                 <wpfTool:ColorPicker SelectedColor="{Binding OutputTextBoxBrush.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Name="OutputColor" Margin="15,3,15,3" Grid.Row="1" Grid.Column="1"/>
                 <TextBox Name="FontSize" HorizontalAlignment="Left" Text="{Binding SizeOfFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,2,0,1" Height="22" Width="40" Grid.Row="2" Grid.Column="1"/>
-                <wpfTool:ColorPicker SelectedColor="{Binding UserFontForeground, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1" SelectedColorChanged="FontColor_SelectedColorChanged" />
+                <wpfTool:ColorPicker SelectedColor="{Binding UserFontForeground.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="FontColor" Margin="15,3,15,3" Grid.Row="3" Grid.Column="1" SelectedColorChanged="FontColor_SelectedColorChanged" />
             </Grid>
         </Border>
         <Button Template="{StaticResource ButtonTemplate}" Foreground="{Binding FontForeground}" Grid.Row="3" Height="25" Width="50" Content="Save" Click="Button_Click"/>

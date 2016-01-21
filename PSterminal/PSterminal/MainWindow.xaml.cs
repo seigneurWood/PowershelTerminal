@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -83,9 +84,35 @@ namespace PSterminal
             bind4.Executed += OpenSettings;
             this.CommandBindings.Add(bind4);
 
-            MainWindow.Terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
+            CommandBinding bind5 = new CommandBinding(ApplicationCommands.Copy);
+            bind5.Executed += CopyTextInRichbox;
+            this.CommandBindings.Add(bind5);
 
-            
+            CommandBinding bind6 = new CommandBinding(ApplicationCommands.Paste);
+            bind6.Executed += PasteTextInRichbox;
+            this.CommandBindings.Add(bind6);
+
+            CommandBinding bind7 = new CommandBinding(ApplicationCommands.Undo);
+            bind7.Executed += UndoTextInRichbox;
+            this.CommandBindings.Add(bind7);
+
+            CommandBinding bind8 = new CommandBinding(ApplicationCommands.Undo);
+            bind8.Executed += RedoTextInRichbox;
+            this.CommandBindings.Add(bind8);
+
+            CommandBinding bind9 = new CommandBinding(ApplicationCommands.NotACommand);
+            bind9.Executed += CompileScript;
+            this.CommandBindings.Add(bind9);
+
+            CommandBinding bind10 = new CommandBinding(ApplicationCommands.Help);
+            bind10.Executed += HelpPowerShell;
+            this.CommandBindings.Add(bind10);
+
+
+            MainWindow.Terminal = new PowerShellTerminal();//new SolidColorBrush(Colors.Aquamarine), new SolidColorBrush(Colors.HotPink));
+            MainWindow.Terminal.Style = StyleFromSettingsDocument();
+            SettingsForTerminal();
+ 
             //DataContext = terminal.Style.InputTextBoxBrush;
             // FlowDocument doc = new FlowDocument();
             // Paragraph par = new Paragraph();
@@ -97,7 +124,6 @@ namespace PSterminal
             TabControlScript.SelectedIndex = 0;
             prev = TabControlScript.SelectedIndex;
 
-            
             //  MessageBox.Show(MainWindow.Terminal.Style.MainColor.ToString());
             // MainColor = new SolidColorBrush(Colors.Aqua);//MainWindow.Terminal.Style.MainColor
 
@@ -256,6 +282,46 @@ namespace PSterminal
             //(TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Background = new SolidColorBrush(Colors.Black);
         }
 
+        private void HelpPowerShell(object sender, ExecutedRoutedEventArgs e)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("powershell.exe");
+            Process.Start(startInfo);
+        }
+
+        private void CompileScript(object sender, ExecutedRoutedEventArgs e)
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
+        }
+
+        private void RedoTextInRichbox(object sender, ExecutedRoutedEventArgs e)
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Redo();
+        }
+
+        private void UndoTextInRichbox(object sender, ExecutedRoutedEventArgs e)
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Undo();
+        }
+
+        private void PasteTextInRichbox(object sender, ExecutedRoutedEventArgs e)
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            string paste = Clipboard.GetText();
+           // (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition.GetPositionAtOffset(0, LogicalDirection.Forward);
+            (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition.InsertTextInRun(paste);
+           // (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition = (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition.GetPositionAtOffset(0,LogicalDirection.Forward);
+            //(TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).CaretPosition.GetInsertionPosition(LogicalDirection.Backward).InsertTextInRun(paste);
+        }
+
+        private void CopyTextInRichbox(object sender, ExecutedRoutedEventArgs e)
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            //MessageBox.Show(((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Selection).Text);
+            Clipboard.SetText(((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Selection).Text);
+        }
         private void NewScriptExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             TabItem t = new TabItem();
@@ -522,9 +588,10 @@ namespace PSterminal
             //w.Owner = this;
             //w.ShowDialog();
             ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            TextRange range = new TextRange((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentStart, (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentEnd);
+            range.ApplyPropertyValue(TextElement.FontSizeProperty, SizeOfFont.ToString());
+           // (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Undo();
             //StyleFromSettingsDocument();
-
-            //WriteChangeToSettingsDocument("light","fff","aaaa","fsdf","100");
             //RunCommand((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox));
             //UpdateRTB();
             //tb.Text = "";
@@ -912,7 +979,10 @@ namespace PSterminal
                  select new { position, brush }).ToList();
 
             foreach (var pb in positionsAndBrushes)
+            {
                 pb.position.ApplyPropertyValue(TextElement.ForegroundProperty, pb.brush);
+                //pb.position.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            }
         }
 
         #endregion
@@ -924,8 +994,9 @@ namespace PSterminal
             {
                 case TokenType.Command: return MainWindow.Terminal.CommandHighlight();
                 case TokenType.Parameter: return MainWindow.Terminal.ParameterHighlight();
+                case TokenType.Punct: return MainWindow.Terminal.Style.FontColor();
             }
-            return MainWindow.Terminal.Style.FontColor();
+            return MainWindow.Terminal.Style.UserFontForeground;
         }
 
         IEnumerable<Paragraph> GetParagraphs(BlockCollection blockCollection)
@@ -954,6 +1025,7 @@ namespace PSterminal
             foreach (var par in GetParagraphs(doc.Blocks).ToList())
                 await UpdateParagraph(par);
             (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).IsEnabled = true;
+            UpdateFontSize();
         }
         #endregion
 
@@ -1275,11 +1347,11 @@ namespace PSterminal
             }
         }
 
-        public Brush InputTextBoxBrush
+        public SolidColorBrush InputTextBoxBrush
         {
             get
             {
-                return MainWindow.Terminal.Style.InputTextBoxBrush;
+                return MainWindow.Terminal.Style.InputTextBoxBrush as SolidColorBrush;
             }
 
             set
@@ -1289,11 +1361,11 @@ namespace PSterminal
             }
         }
 
-        public Brush OutputTextBoxBrush
+        public SolidColorBrush OutputTextBoxBrush
         {
             get
             {
-                return MainWindow.Terminal.Style.OutputTextBoxBrush;
+                return MainWindow.Terminal.Style.OutputTextBoxBrush as SolidColorBrush;
             }
 
             set
@@ -1385,6 +1457,7 @@ namespace PSterminal
                 this.NotifyPropertyChanged("SeparatorColor");
             }
         }
+
         #endregion
 
         private void CreateSettingsFile()
@@ -1395,7 +1468,8 @@ namespace PSterminal
             else MessageBox.Show("File has been created");
         }
 
-        private void WriteChangeToSettingsDocument(string style, string inputTexboxColor, string outputTexboxColor, string fontColor, string fontSize)
+        private void WriteChangeToSettingsDocument(string style, string inputTexboxColor, string outputTexboxColor, string fontColor, string fontSize, string userFontForeground
+            ,string commandHightLight, string parameterHightLight)
         {
             FileStream file = new FileStream("settings.ini", FileMode.Open);
             using (StreamWriter writer = new StreamWriter(file))
@@ -1411,6 +1485,12 @@ namespace PSterminal
                 sb.AppendLine(fontColor);
                 sb.Append("FontSize: ");
                 sb.AppendLine(fontSize);
+                sb.Append("UserFontForeground: ");
+                sb.AppendLine(userFontForeground);
+                sb.Append("CommandHightLight: ");
+                sb.AppendLine(commandHightLight);
+                sb.Append("ParameterHightLight: ");
+                sb.Append(parameterHightLight);
                 writer.Write(sb.ToString());
                 writer.Close();
             }
@@ -1431,8 +1511,15 @@ namespace PSterminal
         }
         private StyleBase StyleFromSettingsDocument()
         {
-            string style = ReadSettingsDocument().Split('\n')[0].Split(' ')[1].Split('\r')[0];
-            Type T = Type.GetType("PSterminal." + style + "Style");
+            string style = ReadSettingsDocument();
+            Type T = null;
+            if (style != "")
+            {
+                style = ReadSettingsDocument().Split('\n')[0].Split(' ')[1].Split('\r')[0];
+                T = Type.GetType("PSterminal." + style + "Style");
+            }
+            else
+                T = Type.GetType("PSterminal.LightSideStyle");
             object obj = Activator.CreateInstance(T);
             return (StyleBase)obj;
             //Type T = Type.GetType("PSterminal." + nameCommand + "Command");
@@ -1441,10 +1528,26 @@ namespace PSterminal
         private void SettingsForTerminal()
         {
             string[] settings = ReadSettingsDocument().Split('\n');
-            for(int i=1; i<settings.Length;i++)
-            {
-                
-            }
+            InputTextBoxBrush = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[1].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[1].Split(',')[1])
+                , Convert.ToByte(settings[1].Split(',')[2]), Convert.ToByte(settings[1].Split(',')[3])));
+            OutputTextBoxBrush = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[2].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[2].Split(',')[1])
+                , Convert.ToByte(settings[2].Split(',')[2]), Convert.ToByte(settings[2].Split(',')[3])));
+            FontForeground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[3].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[3].Split(',')[1])
+                , Convert.ToByte(settings[3].Split(',')[2]), Convert.ToByte(settings[3].Split(',')[3])));
+            SizeOfFont = Convert.ToInt32(settings[4].Split(' ')[1]);
+            UserFontForeground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[5].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[5].Split(',')[1])
+                , Convert.ToByte(settings[5].Split(',')[2]), Convert.ToByte(settings[5].Split(',')[3])));
+            CommandHighlight = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[6].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[6].Split(',')[1])
+                , Convert.ToByte(settings[6].Split(',')[2]), Convert.ToByte(settings[6].Split(',')[3])));
+            ParameterHighlight = new SolidColorBrush(Color.FromArgb(Convert.ToByte(settings[7].Split(',')[0].Split(' ')[1]), Convert.ToByte(settings[7].Split(',')[1])
+               , Convert.ToByte(settings[7].Split(',')[2]), Convert.ToByte(settings[7].Split(',')[3])));
+        }
+
+        private void UpdateFontSize()
+        {
+            ContentPresenter cp = TabControlScript.Template.FindName("PART_SelectedContentHost", TabControlScript) as ContentPresenter;
+            TextRange range = new TextRange((TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentStart, (TabControlScript.ContentTemplate.FindName("TextScript", cp) as RichTextBox).Document.ContentEnd);
+            range.ApplyPropertyValue(TextElement.FontSizeProperty, SizeOfFont.ToString());
         }
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
